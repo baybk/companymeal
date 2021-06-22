@@ -166,7 +166,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
-
+        App\Providers\GoogleDriveServiceProvider::class,
         /*
          * Application Service Providers...
          */
