@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\BalanceChangeHistory;
+use App\Models\RemarkDatePaided;
 use App\Models\User;
+use Carbon\Carbon;
 use Google\Service\CloudSourceRepositories\Repo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +22,8 @@ class AdminController extends Controller
 
     public function orders() {
         $users = User::all();
-        return view('admin.orders', compact('users'));
+        $lastPaidedList = RemarkDatePaided::all()->sortByDesc('id')->take(10);  //get()->take(7)->sortByDesc('id');
+        return view('admin.orders', compact('users', 'lastPaidedList'));
     }
 
     public function postOrders(Request $request) {
@@ -30,6 +33,7 @@ class AdminController extends Controller
         }
 
         $userIds = $request->userIds;
+        // dd(count($userIds));
         
         try {
             DB::beginTransaction();
@@ -49,6 +53,11 @@ class AdminController extends Controller
                     ]);
                 // });
             }
+
+            RemarkDatePaided::create([
+                'date_remark' => Carbon::now(),
+                'order_number' => count($userIds),
+            ]);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();

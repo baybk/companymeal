@@ -42,6 +42,10 @@
         h4 {
             margin-top: 2rem;
         }
+
+        .subtract {
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
