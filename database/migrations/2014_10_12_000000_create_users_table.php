@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->string('role')->default('user')->comment('3 option: admin user visitor ');
+            $table->bigInteger('balance')->default(0)->comment('Unit: VND');
+
             $table->rememberToken();
             $table->timestamps();
         });

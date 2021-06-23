@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,15 @@ Route::get('/', function () {
 });
 
 Route::get('logs', [LogController::class, 'getLogs'])->name('logs.getLogs');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::post('/orders', [AdminController::class, 'postOrders'])->name('admin.postOrders');
+
+    Route::get('/edit-user/{id}', [AdminController::class, 'editUserBalance'])->name('admin.editUserBalance');
+    Route::post('/edit-user/{id}', [AdminController::class, 'postEditUserBalance'])->name('admin.postEditUserBalance');
+});
