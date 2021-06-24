@@ -25,6 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::where('name', '!=', 'fakeUser1')->get();
-        return view('home', compact('users'));
+        $totalBalance = 0;
+        foreach ($users as $user) {
+            $totalBalance = $totalBalance + $user->balance;
+        }
+        return view('home', compact('users', 'totalBalance'));
     }
 }

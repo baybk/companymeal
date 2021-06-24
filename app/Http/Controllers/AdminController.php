@@ -26,7 +26,7 @@ class AdminController extends Controller
 
     public function orders() {
         $users = User::where('name', '!=', 'fakeUser1')->get();
-        $lastPaidedList = RemarkDatePaided::all()->sortByDesc('id')->take(10);  //get()->take(7)->sortByDesc('id');
+        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);  //get()->take(7)->sortByDesc('id');
         return view('admin.orders', compact('users', 'lastPaidedList'));
     }
 
@@ -103,7 +103,7 @@ class AdminController extends Controller
 
     public function editUserBalance(Request $request, $userId) {
         $user = User::findOrFail($userId);
-        $userHistories = BalanceChangeHistory::where('user_id', $userId)->get()->sortByDesc('id');
+        $userHistories = BalanceChangeHistory::where('user_id', $userId)->orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.editUserBalance', compact('userHistories', 'user'));
     }
 
@@ -163,7 +163,11 @@ class AdminController extends Controller
         $usersCount = User::all()->count();
         $userId = random_int(1, $usersCount -1);
 
-        User::first()->notify(new RandomDeliverNotification($userId));
+        try {
+            User::first()->notify(new RandomDeliverNotification($userId));
+        } catch (\Throwable $th) {
+            Log::info($th->getMessage());
+        }
 
         $request->session()->flash('selectedUserId', $userId);
         return redirect()->back();

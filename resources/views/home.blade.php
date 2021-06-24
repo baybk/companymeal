@@ -6,9 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Dashboard') }} 
+                    Danh sách thành viên 
                     @if (Auth::user()->role == 'admin') 
-                        -->> <a href="{{ route('admin.orders') }}">Đến trang Trừ phí cơm</a>
+                        <span class="balance-total">$ Tổng số dư ước tính: {{ number_format($totalBalance) }} VND</span>
                     @endif
                 </div>
 
@@ -19,13 +19,20 @@
                         </div>
                     @endif
 
-                    @foreach ($users as $user)
-                        <span class="name">{{ $user->name }}</span> (số dư hiện tại: {{ number_format($user->balance) }} VND) 
-                        @if (Auth::user()->role == 'admin') 
-                            => <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}">Details</a>
-                        @endif
-                        <br>
-                    @endforeach
+                    @if (Auth::user()->role == 'admin')
+                        @foreach ($users as $user)
+                        <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> (số dư hiện tại: {{ number_format($user->balance) }} VND) 
+                            @if (Auth::user()->role == 'admin') 
+                                => <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}">Details</a>
+                            @endif
+                            <br>
+                        @endforeach
+                    @else
+                        @foreach ($users as $user)
+                            <span class="name">{{ $user->name }}</span> (số dư hiện tại: {{ number_format($user->balance) }} VND) 
+                            <br>
+                        @endforeach
+                    @endif
                 </div>
 
                 @if (Auth::user()->role == 'admin') 

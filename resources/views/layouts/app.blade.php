@@ -69,6 +69,15 @@
             transform: scale(1.8);
             padding: 10px;
         }
+
+        .paginate {
+            float: right;
+            margin-top: 1rem;
+        }
+        .balance-total {
+            display: inline-block;
+            float: right;
+        }
     </style>
 </head>
 <body>

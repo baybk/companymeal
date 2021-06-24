@@ -48,6 +48,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="paginate">
+                        {{ $userHistories->links() }}
+                    </div>
                 </div>
             </div>
         </div>

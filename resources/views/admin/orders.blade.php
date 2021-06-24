@@ -18,15 +18,14 @@
                         @csrf
                         @foreach ($users as $user)
                         <div class="onepeo">
-                            <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> <span class="name">{{ $user->name }}</span> (số dư hiện tại: {{ number_format($user->balance) }} VND) <br>
+                            <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> 
+                            <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> (số dư hiện tại: {{ number_format($user->balance) }} VND) <br>
                         </div>
                         @endforeach
 
                         <br>
                         <input type="submit" value="Xác nhận">
                     </form>
-
-
 
                     <h4>Ngày request gần nhất</h4>
                     <table class="mytable">
@@ -44,6 +43,10 @@
                         @endforeach
                         </tbody>
                     </table>
+
+                    <div class="paginate">
+                        {{ $lastPaidedList->links() }}
+                    </div>
                 </div>
             </div>
         </div>
