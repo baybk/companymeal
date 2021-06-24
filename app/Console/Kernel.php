@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        // $schedule->command('slack:balance-report')->dailyAt('15:00');
+        $schedule->command('slack:balance-report')->everyFourHours();
     }
 
     /**

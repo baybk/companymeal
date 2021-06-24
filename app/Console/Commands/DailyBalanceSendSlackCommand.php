@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\AdminController;
 use App\Models\User;
 use App\Notifications\DailyBalanceNotification;
+use App\Notifications\ReportWhenChangeBalanceNotification;
 use Illuminate\Console\Command;
 
 class DailyBalanceSendSlackCommand extends Command
@@ -39,6 +41,7 @@ class DailyBalanceSendSlackCommand extends Command
      */
     public function handle()
     {
-        // User::first()->notify(new DailyBalanceNotification());
+        $arrayData = (new AdminController())->getDataForReport();
+        User::first()->notify(new ReportWhenChangeBalanceNotification($arrayData));
     }
 }

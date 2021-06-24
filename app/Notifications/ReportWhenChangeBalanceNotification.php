@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 use TelegramNotifications\Messages\TelegramMessage;
 use TelegramNotifications\TelegramChannel;
 
@@ -48,7 +49,7 @@ class ReportWhenChangeBalanceNotification extends Notification
 
     public function toTelegram($notifiable)
     {
-        $title = '$$ Báo cáo thay đổi số dư mới nhất ' . date('d-m-Y H:i') . ' :';
+        // $title = '$$ Báo cáo thay đổi số dư mới nhất ' . date('d-m-Y H:i') . ' :';
         return (new TelegramMessage())
                 ->text(json_encode($this->arrayData));
     }

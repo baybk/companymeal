@@ -89,7 +89,7 @@ class AdminController extends Controller
         Log::info($this->getDataForReport());
     }
 
-    private function getDataForReport() {
+    public function getDataForReport() {
         $users = User::where('name', '!=', 'fakeUser1')->get();
         $arrayData = [];
         $i = 1;
