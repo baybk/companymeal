@@ -39,6 +39,6 @@ class DailyBalanceSendSlackCommand extends Command
      */
     public function handle()
     {
-        User::first()->notify(new DailyBalanceNotification);
+        // User::first()->notify(new DailyBalanceNotification());
     }
 }

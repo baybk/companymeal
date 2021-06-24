@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
+    public function __construct() {
+        $this->middleware('adminAuth');
+    }
+
     public function getLogs(Request $request) {
         Log::debug("ok3");
         $date = Carbon::now();

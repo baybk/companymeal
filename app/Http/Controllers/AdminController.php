@@ -13,6 +13,7 @@ use Google\Service\CloudSourceRepositories\Repo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -72,10 +73,32 @@ class AdminController extends Controller
             }
         }
 
-        User::first()->notify(new DailyBalanceNotification);
+        try {
+            User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
+        } catch (\Throwable $th) {
+            Log::info($th->getMessage());
+            $this->writeLogBalanceReport();
+        }
 
         $request->session()->flash('status', 'Request thành công');
         return redirect('/home');
+    }
+
+    private function writeLogBalanceReport($type = 'REPORT DAILY BALANCE') {
+        Log::info($type);
+        Log::info($this->getDataForReport());
+    }
+
+    private function getDataForReport() {
+        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $arrayData = [];
+        $i = 1;
+        foreach ($users as $user) {
+            $arrayData[$i . '. ' . $user->name] = number_format($user->balance) . ' VND';
+            $i++;
+        }
+
+        return $arrayData;
     }
 
     public function editUserBalance(Request $request, $userId) {
@@ -119,13 +142,18 @@ class AdminController extends Controller
                 'change_number' => $changeMoney,
             ]);
 
-            User::first()->notify(new ReportWhenChangeBalanceNotification());
-
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
             $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
             return redirect()->back()->withInput();
+        }
+
+        try {
+            User::first()->notify(new ReportWhenChangeBalanceNotification($this->getDataForReport()));
+        } catch (\Throwable $th) {
+            Log::info($th->getMessage());
+            $this->writeLogBalanceReport('REPORT PRIVATE');
         }
 
         return redirect('/home');

@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\Log;
 class DailyBalanceNotification extends Notification
 {
     use Queueable;
+    public $arrayData;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($arrayData)
     {
-        //
+        $this->arrayData = $arrayData;
     }
 
     /**
@@ -38,19 +39,12 @@ class DailyBalanceNotification extends Notification
     public function toSlack($notifiable)
     {
         $title = '$$ Báo cáo số dư sau ngày ' . date('d-m-Y') . ' :';
-        $users = User::where('name', '!=', 'fakeUser1')->get();
-        $arrayData = [];
-        $i = 1;
-        foreach ($users as $user) {
-            $arrayData[$i . '. ' . $user->name] = number_format($user->balance) . ' VND';
-            $i++;
-        }
         return (new SlackMessage)
                     ->success()
                     ->content('REPORT')
-                    ->attachment(function ($attachment) use($title, $arrayData) {
+                    ->attachment(function ($attachment) use($title) {
                         $attachment->title($title)
-                                ->fields($arrayData);
+                                ->fields($this->arrayData);
                     });
     }
 }
