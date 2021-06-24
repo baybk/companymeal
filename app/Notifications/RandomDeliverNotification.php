@@ -31,6 +31,9 @@ class RandomDeliverNotification extends Notification
      */
     public function via($notifiable)
     {
+        if (env('BOT_PROVIDER', 'TELEGRAM') == 'TELEGRAM') {
+            return [TelegramChannel::class];
+        }
         return ['slack'];
     }
 

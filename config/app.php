@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
+        TelegramNotifications\TelegramServiceProvider::class,
 
         /*
          * Application Service Providers...

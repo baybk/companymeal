@@ -9,6 +9,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
+use TelegramNotifications\Messages\TelegramMessage;
+use TelegramNotifications\TelegramChannel;
 
 class DailyBalanceNotification extends Notification
 {
@@ -33,6 +35,9 @@ class DailyBalanceNotification extends Notification
      */
     public function via($notifiable)
     {
+        if (env('BOT_PROVIDER', 'TELEGRAM') == 'TELEGRAM') {
+            return [TelegramChannel::class];
+        }
         return ['slack'];
     }
 
@@ -46,5 +51,12 @@ class DailyBalanceNotification extends Notification
                         $attachment->title($title)
                                 ->fields($this->arrayData);
                     });
+    }
+
+    public function toTelegram($notifiable)
+    {
+        $title = '$$ Báo cáo số dư sau ngày ' . date('d-m-Y') . ' :';
+        return (new TelegramMessage())
+                ->text(json_encode($this->arrayData));
     }
 }

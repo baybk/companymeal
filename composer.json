@@ -6,10 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "babenkoivan/telegram-notifications": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^6.0.0",
         "laravel/framework": "^8.40",
         "laravel/passport": "^10.1",
         "laravel/slack-notification-channel": "^2.3",

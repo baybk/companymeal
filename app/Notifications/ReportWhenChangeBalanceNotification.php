@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
+use TelegramNotifications\Messages\TelegramMessage;
+use TelegramNotifications\TelegramChannel;
 
 class ReportWhenChangeBalanceNotification extends Notification
 {
@@ -26,6 +28,9 @@ class ReportWhenChangeBalanceNotification extends Notification
 
     public function via($notifiable)
     {
+        if (env('BOT_PROVIDER', 'TELEGRAM') == 'TELEGRAM') {
+            return [TelegramChannel::class];
+        }
         return ['slack'];
     }
 
@@ -39,5 +44,12 @@ class ReportWhenChangeBalanceNotification extends Notification
                         $attachment->title($title)
                                 ->fields($this->arrayData);
                     });
+    }
+
+    public function toTelegram($notifiable)
+    {
+        $title = '$$ Báo cáo thay đổi số dư mới nhất ' . date('d-m-Y H:i') . ' :';
+        return (new TelegramMessage())
+                ->text(json_encode($this->arrayData));
     }
 }

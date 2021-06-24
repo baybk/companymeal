@@ -54,4 +54,9 @@ class User extends Authenticatable
         }
         return env('RICE_SLACK_CHANNEL_URL', 'https://hooks.slack.com/services/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');
     }
+
+    public function routeNotificationForTelegram()
+    {
+        return '1717746490';
+    }
 }
