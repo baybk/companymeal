@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ReportWhenChangeBalanceNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,6 +49,9 @@ class User extends Authenticatable
 
     public function routeNotificationForSlack($notification)
     {
+        if ($notification instanceof ReportWhenChangeBalanceNotification) {
+            return env('PERSONAL_SLACK_CHANNEL_URL', 'https://hooks.slack.com/services/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');
+        }
         return env('RICE_SLACK_CHANNEL_URL', 'https://hooks.slack.com/services/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');
     }
 }

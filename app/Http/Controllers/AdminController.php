@@ -7,6 +7,7 @@ use App\Models\RemarkDatePaided;
 use App\Models\User;
 use App\Notifications\DailyBalanceNotification;
 use App\Notifications\RandomDeliverNotification;
+use App\Notifications\ReportWhenChangeBalanceNotification;
 use Carbon\Carbon;
 use Google\Service\CloudSourceRepositories\Repo;
 use Illuminate\Http\Request;
@@ -117,6 +118,8 @@ class AdminController extends Controller
                 'balance_before_change' => $oldBalance,
                 'change_number' => $changeMoney,
             ]);
+
+            User::first()->notify(new ReportWhenChangeBalanceNotification());
 
             DB::commit();
         } catch (\Throwable $th) {
