@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('name', '!=', 'fakeUser1')->get();
         return view('home', compact('users'));
     }
 }

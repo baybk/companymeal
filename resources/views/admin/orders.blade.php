@@ -37,7 +37,7 @@
                         @foreach ($lastPaidedList as $lastPaided)
                             <tr>
                                 <td class="mytd">{{ $lastPaided->date_remark }}</td>
-                                <td class="mytd">{{ $lastPaided->order_number }}</td>
+                                <td class="mytd">{{ $lastPaided->user_list_paid }}</td>
                             </tr>
                         @endforeach
                         </tbody>

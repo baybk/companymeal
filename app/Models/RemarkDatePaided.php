@@ -12,6 +12,7 @@ class RemarkDatePaided extends Model
     public $fillable = [
         'date_remark',
         'order_number',
+        'user_list_paid'
     ];
     public $table = 'remark_date_paided';
 }

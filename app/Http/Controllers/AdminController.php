@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BalanceChangeHistory;
 use App\Models\RemarkDatePaided;
 use App\Models\User;
+use App\Notifications\DailyBalanceNotification;
 use Carbon\Carbon;
 use Google\Service\CloudSourceRepositories\Repo;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class AdminController extends Controller
     }
 
     public function orders() {
-        $users = User::all();
+        $users = User::where('name', '!=', 'fakeUser1')->get();
         $lastPaidedList = RemarkDatePaided::all()->sortByDesc('id')->take(10);  //get()->take(7)->sortByDesc('id');
         return view('admin.orders', compact('users', 'lastPaidedList'));
     }
@@ -33,10 +34,10 @@ class AdminController extends Controller
         }
 
         $userIds = $request->userIds;
-        // dd(count($userIds));
         
         try {
             DB::beginTransaction();
+            $listUserText = '';
             foreach ($userIds as $userId) {
                 // DB::transaction(function ($userId) {
                     $userId = (int) $userId;
@@ -51,12 +52,14 @@ class AdminController extends Controller
                         'balance_before_change' => $oldBalance,
                         'change_number' => 20000,
                     ]);
+                    $listUserText = $listUserText . $user->name . ' ;';
                 // });
             }
 
             RemarkDatePaided::create([
                 'date_remark' => Carbon::now(),
                 'order_number' => count($userIds),
+                'user_list_paid' => $listUserText
             ]);
             DB::commit();
         } catch (\Throwable $th) {
@@ -64,6 +67,8 @@ class AdminController extends Controller
             $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
             return redirect()->back()->withInput();
         }
+
+        User::first()->notify(new DailyBalanceNotification);
 
         $request->session()->flash('status', 'Request thành công');
         return redirect('/home');
