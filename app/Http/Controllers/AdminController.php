@@ -54,7 +54,7 @@ class AdminController extends Controller
                             'user_id' => $userId,
                             'reason' => 'Trừ tiền cơm hằng ngày',
                             'balance_before_change' => $oldBalance,
-                            'change_number' => intval(env('MEAL_PRICE', 20000)),
+                            'change_number' => -intval(env('MEAL_PRICE', 20000)),
                         ]);
                         $listUserText = $listUserText . $user->name . ' ;';
                     // });
