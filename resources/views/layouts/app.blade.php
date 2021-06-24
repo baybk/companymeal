@@ -46,6 +46,14 @@
         .subtract {
             font-size: 1.5rem;
         }
+
+        .navbarDropdown {
+            padding: 5px;
+            background: cornflowerblue;
+            border-radius: 8px;
+            margin-right: 4px;
+            color: #f8fafc;
+        }
     </style>
 </head>
 <body>
@@ -86,18 +94,18 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
+                                <a class="navbarDropdown" href="/home">Home</a>
+                                @if (Auth::user()->role == 'admin') 
+                                    <a class="navbarDropdown" href="/admin/orders">Order trừ số dư</a>
+                                    <a class="navbarDropdown" href="/register">Đăng kí thêm user</a>
+                                @endif
+
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
-                                    <a class="dropdown-item" href="/home">Home</a>
-                                    @if (Auth::user()->role == 'admin') 
-                                        <a class="dropdown-item" href="/admin/orders">Order trừ số dư</a>
-                                        <a class="dropdown-item" href="/register">Đăng kí thêm user</a>
-                                    @endif
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
