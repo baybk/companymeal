@@ -27,6 +27,19 @@
                         <br>
                     @endforeach
                 </div>
+
+                @if (Auth::user()->role == 'admin') 
+                <div class="card-body">
+                    <h4>Chọn người mua cơm hôm nay</h4>
+                    <a href="{{ route('admin.randomDeliver') }}">Quay random</a>
+
+                    @if (session('selectedUserId'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('selectedUserId') }}
+                        </div>
+                    @endif
+                </div>
+                @endif
             </div>
         </div>
     </div>

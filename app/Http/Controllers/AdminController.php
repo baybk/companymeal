@@ -6,6 +6,7 @@ use App\Models\BalanceChangeHistory;
 use App\Models\RemarkDatePaided;
 use App\Models\User;
 use App\Notifications\DailyBalanceNotification;
+use App\Notifications\RandomDeliverNotification;
 use Carbon\Carbon;
 use Google\Service\CloudSourceRepositories\Repo;
 use Illuminate\Http\Request;
@@ -127,4 +128,13 @@ class AdminController extends Controller
         return redirect('/home');
     }
 
+    public function randomDeliver(Request $request) {
+        $usersCount = User::all()->count();
+        $userId = random_int(1, $usersCount -1);
+
+        User::first()->notify(new RandomDeliverNotification($userId));
+
+        $request->session()->flash('selectedUserId', $userId);
+        return redirect()->back();
+    }
 }
