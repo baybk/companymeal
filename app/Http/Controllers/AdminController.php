@@ -35,37 +35,39 @@ class AdminController extends Controller
 
         $userIds = $request->userIds;
         
-        try {
-            DB::beginTransaction();
-            $listUserText = '';
-            foreach ($userIds as $userId) {
-                // DB::transaction(function ($userId) {
-                    $userId = (int) $userId;
-                    $user = User::findOrFail($userId);
-                    $oldBalance = $user->balance;
-                    $user->balance = $user->balance - 20000;
-                    $user->save();
+        if (!env('APP_DEBUG', true)) {
+            try {
+                DB::beginTransaction();
+                $listUserText = '';
+                foreach ($userIds as $userId) {
+                    // DB::transaction(function ($userId) {
+                        $userId = (int) $userId;
+                        $user = User::findOrFail($userId);
+                        $oldBalance = $user->balance;
+                        $user->balance = $user->balance - intval(env('MEAL_PRICE', 20000));
+                        $user->save();
 
-                    BalanceChangeHistory::create([
-                        'user_id' => $userId,
-                        'reason' => 'Trừ tiền cơm hằng ngày',
-                        'balance_before_change' => $oldBalance,
-                        'change_number' => 20000,
-                    ]);
-                    $listUserText = $listUserText . $user->name . ' ;';
-                // });
+                        BalanceChangeHistory::create([
+                            'user_id' => $userId,
+                            'reason' => 'Trừ tiền cơm hằng ngày',
+                            'balance_before_change' => $oldBalance,
+                            'change_number' => intval(env('MEAL_PRICE', 20000)),
+                        ]);
+                        $listUserText = $listUserText . $user->name . ' ;';
+                    // });
+                }
+
+                RemarkDatePaided::create([
+                    'date_remark' => Carbon::now(),
+                    'order_number' => count($userIds),
+                    'user_list_paid' => $listUserText
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
+                return redirect()->back()->withInput();
             }
-
-            RemarkDatePaided::create([
-                'date_remark' => Carbon::now(),
-                'order_number' => count($userIds),
-                'user_list_paid' => $listUserText
-            ]);
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
-            return redirect()->back()->withInput();
         }
 
         User::first()->notify(new DailyBalanceNotification);
