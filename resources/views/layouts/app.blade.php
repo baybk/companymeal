@@ -25,6 +25,7 @@
             color: #38c172;
             text-decoration-line: underline;
             font-weight: 300;
+            padding-left: 1rem;
         }
 
         .mytable {
@@ -53,6 +54,20 @@
             border-radius: 8px;
             margin-right: 4px;
             color: #f8fafc;
+        }
+
+        .onepeo {
+            margin-bottom: 0.7rem;
+        }
+
+        .onecb {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(1.8); /* IE */
+            -moz-transform: scale(1.8); /* FF */
+            -webkit-transform: scale(1.8); /* Safari and Chrome */
+            -o-transform: scale(1.8); /* Opera */
+            transform: scale(1.8);
+            padding: 10px;
         }
     </style>
 </head>

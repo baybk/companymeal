@@ -17,7 +17,9 @@
                     <form method="POST" action="{{ route('admin.postOrders') }}">
                         @csrf
                         @foreach ($users as $user)
-                        <input name="userIds[]" type="checkbox" value="{{ $user->id }}" /> : <span class="name">{{ $user->name }}</span> (số dư hiện tại: {{ number_format($user->balance) }} VND) <br>
+                        <div class="onepeo">
+                            <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> <span class="name">{{ $user->name }}</span> (số dư hiện tại: {{ number_format($user->balance) }} VND) <br>
+                        </div>
                         @endforeach
 
                         <br>
