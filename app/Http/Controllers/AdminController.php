@@ -175,8 +175,7 @@ class AdminController extends Controller
 
     public function orders2() {
         $users = User::where('name', '!=', 'fakeUser1')->get();
-        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);  //get()->take(7)->sortByDesc('id');
-        return view('admin.orders2', compact('users', 'lastPaidedList'));
+        return view('admin.orders2', compact('users'));
     }
 
     public function postOrders2(Request $request) {
@@ -188,8 +187,8 @@ class AdminController extends Controller
         $userIds = $request->userIds;
         $arrMoney = $request->list_money;
 
-        if (in_array(null, $arrMoney)) {
-            $request->session()->flash('error', 'Vui lòng nhập số tiền');
+        if (in_array(null, $arrMoney) || !isset($request->reason) || empty($request->reason)) {
+            $request->session()->flash('error', 'Thiếu thông tin số tiền hoặc lí do yêu cầu');
             return redirect()->back()->withInput();
         }
 
@@ -209,19 +208,13 @@ class AdminController extends Controller
 
                         BalanceChangeHistory::create([
                             'user_id' => $userId,
-                            'reason' => 'Trừ tiền cơm hằng ngày',
+                            'reason' => $request->reason,
                             'balance_before_change' => $oldBalance,
                             'change_number' => -intval($money),
                         ]);
                         $listUserText = $listUserText . $user->name . ' ;';
                     // });
                 }
-
-                RemarkDatePaided::create([
-                    'date_remark' => Carbon::now(),
-                    'order_number' => count($userIds),
-                    'user_list_paid' => $listUserText
-                ]);
                 DB::commit();
             } catch (\Throwable $th) {
                 DB::rollBack();

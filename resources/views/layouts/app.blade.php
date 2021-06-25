@@ -28,6 +28,7 @@
             padding-left: 1rem;
             display: inline-block;
             margin-right: 2rem;
+            width: 15rem;
         }
 
         .mytable {
@@ -60,6 +61,8 @@
 
         .onepeo {
             margin-bottom: 0.7rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 3px;
         }
 
         .onecb {
@@ -70,6 +73,7 @@
             -o-transform: scale(1.8); /* Opera */
             transform: scale(1.8);
             padding: 10px;
+            margin-right: 1rem;
         }
 
         .paginate {
