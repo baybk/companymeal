@@ -26,6 +26,8 @@
             text-decoration-line: underline;
             font-weight: 300;
             padding-left: 1rem;
+            display: inline-block;
+            margin-right: 2rem;
         }
 
         .mytable {
@@ -82,6 +84,10 @@
         .h5-guide {
             color: #c51f1a;
             margin-bottom: 1rem;
+        }
+
+        .onemoney {
+            font-family: -webkit-pictograph;
         }
     </style>
 </head>

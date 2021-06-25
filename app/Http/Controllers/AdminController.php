@@ -172,4 +172,72 @@ class AdminController extends Controller
         $request->session()->flash('selectedUserId', $userId);
         return redirect()->back();
     }
+
+    public function orders2() {
+        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);  //get()->take(7)->sortByDesc('id');
+        return view('admin.orders2', compact('users', 'lastPaidedList'));
+    }
+
+    public function postOrders2(Request $request) {
+        if (!isset($request->userIds) || empty($request->userIds)) {
+            $request->session()->flash('error', 'Không ai order');
+            return redirect()->back()->withInput();
+        }
+
+        $userIds = $request->userIds;
+        $arrMoney = $request->list_money;
+
+        if (in_array(null, $arrMoney)) {
+            $request->session()->flash('error', 'Vui lòng nhập số tiền');
+            return redirect()->back()->withInput();
+        }
+
+        $filteredArr = array_intersect_key($arrMoney, array_flip($userIds));
+        
+        if (!env('APP_DEBUG', true)) {
+            try {
+                DB::beginTransaction();
+                $listUserText = '';
+                foreach ($filteredArr as $userId => $money) {
+                    // DB::transaction(function ($userId) {
+                        $userId = (int) $userId;
+                        $user = User::findOrFail($userId);
+                        $oldBalance = $user->balance;
+                        $user->balance = $user->balance - intval($money);
+                        $user->save();
+
+                        BalanceChangeHistory::create([
+                            'user_id' => $userId,
+                            'reason' => 'Trừ tiền cơm hằng ngày',
+                            'balance_before_change' => $oldBalance,
+                            'change_number' => -intval($money),
+                        ]);
+                        $listUserText = $listUserText . $user->name . ' ;';
+                    // });
+                }
+
+                RemarkDatePaided::create([
+                    'date_remark' => Carbon::now(),
+                    'order_number' => count($userIds),
+                    'user_list_paid' => $listUserText
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
+                return redirect()->back()->withInput();
+            }
+        }
+
+        try {
+            User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
+        } catch (\Throwable $th) {
+            Log::info($th->getMessage());
+            $this->writeLogBalanceReport();
+        }
+
+        $request->session()->flash('status', 'Request thành công');
+        return redirect('/home');
+    }
 }
