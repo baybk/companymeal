@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><span class="subtract">Request trừ tiền cơm ( cho ngày {{ date('d-m-Y') }} )</span> <br>(Hiện tại mặc định 1 bữa ăn có giá 20k)</div>
+                <div class="card-header"><span class="subtract">Request trừ tiền cơm ( cho ngày {{ date('d-m-Y') }} )</span> <br>(Hiện tại mặc định 1 bữa ăn có giá {{ env('MEAL_PRICE', 20000) }} VND)</div>
 
                 <div class="card-body">
                     @if (session('error'))
@@ -13,6 +13,8 @@
                             {{ session('error') }}
                         </div>
                     @endif
+
+                    <h5 class="h5-guide">Đánh dấu những người đặt cơm. Sau đó nhấn xác nhận để trừ số dư của họ</h5>
 
                     <form method="POST" action="{{ route('admin.postOrders') }}">
                         @csrf

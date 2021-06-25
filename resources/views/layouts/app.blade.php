@@ -78,6 +78,11 @@
             display: inline-block;
             float: right;
         }
+
+        .h5-guide {
+            color: #c51f1a;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
