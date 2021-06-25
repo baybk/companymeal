@@ -133,6 +133,7 @@
                                 @if (Auth::user()->role == 'admin') 
                                     <a class="navbarDropdown" href="/admin/orders">Order trừ số dư</a>
                                     <a class="navbarDropdown" href="/register">Đăng kí thêm user</a>
+                                    <a class="navbarDropdown" href="/admin/orders2">Beta</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
