@@ -32,7 +32,7 @@
                     <h4>Ngày request gần nhất</h4>
                     <table class="mytable">
                         <thead>
-                            <th class="myth">Day</th>
+                            <th class="myth">Ngày đã đặt cơm</th>
                             <th class="myth">Số người được request</th>
                         </thead>
 

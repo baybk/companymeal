@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToRemarkDatePaidedTable extends Migration
+class AddReasonColumnToRemarkDatePaidedTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddColumnToRemarkDatePaidedTable extends Migration
     public function up()
     {
         Schema::table('remark_date_paided', function (Blueprint $table) {
-            $table->text('user_list_paid')->nullable()->default(null);
+            $table->mediumText('reason');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnToRemarkDatePaidedTable extends Migration
     public function down()
     {
         Schema::table('remark_date_paided', function (Blueprint $table) {
-            $table->dropColumn('user_list_paid');
+            $table->dropColumn('reason');
         });
     }
 }

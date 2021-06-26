@@ -175,7 +175,8 @@ class AdminController extends Controller
 
     public function orders2() {
         $users = User::where('name', '!=', 'fakeUser1')->get();
-        return view('admin.orders2', compact('users'));
+        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
+        return view('admin.orders2', compact('users', 'lastPaidedList'));
     }
 
     public function postOrders2(Request $request) {
@@ -187,11 +188,21 @@ class AdminController extends Controller
         $userIds = $request->userIds;
         $arrMoney = $request->list_money;
 
-        if (in_array(null, $arrMoney) || !isset($request->reason) || empty($request->reason)) {
+        if (
+            in_array(null, $arrMoney) ||
+            !isset($request->reason_type) ||
+            empty($request->reason_type) ||
+            ($request->reason_type != REASON_TYPE_DAILY_RICE &&
+            $request->reason_type != REASON_TYPE_OTHER)
+        ) {
             $request->session()->flash('error', 'Thiếu thông tin số tiền hoặc lí do yêu cầu');
             return redirect()->back()->withInput();
         }
 
+        $reason = REASON_DAILY_RICE;
+        if ($request->reason_type != REASON_TYPE_DAILY_RICE) {
+            $reason = isset($request->reason) ? $request->reason : 'Lí do khác';
+        }
         $filteredArr = array_intersect_key($arrMoney, array_flip($userIds));
         
         if (!env('APP_DEBUG', true)) {
@@ -208,12 +219,21 @@ class AdminController extends Controller
 
                         BalanceChangeHistory::create([
                             'user_id' => $userId,
-                            'reason' => $request->reason,
+                            'reason' => $reason,
                             'balance_before_change' => $oldBalance,
                             'change_number' => -intval($money),
                         ]);
                         $listUserText = $listUserText . $user->name . ' ;';
                     // });
+                }
+
+                if ($request->reason_type == REASON_DAILY_RICE) {
+                    RemarkDatePaided::create([
+                        'date_remark' => Carbon::now(),
+                        'order_number' => count($userIds),
+                        'user_list_paid' => $listUserText,
+                        'reason' => $reason
+                    ]);
                 }
                 DB::commit();
             } catch (\Throwable $th) {

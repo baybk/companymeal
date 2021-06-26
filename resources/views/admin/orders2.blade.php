@@ -19,13 +19,19 @@
                     <form method="POST" action="{{ route('admin.postOrders2') }}">
                         @csrf
                         <div class="onepeo">
-                            Lí do yêu cầu: <input type="text" name="reason" value="Phí cơm hằng ngày" />
+                            Lí do yêu cầu: 
+                            <select id="id_reason_selection" name="reason_type" onchange="return onChangeReason()">
+                                <option value="DAILY_RICE">Phí cơm hằng ngày</option>
+                                <option value="OTHER">Lí do khác</option>
+                            </select>
+                            
+                            <input id="id_reason_input" style="display:none" type="text" name="reason" value="Ăn vặt .." /> <br>
                         </div>
                         @foreach ($users as $user)
                         <div class="onepeo">
                             <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> 
                             <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> 
-                            <input class="onemoney" name="list_money[{{ $user->id }}]" type="number" value="{{ env('MEAL_PRICE', 20000) }}" /> 
+                            <input class="onemoney" name="list_money[{{ $user->id }}]" type="number" value="{{ env('MEAL_PRICE', 20000) }}" /> <span>VND</span>
                             <br>
                         </div>
                         @endforeach
@@ -34,9 +40,43 @@
                         <input type="submit" value="Xác nhận">
                     </form>
 
+                    <h4>Ngày request gần nhất</h4>
+                    <table class="mytable">
+                        <thead>
+                            <th class="myth">Ngày đã đặt cơm</th>
+                            <th class="myth">Số người được request</th>
+                        </thead>
+
+                        <tbody>
+                        @foreach ($lastPaidedList as $lastPaided)
+                            <tr>
+                                <td class="mytd">{{ $lastPaided->date_remark }}</td>
+                                <td class="mytd">{{ $lastPaided->user_list_paid }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <div class="paginate">
+                        {{ $lastPaidedList->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@section('js')
+<script>
+    function onChangeReason() {
+        var valueSelected = document.getElementById('id_reason_selection').value;
+        var displayStatus = 'none';
+        if (valueSelected == 'OTHER') {
+            displayStatus = '';
+        }
+        document.getElementById('id_reason_input').style.display = displayStatus;
+    }
+</script>
+@stop

@@ -31,10 +31,10 @@
                     <h4>(3) Lịch sử thay đổi số dư</h4>
                     <table class="mytable">
                         <thead>
-                            <th class="myth">Day</th>
-                            <th class="myth">Reason</th>
-                            <th class="myth">Old balance</th>
-                            <th class="myth">Change number</th>
+                            <th class="myth">Ngày</th>
+                            <th class="myth">Lí do</th>
+                            <th class="myth">Số dư trước biến động</th>
+                            <th class="myth">Lượng thay đổi</th>
                         </thead>
 
                         <tbody>
