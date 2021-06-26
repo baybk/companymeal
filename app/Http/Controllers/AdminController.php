@@ -184,16 +184,13 @@ class AdminController extends Controller
             $request->session()->flash('error', 'Không ai order');
             return redirect()->back()->withInput();
         }
-
         $userIds = $request->userIds;
         $arrMoney = $request->list_money;
-
         if (
             in_array(null, $arrMoney) ||
-            !isset($request->reason_type) ||
-            empty($request->reason_type) ||
-            ($request->reason_type != REASON_TYPE_DAILY_RICE &&
-            $request->reason_type != REASON_TYPE_OTHER)
+            !isset($request->reason_type) || empty($request->reason_type) ||
+            !isset($request->submit_type) || empty($request->submit_type) ||
+            ($request->reason_type != REASON_TYPE_DAILY_RICE && $request->reason_type != REASON_TYPE_OTHER)
         ) {
             $request->session()->flash('error', 'Thiếu thông tin số tiền hoặc lí do yêu cầu');
             return redirect()->back()->withInput();
@@ -204,8 +201,12 @@ class AdminController extends Controller
             $reason = isset($request->reason) ? $request->reason : 'Lí do khác';
         }
         $filteredArr = array_intersect_key($arrMoney, array_flip($userIds));
-        
-        if (!env('APP_DEBUG', true)) {
+
+        $romdomDeliverName = null;
+        if (
+            ($request->submit_type == 1 || $request->submit_type == 2) &&
+            !env('APP_DEBUG', true)
+        ) {
             try {
                 DB::beginTransaction();
                 $listUserText = '';
@@ -236,6 +237,13 @@ class AdminController extends Controller
                     ]);
                 }
                 DB::commit();
+
+                try {
+                    User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
+                } catch (\Throwable $th) {
+                    Log::info($th->getMessage());
+                    $this->writeLogBalanceReport();
+                }
             } catch (\Throwable $th) {
                 DB::rollBack();
                 $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
@@ -243,11 +251,8 @@ class AdminController extends Controller
             }
         }
 
-        try {
-            User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
-        } catch (\Throwable $th) {
-            Log::info($th->getMessage());
-            $this->writeLogBalanceReport();
+        if ($request->submit_type == 1 || $request->submit_type == 3) {
+            // random deliver name in selected list users
         }
 
         $request->session()->flash('status', 'Request thành công');

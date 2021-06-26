@@ -18,6 +18,7 @@
 
                     <form method="POST" action="{{ route('admin.postOrders2') }}">
                         @csrf
+                        <input type="hidden" id="id_type_submit" name="type_submit" value="1" />
                         <div class="onepeo">
                             Lí do yêu cầu: 
                             <select id="id_reason_selection" name="reason_type" onchange="return onChangeReason()">
@@ -37,7 +38,10 @@
                         @endforeach
 
                         <br>
-                        <input type="submit" value="Xác nhận">
+                        <input onclick="return submitOrder(1)" class="submit-order-1" type="button" value="Trừ tiền và random người mua">
+                        <input onclick="return submitOrder(2)" class="submit-order-2" type="button" value="Chỉ trừ tiền"> 
+                        <input onclick="return submitOrder(3)" class="submit-order-3" type="button" value="Chỉ random người mua">
+                        <input style="display:none" id="bt_submit_order" type="submit">
                     </form>
 
                     <h4>Ngày request gần nhất</h4>
@@ -77,6 +81,23 @@
             displayStatus = '';
         }
         document.getElementById('id_reason_input').style.display = displayStatus;
+    }
+
+    function submitOrder(type) {
+        document.getElementById('id_type_submit').value = type;
+
+        $confirmIsYes = true;
+        if (type == 1) {
+            $confirmIsYes = confirm('Bạn chắc chắn muốn request trừ tiền + random người mua?');
+        }
+        if (type == 2) {
+            $confirmIsYes = confirm('Bạn chắc chắn muốn request trừ tiền?');
+        }
+        if ($confirmIsYes == true) {
+            document.getElementById('bt_submit_order').click();
+        } else {
+            return false;
+        }
     }
 </script>
 @stop

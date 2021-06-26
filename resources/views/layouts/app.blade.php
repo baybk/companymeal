@@ -93,6 +93,26 @@
         .onemoney {
             font-family: -webkit-pictograph;
         }
+
+        .submit-order-1 {
+            width: 60%;
+            background: #1472ed;
+            color: #fff;
+            outline: none;
+            border: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 0.3rem;
+            font-size: 1rem;
+            margin: 0px auto 6px auto;
+        }
+
+        .submit-order-3 {
+            float: right;
+        }
+        .submit-order-2 {
+            min-width: 10rem;
+        }
     </style>
 </head>
 <body>
