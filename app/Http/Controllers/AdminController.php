@@ -181,7 +181,7 @@ class AdminController extends Controller
 
     public function postOrders2(Request $request) {
         if (!isset($request->userIds) || empty($request->userIds)) {
-            $request->session()->flash('error', 'Không ai order');
+            $request->session()->flash('error', 'Lỗi: Chưa ai được chọn!!');
             return redirect()->back()->withInput();
         }
         $userIds = $request->userIds;
@@ -192,7 +192,7 @@ class AdminController extends Controller
             !isset($request->submit_type) || empty($request->submit_type) ||
             ($request->reason_type != REASON_TYPE_DAILY_RICE && $request->reason_type != REASON_TYPE_OTHER)
         ) {
-            $request->session()->flash('error', 'Thiếu thông tin số tiền hoặc lí do yêu cầu');
+            $request->session()->flash('error', 'Lỗi: Thiếu thông tin số tiền hoặc lí do yêu cầu');
             return redirect()->back()->withInput();
         }
 
@@ -203,8 +203,9 @@ class AdminController extends Controller
         $filteredArr = array_intersect_key($arrMoney, array_flip($userIds));
 
         $romdomDeliverName = null;
+        $submitType = intval($request->submit_type);
         if (
-            ($request->submit_type == 1 || $request->submit_type == 2) &&
+            ($submitType == 1 || $submitType == 2) &&
             !env('APP_DEBUG', true)
         ) {
             try {
@@ -224,11 +225,11 @@ class AdminController extends Controller
                             'balance_before_change' => $oldBalance,
                             'change_number' => -intval($money),
                         ]);
-                        $listUserText = $listUserText . $user->name . ' ;';
+                        $listUserText = $listUserText . $user->name . '; ';
                     // });
                 }
 
-                if ($request->reason_type == REASON_DAILY_RICE) {
+                if ($request->reason_type == REASON_TYPE_DAILY_RICE) {
                     RemarkDatePaided::create([
                         'date_remark' => Carbon::now(),
                         'order_number' => count($userIds),
@@ -237,7 +238,10 @@ class AdminController extends Controller
                     ]);
                 }
                 DB::commit();
-
+                $request->session()->flash(
+                    'status',
+                    'Thực hiện trừ tiền *' . $reason . '* thành công - ngày ' . date('d-m-Y')
+                );
                 try {
                     User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
                 } catch (\Throwable $th) {
@@ -251,11 +255,17 @@ class AdminController extends Controller
             }
         }
 
-        if ($request->submit_type == 1 || $request->submit_type == 3) {
+        if ($submitType == 1 || $submitType == 3) {
             // random deliver name in selected list users
+            $randomeUserId = $userIds[array_rand($userIds)];
+            $randomUser = User::find($randomeUserId);
+            try {
+                User::first()->notify(new RandomDeliverNotification($randomUser->name));
+            } catch (\Throwable $th) {
+                Log::info($th->getMessage());
+            }
+            $request->session()->flash('selectedUserId', $randomUser->name);
         }
-
-        $request->session()->flash('status', 'Request thành công');
         return redirect('/home');
     }
 }

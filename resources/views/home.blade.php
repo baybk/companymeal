@@ -23,7 +23,7 @@
                         @foreach ($users as $user)
                         <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> (số dư hiện tại: {{ number_format($user->balance) }} VND) 
                             @if (Auth::user()->role == 'admin') 
-                                => <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}">Details</a>
+                                => <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}">Chi tiết</a>
                             @endif
                             <br>
                         @endforeach
@@ -35,18 +35,19 @@
                     @endif
                 </div>
 
-                @if (Auth::user()->role == 'admin') 
+                @if (session('selectedUserId'))
                 <div class="card-body">
-                    <h4>Chọn người mua cơm hôm nay</h4>
-                    <a href="{{ route('admin.randomDeliver') }}">Quay random</a>
-
-                    @if (session('selectedUserId'))
-                        <div class="alert alert-success" role="alert">
+                    <h5 style="color: #ff6b00;">Cảm ơn người được chọn hôm nay ({{ date('d-m-Y') }}):</h5>
+                        <div style="font-size: 2rem;" class="alert alert-success" role="alert">
                             {{ session('selectedUserId') }}
                         </div>
-                    @endif
                 </div>
                 @endif
+
+                <div class="card-body">
+                    <h5>Công cụ hỗ trợ:</h5>
+                    <a href="{{ route('admin.randomDeliver') }}">Quay random ID</a>
+                </div>
             </div>
         </div>
     </div>

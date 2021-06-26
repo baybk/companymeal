@@ -18,7 +18,7 @@
 
                     <form method="POST" action="{{ route('admin.postOrders2') }}">
                         @csrf
-                        <input type="hidden" id="id_type_submit" name="type_submit" value="1" />
+                        <input type="hidden" id="id_type_submit" name="submit_type" value="1" />
                         <div class="onepeo">
                             Lí do yêu cầu: 
                             <select id="id_reason_selection" name="reason_type" onchange="return onChangeReason()">
