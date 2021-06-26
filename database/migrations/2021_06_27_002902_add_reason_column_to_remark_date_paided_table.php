@@ -14,7 +14,7 @@ class AddReasonColumnToRemarkDatePaidedTable extends Migration
     public function up()
     {
         Schema::table('remark_date_paided', function (Blueprint $table) {
-            $table->mediumText('reason');
+            $table->mediumText('reason')->nullable()->default(null);
         });
     }
 
