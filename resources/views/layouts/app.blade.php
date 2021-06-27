@@ -160,9 +160,9 @@
 
                                 <a class="navbarDropdown" href="/home">Home</a>
                                 @if (Auth::user()->role == 'admin') 
-                                    <a class="navbarDropdown" href="/admin/orders2">Yêu cầu trừ số dư</a>
-                                    <a class="navbarDropdown" href="/register">Đăng kí thêm user</a>
-                                    <a style="display:none" class="navbarDropdown" href="/admin/orders2">Beta</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.orders2') }}">Yêu cầu trừ số dư</a>
+                                    <a class="navbarDropdown" href="{{ route('register') }}">Đăng kí thêm user</a>
+                                    <a style="display:none" class="navbarDropdown" href="{{ route('admin.orders') }}">Beta</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
