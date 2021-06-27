@@ -18,6 +18,10 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
+            .img-home {
+                width: 60%;
+                margin: 0 auto;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -34,7 +38,7 @@
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">                                
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <img src="{{ asset('img/meal.png') }}" />
+                    <img class="img-home" src="{{ asset('img/meal.png') }}" />
                 </div>
 
                 <div style="justify-content: center;" class="flex mt-4 sm:items-center">
