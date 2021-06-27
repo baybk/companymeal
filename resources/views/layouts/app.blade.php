@@ -101,17 +101,22 @@
             outline: none;
             border: none;
             display: block;
-            padding: 0.5rem;
+            padding: 0.7rem 0.3rem;
             border-radius: 0.3rem;
             font-size: 1rem;
-            margin: 0px auto 6px auto;
+            margin: 0px auto 13px auto;
         }
 
         .submit-order-3 {
             float: right;
+            min-width: 30%;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
         }
         .submit-order-2 {
-            min-width: 10rem;
+            min-width: 30%;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -155,9 +160,9 @@
 
                                 <a class="navbarDropdown" href="/home">Home</a>
                                 @if (Auth::user()->role == 'admin') 
-                                    <a class="navbarDropdown" href="/admin/orders">Order trừ số dư</a>
+                                    <a class="navbarDropdown" href="/admin/orders2">Yêu cầu trừ số dư</a>
                                     <a class="navbarDropdown" href="/register">Đăng kí thêm user</a>
-                                    <a class="navbarDropdown" href="/admin/orders2">Beta</a>
+                                    <a style="display:none" class="navbarDropdown" href="/admin/orders2">Beta</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
