@@ -40,21 +40,17 @@
                 <div style="justify-content: center;" class="flex mt-4 sm:items-center">
                     <div class="text-center text-sm text-gray-500 sm:text-left">
                         <div style="font-size: 1.5rem;" class="flex items-center">
-                            @auth
-                                <a href="{{ url('/home') }}" class="ml-1 underline">Home</a>
-                            @else
-                                <svg style="height: auto;width: 2rem;margin: 0 auto;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                </svg>
+                            <svg style="height: auto;width: 2rem;margin: 0 auto;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
+                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
 
-                                <a href="{{ route('login') }}" class="ml-1">
-                                    Enjoy the meal with your co-workers
-                                </a>
+                            <a href="/home" class="ml-1">
+                                Enjoy the meal with your co-workers
+                            </a>
 
-                                <svg style="height: auto;width: 2rem;margin: 0 auto;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                </svg>
-                            @endauth
+                            <svg style="height: auto;width: 2rem;margin: 0 auto;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
+                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
                         </div>
                     </div>
                 </div>
