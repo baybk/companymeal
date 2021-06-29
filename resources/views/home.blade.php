@@ -37,10 +37,13 @@
 
                 @if (session('selectedUserId'))
                 <div class="card-body">
-                    <h5 style="color: #ff6b00;">Cảm ơn người được chọn hôm nay ({{ date('d-m-Y') }}):</h5>
-                        <div style="font-size: 2rem;" class="alert alert-success" role="alert">
-                            {{ session('selectedUserId') }}
-                        </div>
+                    <div>
+                        <span style="font-size: 1.5rem;">Lần quay thứ {{ session('random_deliver_counter', 1) }} ( ngày {{ date('d-m-Y') }})</span> <br>
+                        <span style="color: #ff6b00;">Cảm ơn người được chọn :</span>
+                    </div>
+                    <div style="font-size: 2rem;" class="alert alert-success" role="alert">
+                        {{ session('selectedUserId') }}
+                    </div>
                 </div>
                 @endif
 

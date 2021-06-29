@@ -202,7 +202,6 @@ class AdminController extends Controller
         }
         $filteredArr = array_intersect_key($arrMoney, array_flip($userIds));
 
-        $romdomDeliverName = null;
         $submitType = intval($request->submit_type);
         if (
             ($submitType == 1 || $submitType == 2) &&
@@ -265,6 +264,8 @@ class AdminController extends Controller
                 Log::info($th->getMessage());
             }
             $request->session()->flash('selectedUserId', $randomUser->name);
+            $oldRandomDeliverCounter = $request->session()->get('random_deliver_counter', 0);
+            $request->session()->put('random_deliver_counter', $oldRandomDeliverCounter + 1);
         }
         return redirect('/home');
     }
