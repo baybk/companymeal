@@ -74,7 +74,7 @@ class AdminController extends Controller
         }
 
         try {
-            User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
+            User::first()->notify(new DailyBalanceNotification($this->getDataForReport(REASON_DAILY_RICE)));
         } catch (\Throwable $th) {
             Log::info($th->getMessage());
             $this->writeLogBalanceReport();
@@ -84,14 +84,17 @@ class AdminController extends Controller
         return redirect('/home');
     }
 
-    private function writeLogBalanceReport($type = 'REPORT DAILY BALANCE') {
-        Log::info($type);
-        Log::info($this->getDataForReport());
+    private function writeLogBalanceReport($reportReson = REASON_DAILY_RICE) {
+        Log::info($reportReson);
+        Log::info($this->getDataForReport($reportReson));
     }
 
-    public function getDataForReport() {
+    public function getDataForReport($reportReson = REASON_DAILY_RICE) {
+        $reportReasonOffical = $reportReson . ' ( ' . date('d-m-Y H:i') . ' )';
         $users = User::where('name', '!=', 'fakeUser1')->get();
-        $arrayData = [];
+        $arrayData = [
+            'report_reson' => $reportReasonOffical
+        ];
         $i = 1;
         foreach ($users as $user) {
             $arrayData[$i . '. ' . $user->name] = number_format($user->balance) . ' VND';
@@ -150,7 +153,7 @@ class AdminController extends Controller
         }
 
         try {
-            User::first()->notify(new ReportWhenChangeBalanceNotification($this->getDataForReport()));
+            User::first()->notify(new ReportWhenChangeBalanceNotification($this->getDataForReport(REASON_EDIT_USER_BALANCE)));
         } catch (\Throwable $th) {
             Log::info($th->getMessage());
             $this->writeLogBalanceReport('REPORT PRIVATE');
@@ -239,10 +242,10 @@ class AdminController extends Controller
                 DB::commit();
                 $request->session()->flash(
                     'status',
-                    'Thực hiện trừ tiền *' . $reason . '* thành công - ngày ' . date('d-m-Y')
+                    'Thực hiện *' . $reason . '* thành công - ngày ' . date('d-m-Y')
                 );
                 try {
-                    User::first()->notify(new DailyBalanceNotification($this->getDataForReport()));
+                    User::first()->notify(new DailyBalanceNotification($this->getDataForReport(REASON_DAILY_RICE)));
                 } catch (\Throwable $th) {
                     Log::info($th->getMessage());
                     $this->writeLogBalanceReport();
