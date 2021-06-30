@@ -26,7 +26,7 @@ class AdminController extends Controller
 
     public function orders() {
         $users = User::where('name', '!=', 'fakeUser1')->get();
-        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);  //get()->take(7)->sortByDesc('id');
+        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders', compact('users', 'lastPaidedList'));
     }
 
@@ -266,9 +266,10 @@ class AdminController extends Controller
             } catch (\Throwable $th) {
                 Log::info($th->getMessage());
             }
-            $request->session()->flash('selectedUserId', $randomUser->name);
+            $request->session()->flash('random_user_id', $randomUser->name);
             $oldRandomDeliverCounter = $request->session()->get('random_deliver_counter', 0);
             $request->session()->put('random_deliver_counter', $oldRandomDeliverCounter + 1);
+            $request->session()->flash('selected_user_ids', $userIds);
         }
         return redirect('/home');
     }

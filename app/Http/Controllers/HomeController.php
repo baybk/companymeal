@@ -22,13 +22,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::where('name', '!=', 'fakeUser1')->get();
         $totalBalance = 0;
+        $selectedUserIdsForRandom = $request->session()->get('selected_user_ids', []);
+
         foreach ($users as $user) {
             $totalBalance = $totalBalance + $user->balance;
         }
-        return view('home', compact('users', 'totalBalance'));
+        return view('home', compact('users', 'totalBalance', 'selectedUserIdsForRandom'));
     }
 }

@@ -24,7 +24,7 @@
         .name {
             font-size: 18px;
             color: #38c172;
-            text-decoration-line: underline;
+            /* text-decoration-line: underline; */
             font-weight: 300;
             padding-left: 1rem;
             display: inline-block;
@@ -118,6 +118,12 @@
             min-width: 30%;
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
+        }
+        .red {
+            color:#c51f1a !important;
+        }
+        .linethrough {
+            text-decoration: line-through !important;
         }
     </style>
 </head>
