@@ -153,7 +153,7 @@ class AdminController extends Controller
         }
 
         try {
-            User::first()->notify(new ReportWhenChangeBalanceNotification($this->getDataForReport(REASON_EDIT_USER_BALANCE)));
+            User::first()->notify(new ReportWhenChangeBalanceNotification($this->getDataForReport(REASON_EDIT_USER_BALANCE . ' ' . $user->name)));
         } catch (\Throwable $th) {
             Log::info($th->getMessage());
             $this->writeLogBalanceReport('REPORT PRIVATE');
