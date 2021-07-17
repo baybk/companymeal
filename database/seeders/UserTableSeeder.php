@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
 use App\Models\User;
+use App\Models\UsersTeam;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
@@ -15,17 +17,32 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         // new Admin
-        User::factory()->create([
+        $admin = User::factory()->create([
             'name' => 'Nguyen Van Bay',
             'email' => 'baynguyen1997@gmail.com',
-            'role' => 'admin',
             'password' => bcrypt('Pw@01628164331'),
         ]);
 
         // new Users
-        User::factory()->create([
-            'name' => 'fakeUser1',
+        $user = User::factory()->create([
+            'name' => 'fakeUser2',
             'email' => 'fakeuser1@gmail.com'
+        ]);
+
+        // New team
+        $team = Team::create([
+            'name' => 'Rice office 140'
+        ]);
+        // add member to team
+        UsersTeam::factory()->create([
+            'user_id' => $admin->id,
+            'team_id' => $team->id,
+            'role' => 'admin'
+        ]);
+        UsersTeam::create([
+            'user_id' => $user->id,
+            'team_id' => $team->id,
+            'role' => 'user'
         ]);
     }
 }
