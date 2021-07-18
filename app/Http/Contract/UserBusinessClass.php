@@ -14,4 +14,9 @@ class UserBusinessClass
     {
         return $this->isAdminUser();
     }
+
+    public function getCurrentTeamHelper()
+    {
+        return $this->getCurrentTeam();
+    }
 }
