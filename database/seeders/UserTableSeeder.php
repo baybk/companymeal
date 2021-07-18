@@ -20,28 +20,49 @@ class UserTableSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'Nguyen Van Bay',
             'email' => 'baynguyen1997@gmail.com',
-            'password' => bcrypt('Pw@01628164331'),
+            'password' => bcrypt('12345678'),
         ]);
 
         // new Users
         $user = User::factory()->create([
-            'name' => 'fakeUser2',
-            'email' => 'fakeuser1@gmail.com'
+            'name' => 'fakeUser11',
+            // 'name' => FAKE_USER_NAME,
+            'email' => 'fakeuser11@gmail.com'
+        ]);
+        $user2 = User::factory()->create([
+            'name' => 'fakeUser22',
+            // 'name' => FAKE_USER_NAME,
+            'email' => 'fakeuser22@gmail.com'
         ]);
 
         // New team
         $team = Team::create([
             'name' => 'Rice office 140'
         ]);
+        $team2 = Team::create([
+            'name' => 'Rice office 35'
+        ]);
+
         // add member to team
         UsersTeam::factory()->create([
             'user_id' => $admin->id,
             'team_id' => $team->id,
-            'role' => 'admin'
+            'role' => USER_ROLE_ADMIN
         ]);
+        UsersTeam::factory()->create([
+            'user_id' => $admin->id,
+            'team_id' => $team2->id,
+            'role' => USER_ROLE_ADMIN
+        ]);
+
         UsersTeam::create([
             'user_id' => $user->id,
             'team_id' => $team->id,
+            'role' => 'user'
+        ]);
+        UsersTeam::create([
+            'user_id' => $user2->id,
+            'team_id' => $team2->id,
             'role' => 'user'
         ]);
     }

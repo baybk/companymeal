@@ -59,4 +59,13 @@ class User extends Authenticatable
     {
         return '1717746490';
     }
+
+    public function getRoleInTeam($teamId)
+    {
+        $usersTeam = UsersTeam::where('user_id', $this->id)->where('team_id', $teamId)->first();
+        if ($usersTeam) {
+            return $usersTeam->role;
+        }
+        return USER_ROLE_VISITOR;
+    }
 }
