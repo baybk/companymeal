@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Contract\UserBusinessClass;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('transChoiceHp')) {
     function transChoiceHp($transCode, $choiceNum = 1)
@@ -18,5 +20,12 @@ if (!function_exists('generateNewCode')) {
         $timestamp = Carbon::now()->timestamp;
         $code = $salt . '_' . $timestamp;
         return $code;
+    }
+}
+
+if (!function_exists('isAdminUserHelper')) {
+    function isAdminUserHelper()
+    {
+        return (new UserBusinessClass())->isAdminUserHelper();
     }
 }

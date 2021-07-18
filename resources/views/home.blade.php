@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     Danh sách thành viên 
-                    @if (Auth::user()->role == 'admin') 
+                    @if (isAdminUserHelper() == 'admin') 
                         <span class="balance-total">$ Tổng số dư ước tính: {{ number_format($totalBalance) }} VND</span>
                     @endif
                 </div>

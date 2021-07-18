@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'Nguyen Van Bay',
             'email' => 'baynguyen1997@gmail.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123456'),
         ]);
 
         // new Users

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Contract\UserBusiness;
 use App\Models\BalanceChangeHistory;
 use App\Models\RemarkDatePaided;
 use App\Models\User;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
+    use UserBusiness;
+    
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,7 +28,8 @@ class AdminController extends Controller
     }
 
     public function orders() {
-        $users = User::where('name', '!=', FAKE_USER_NAME)->get();
+        // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
+        $users = $this->getUsersByTeam(session('team_id'));
         $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders', compact('users', 'lastPaidedList'));
     }
@@ -177,7 +181,8 @@ class AdminController extends Controller
     }
 
     public function orders2() {
-        $users = User::where('name', '!=', FAKE_USER_NAME)->get();
+        // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
+        $users = $this->getUsersByTeam(session('team_id'));
         $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders2', compact('users', 'lastPaidedList'));
     }
