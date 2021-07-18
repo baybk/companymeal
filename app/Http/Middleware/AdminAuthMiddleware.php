@@ -2,12 +2,15 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Contract\UserBusiness;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminAuthMiddleware
 {
+    use UserBusiness;
+    
     /**
      * Handle an incoming request.
      *
@@ -17,11 +20,8 @@ class AdminAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            if ($user->getRoleInTeam(session('team_id')) == USER_ROLE_ADMIN) {
-                return $next($request);
-            }
+        if ($this->isAdminUser()) {
+            return $next($request);
         }
         return redirect('/');
     }
