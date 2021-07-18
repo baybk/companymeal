@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Contract\UserBusiness;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    use UserBusiness;
+
     /**
      * Create a new controller instance.
      *
@@ -24,7 +27,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $users = $this->getUsersByTeam(session('team_id'));
+        // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
         $totalBalance = 0;
         $selectedUserIdsForRandom = $request->session()->get('selected_user_ids', []);
 

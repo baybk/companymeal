@@ -25,7 +25,7 @@ class AdminController extends Controller
     }
 
     public function orders() {
-        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $users = User::where('name', '!=', FAKE_USER_NAME)->get();
         $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders', compact('users', 'lastPaidedList'));
     }
@@ -91,7 +91,7 @@ class AdminController extends Controller
 
     public function getDataForReport($reportReson = REASON_DAILY_RICE) {
         $reportReasonOffical = $reportReson . ' ( ' . date('d-m-Y H:i') . ' )';
-        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $users = User::where('name', '!=', FAKE_USER_NAME)->get();
         $arrayData = [
             'report_reson' => $reportReasonOffical
         ];
@@ -112,7 +112,7 @@ class AdminController extends Controller
 
     public function postEditUserBalance(Request $request, $userId) {
         $user = User::findOrFail($userId);
-        $adminUser = User::where('role', 'admin')->first();
+        $adminUser = User::where('role', USER_ROLE_ADMIN)->first();
         if (
             !isset($request->money) || empty($request->money) ||
             !isset($request->reason) || empty($request->reason) ||
@@ -177,7 +177,7 @@ class AdminController extends Controller
     }
 
     public function orders2() {
-        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $users = User::where('name', '!=', FAKE_USER_NAME)->get();
         $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders2', compact('users', 'lastPaidedList'));
     }

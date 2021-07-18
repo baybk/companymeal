@@ -19,7 +19,7 @@ class AdminAuthMiddleware
     {
         if (Auth::check()) {
             $user = Auth::user();
-            if ($user->role == 'admin') {
+            if ($user->getRoleInTeam(session('team_id')) == USER_ROLE_ADMIN) {
                 return $next($request);
             }
         }
