@@ -10,6 +10,7 @@ class RemarkDatePaided extends Model
     use HasFactory;
 
     public $fillable = [
+        'team_id',
         'date_remark',
         'order_number',
         'user_list_paid',

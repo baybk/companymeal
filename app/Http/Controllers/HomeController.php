@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $users = $this->getUsersByTeam(session('team_id'));
+        $users = $this->getUsersListInCurrentTeam();
         // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
         $totalBalance = 0;
         $selectedUserIdsForRandom = $request->session()->get('selected_user_ids', []);
