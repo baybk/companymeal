@@ -25,7 +25,7 @@ class UsersTeamFactory extends Factory
     {
         return [
             'role' => 'user',
-            'balance' => 0
+            'balance' => random_int(20000, 200000)
         ];
     }
 }

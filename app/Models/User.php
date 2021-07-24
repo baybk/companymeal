@@ -68,4 +68,10 @@ class User extends Authenticatable
         }
         return USER_ROLE_VISITOR;
     }
+
+    public function getBalance()
+    {
+        $userTeam = UsersTeam::where('user_id', $this->id)->where('team_id', session('team_id'))->first();
+        return $userTeam->balance;
+    }
 }

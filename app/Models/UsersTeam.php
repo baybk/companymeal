@@ -12,6 +12,7 @@ class UsersTeam extends Model
     public $fillable = [
         'user_id',
         'team_id',
-        'role'
+        'role',
+        'balance'
     ];
 }
