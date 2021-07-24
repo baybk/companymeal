@@ -55,12 +55,12 @@ class UserTableSeeder extends Seeder
             'role' => USER_ROLE_ADMIN
         ]);
 
-        UsersTeam::create([
+        UsersTeam::factory()->create([
             'user_id' => $user->id,
             'team_id' => $team->id,
             'role' => 'user'
         ]);
-        UsersTeam::create([
+        UsersTeam::factory()->create([
             'user_id' => $user2->id,
             'team_id' => $team2->id,
             'role' => 'user'

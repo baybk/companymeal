@@ -29,7 +29,7 @@
                         <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name {{ $classColor }}">
                             {{ $user->name }}
                         </a> 
-                        (số dư hiện tại: {{ number_format($user->balance) }} VND) 
+                        (số dư hiện tại: {{ number_format($user->getBalance()) }} VND) 
                         <br>
                     @endforeach
                 </div>
