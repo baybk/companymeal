@@ -11,6 +11,7 @@ class BalanceChangeHistory extends Model
 
     public $fillable = [
         'user_id',
+        'team_id',
         'reason',
         'balance_before_change',
         'change_number',

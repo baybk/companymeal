@@ -110,13 +110,13 @@ class AdminController extends Controller
 
     public function editUserBalance(Request $request, $userId) {
         $user = User::findOrFail($userId);
-        $userHistories = BalanceChangeHistory::where('user_id', $userId)->orderBy('id', 'desc')->simplePaginate(10);
+        $userHistories = $user->getBalanceChangeHistoriesInCurrentTeam();
         return view('admin.editUserBalance', compact('userHistories', 'user'));
     }
 
     public function postEditUserBalance(Request $request, $userId) {
         $user = User::findOrFail($userId);
-        $adminUser = User::where('role', USER_ROLE_ADMIN)->first();
+        $adminUser = auth()->user();
         if (
             !isset($request->money) || empty($request->money) ||
             !isset($request->reason) || empty($request->reason) ||
@@ -134,16 +134,16 @@ class AdminController extends Controller
         }
         
         $changeMoney = (int) $request->money;
-        $oldBalance = $user->balance;
+        $oldBalance = $user->getBalanceInCurrentTeam();
 
         try {
             DB::beginTransaction();
             
-            $user->balance = $user->balance + $changeMoney;
-            $user->save();
+            $user->changeBalanceInCurrentTeam($changeMoney);
 
             BalanceChangeHistory::create([
                 'user_id' => $userId,
+                'team_id' => $this->getCurrentTeam()->id,
                 'reason' => $request->reason,
                 'balance_before_change' => $oldBalance,
                 'change_number' => $changeMoney,
@@ -151,6 +151,7 @@ class AdminController extends Controller
 
             DB::commit();
         } catch (\Throwable $th) {
+            Log::info($th->getMessage());
             DB::rollBack();
             $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
             return redirect()->back()->withInput();

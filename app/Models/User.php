@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Contract\UserBusiness;
 use App\Notifications\ReportWhenChangeBalanceNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +15,7 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
+    use UserBusiness;
 
     /**
      * The attributes that are mass assignable.
@@ -69,9 +71,36 @@ class User extends Authenticatable
         return USER_ROLE_VISITOR;
     }
 
-    public function getBalance()
+    public function getBalanceInCurrentTeam()
     {
-        $userTeam = UsersTeam::where('user_id', $this->id)->where('team_id', session('team_id'))->first();
+        $userTeam = UsersTeam::where('user_id', $this->id)
+                    ->where('team_id', $this->getCurrentTeam()->id)
+                    ->first();
         return $userTeam->balance;
+    }
+
+    public function getBalanceChangeHistoriesInCurrentTeam()
+    {
+        $userHistories = BalanceChangeHistory::where('user_id', $this->id)
+                                ->where('team_id', $this->getCurrentTeam()->id)
+                                ->orderBy('id', 'desc')
+                                ->simplePaginate(10);
+        return $userHistories;
+    }
+
+    public function getCurrentUserTeam()
+    {
+        $userTeam = UsersTeam::where('user_id', $this->id)
+                        ->where('team_id', $this->getCurrentTeam()->id)
+                        ->first();
+        return $userTeam;
+    }
+
+    public function changeBalanceInCurrentTeam($changeMoney)
+    {
+        $userTeam = $this->getCurrentUserTeam();
+        $userTeam->balance = $userTeam->balance + $changeMoney;
+        $userTeam->save();
+        return $userTeam;
     }
 }
