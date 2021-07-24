@@ -19,9 +19,11 @@ class CreateBalanceChangeHistoriesTable extends Migration
             $table->bigInteger('change_number');
             $table->string('reason', 200)->nullable()->default(null);
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('team_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('CASCADE');
         });
     }
 

@@ -33,7 +33,7 @@ class HomeController extends Controller
         $selectedUserIdsForRandom = $request->session()->get('selected_user_ids', []);
 
         foreach ($users as $user) {
-            $totalBalance = $totalBalance + $user->balance;
+            $totalBalance = $totalBalance + $user->getBalanceInCurrentTeam();
         }
         return view('home', compact('users', 'totalBalance', 'selectedUserIdsForRandom'));
     }
