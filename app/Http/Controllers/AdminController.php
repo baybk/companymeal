@@ -223,12 +223,13 @@ class AdminController extends Controller
                     // DB::transaction(function ($userId) {
                         $userId = (int) $userId;
                         $user = User::findOrFail($userId);
-                        $oldBalance = $user->balance;
-                        $user->balance = $user->balance - intval($money);
+                        $oldBalance = $user->getBalanceInCurrentTeam();
+                        $user->changeBalanceInCurrentTeam(-intval($money));
                         $user->save();
 
                         BalanceChangeHistory::create([
                             'user_id' => $userId,
+                            'team_id' => $this->getCurrentTeam()->id,
                             'reason' => $reason,
                             'balance_before_change' => $oldBalance,
                             'change_number' => -intval($money),
