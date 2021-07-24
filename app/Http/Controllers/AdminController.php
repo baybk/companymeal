@@ -29,7 +29,7 @@ class AdminController extends Controller
 
     public function orders() {
         // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
-        $users = $this->getUsersByTeam(session('team_id'));
+        $users = $this->getUsersListInCurrentTeam();
         $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders', compact('users', 'lastPaidedList'));
     }
@@ -182,9 +182,10 @@ class AdminController extends Controller
     }
 
     public function orders2() {
-        // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
-        $users = $this->getUsersByTeam(session('team_id'));
-        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
+        $users = $this->getUsersListInCurrentTeam();
+        $lastPaidedList = RemarkDatePaided::where('team_id', $this->getCurrentTeam()->id)
+                                            ->orderBy('id', 'desc')
+                                            ->simplePaginate(10);
         return view('admin.orders2', compact('users', 'lastPaidedList'));
     }
 
@@ -240,6 +241,7 @@ class AdminController extends Controller
 
                 if ($request->reason_type == REASON_TYPE_DAILY_RICE) {
                     RemarkDatePaided::create([
+                        'team_id' => $this->getCurrentTeam()->id,
                         'date_remark' => Carbon::now(),
                         'order_number' => count($userIds),
                         'user_list_paid' => $listUserText,
@@ -258,6 +260,7 @@ class AdminController extends Controller
                     $this->writeLogBalanceReport();
                 }
             } catch (\Throwable $th) {
+                Log::info($th->getMessage());
                 DB::rollBack();
                 $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
                 return redirect()->back()->withInput();

@@ -16,6 +16,14 @@ trait UserBusiness
         return $users;
     }
 
+    public function getUsersListInCurrentTeam()
+    {
+        $teamId = $this->getCurrentTeam()->id;
+        $userIds = UsersTeam::where('team_id', $teamId)->pluck('user_id');
+        $users = User::whereIn('id', $userIds)->where('name', 'not like', '%' . FAKE_USER_NAME . '%')->get();
+        return $users;
+    }
+
     public function isAdminUser()
     {
         if (!session('team_id') || !Auth::check()) {

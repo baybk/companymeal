@@ -15,8 +15,14 @@ class CreateRemarkDatePaidedTable extends Migration
     {
         Schema::create('remark_date_paided', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('team_id');
             $table->date('date_remark')->comment('Day paided');
             $table->integer('order_number')->comment('The number of pepples order in that day');
+            $table->text('user_list_paid')->nullable()->default(null);
+            $table->mediumText('reason')->nullable()->default(null);
+
+            $table->foreign('team_id')->references('id')->on('teams')->onDelete('CASCADE');
+
             $table->timestamps();
         });
     }
