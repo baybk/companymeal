@@ -45,11 +45,6 @@
                     </div>
                 </div>
                 @endif
-
-                <div class="card-body">
-                    <h5>Công cụ hỗ trợ:</h5>
-                    <a href="{{ route('admin.randomDeliver') }}">Quay random ID</a>
-                </div>
             </div>
         </div>
     </div>

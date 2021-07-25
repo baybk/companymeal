@@ -55,8 +55,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -68,10 +68,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $code = generateNewCode();
         return User::create([
             'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'email' => $code . '@gmail.com',
+            'password' => Hash::make($code),
         ]);
     }
 
@@ -79,6 +80,9 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
+        $user->email = $user->id . '@gmail.com';
+        $user->password = Hash::make($user->id . '');
+        $user->save();
         if ($response = $this->registered($request, $user)) {
             return $response;
         }

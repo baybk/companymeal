@@ -35,4 +35,6 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/orders2', [AdminController::class, 'orders2'])->name('admin.orders2');
     Route::post('/orders2', [AdminController::class, 'postOrders2'])->name('admin.postOrders2');
+
+    Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
 });

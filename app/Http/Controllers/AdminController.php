@@ -273,4 +273,13 @@ class AdminController extends Controller
         }
         return redirect('/home');
     }
+
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user) {
+            $user->delete();
+        }
+        return redirect('/home');
+    }
 }

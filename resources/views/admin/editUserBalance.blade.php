@@ -28,7 +28,9 @@
                     <div>Tên: {{ $user->name }}</div>
                     <div>Số dư hiện tại: {{ number_format($user->balance) }} VND</div>
 
-                    <h4>(3) Lịch sử thay đổi số dư</h4>
+                    <h4>(3) Xoá user <button class="btn-delete" onclick="return submit()">Xác nhận</button> </h4>
+
+                    <h4>(4) Lịch sử thay đổi số dư</h4>
                     <table class="mytable">
                         <thead>
                             <th class="myth">Ngày</th>
@@ -57,4 +59,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    function submit() {
+        $confirmIsYes = true;
+        $confirmIsYes = confirm('Các thông tin liên quan đến người này sẽ xoá khỏi hệ thống. Bạn chắc chắn muốn xoá người dùng? ');
+        if ($confirmIsYes == true) {
+            //document.getElementById('bt_submit').click();
+            window.location.href = "{{ route( 'admin.deleteUser', [ 'id' => $user->id ] ) }}";
+        } else {
+            return false;
+        }
+    }
+</script>
 @endsection

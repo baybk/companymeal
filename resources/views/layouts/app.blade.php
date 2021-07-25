@@ -125,6 +125,15 @@
         .linethrough {
             text-decoration: line-through !important;
         }
+
+        .btn-delete {
+            font-size: 1rem;
+            background: #e3342f;
+            color: #fff;
+            border: none;
+            padding: 0.2rem 0.3rem;
+            border-radius: 0.2rem;
+        }
     </style>
 </head>
 <body>
