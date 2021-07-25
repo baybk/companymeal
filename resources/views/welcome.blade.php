@@ -23,6 +23,9 @@
                 width: 60%;
                 margin: 0 auto;
             }
+            .link-hover:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -30,9 +33,11 @@
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
+                        <a href="{{ url('/home') }}" class="text-sm text-gray-700">Home</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Đăng nhập</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 link-hover">{{ __('messages.login') }}</a>
+                        <span class="text-gray-700"> | </span>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 link-hover">{{ __('messages.register_your_team') }}</a>
                     @endauth
                 </div>
             @endif

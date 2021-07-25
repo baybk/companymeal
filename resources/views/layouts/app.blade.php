@@ -134,6 +134,15 @@
             padding: 0.2rem 0.3rem;
             border-radius: 0.2rem;
         }
+        .my-nav-link {
+            margin: 0.2rem;
+            background: cornflowerblue;
+            border-radius: 8px;
+            padding-left: 0.5rem !important;
+        }
+        .my-nav-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -162,13 +171,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('register') }}">{{ __('messages.register_your_team') }}</a>
                                 </li>
                             @endif
                         @else
@@ -180,7 +189,7 @@
                                 <a class="navbarDropdown" href="/home">Home</a>
                                 @if (isAdminUserHelper() == 'admin') 
                                     <a class="navbarDropdown" href="{{ route('admin.orders2') }}">Yêu cầu trừ số dư</a>
-                                    <a class="navbarDropdown" href="{{ route('register') }}">Đăng kí thêm user</a>
+                                    <a class="navbarDropdown" href="{{ route('register') }}">Thêm thành viên</a>
                                     <a style="display:none" class="navbarDropdown" href="{{ route('admin.orders') }}">Beta</a>
                                 @endif
 
@@ -188,7 +197,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('messages.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
