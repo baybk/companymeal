@@ -29,3 +29,10 @@ if (!function_exists('isAdminUserHelper')) {
         return (new UserBusinessClass())->isAdminUserHelper();
     }
 }
+
+if (!function_exists('getCurrentTeamHelper')) {
+    function getCurrentTeamHelper()
+    {
+        return (new UserBusinessClass())->getCurrentTeam();
+    }
+}
