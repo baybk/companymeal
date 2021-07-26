@@ -22,6 +22,7 @@
             .img-home {
                 width: 60%;
                 margin: 0 auto;
+                border-radius: 9%;
             }
             .link-hover:hover {
                 text-decoration: underline;
@@ -44,7 +45,7 @@
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">                                
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <img class="img-home" src="{{ asset('img/meal.png') }}" />
+                    <img class="img-home" src="{{ asset('img/team.png') }}" />
                 </div>
 
                 <div style="justify-content: center;" class="flex mt-4 sm:items-center">
@@ -55,7 +56,7 @@
                             </svg>
 
                             <a href="{{ route('home') }}" class="ml-1">
-                                Enjoy the meal with your co-workers
+                                Manage the wallet of your team
                             </a>
 
                             <svg style="height: auto;width: 2rem;margin: 0 auto;" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
