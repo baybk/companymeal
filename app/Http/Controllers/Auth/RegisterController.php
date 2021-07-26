@@ -90,11 +90,7 @@ class RegisterController extends Controller
         $user->email = $user->id . '@gmail.com';
         $user->password = Hash::make($user->id . '');
         $user->save();
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
-        return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect($this->redirectPath());
+        session()->flash('message', __('messages.register_team_success_please_login_to_manage_your_team'));
+        return redirect('/login');
     }
 }

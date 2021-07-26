@@ -143,6 +143,10 @@
         .my-nav-link:hover {
             text-decoration: underline;
         }
+        .message-success{
+            color: #33b995;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -177,7 +181,7 @@
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('register') }}">{{ __('messages.register_your_team') }}</a>
+                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('registerTeam') }}">{{ __('messages.register_your_team') }}</a>
                                 </li>
                             @endif
                         @else

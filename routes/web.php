@@ -24,6 +24,8 @@ Route::get('logs', [LogController::class, 'getLogs'])->name('logs.getLogs');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/register-team', [App\Http\Controllers\HomeController::class, 'registerAdminAndTeam'])->name('registerTeam');
+Route::post('/register-team', [App\Http\Controllers\HomeController::class, 'postRegisterAdminAndTeam'])->name('postRegisterTeam');
 
 Route::prefix('admin')->group(function () {
     Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');

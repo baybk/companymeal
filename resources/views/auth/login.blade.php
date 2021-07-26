@@ -1,10 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            @if (session('success_message'))
+            <div class="message-success">
+                <strong>{{ session('success_message') }}</strong>
+            </div>
+            @endif
+
             <div class="card">
+
                 <div class="card-header">{{ __('messages.login') }}</div>
 
                 <div class="card-body">
@@ -14,7 +23,7 @@
                         <div class="form-group row">
                             <label for="team_id" class="col-md-4 col-form-label text-md-right">{{ __('messages.your_team_id') }}</label>
                             <div class="col-md-6">
-                                <input id="team_id" type="number" class="form-control @error('team_id') is-invalid @enderror" name="team_id" required>
+                                <input id="team_id" type="number" class="form-control @error('team_id') is-invalid @enderror" name="team_id" value="{{ old('team_id') }}" required>
                                 @error('team_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
