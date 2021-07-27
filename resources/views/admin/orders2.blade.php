@@ -32,6 +32,7 @@
                         <div class="onepeo">
                             <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> 
                             <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> 
+                            <span style="width:1rem;">-</span>
                             <input class="onemoney" name="list_money[{{ $user->id }}]" type="number" value="{{ env('MEAL_PRICE', 20000) }}" /> <span>VND</span>
                             <br>
                         </div>
