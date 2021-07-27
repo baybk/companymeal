@@ -10,6 +10,9 @@
         <meta property="og:description" content="Manage the wallet of your team"/>
         <meta property="og:url" content="{{ Request::url() }}"/>
 
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <title>{{ config('app.name', 'Home') }}</title>
 
         <!-- Fonts -->
