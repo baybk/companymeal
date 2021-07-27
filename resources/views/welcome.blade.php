@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="{{ asset('img/team.png') }}">
 
-        <meta property=’og:title’ content='WalletTeam' />
-        <meta property=’og:image’ content="{{ asset('img/team.png') }}" />
-        <meta property=’og:description’ content='Manage the wallet of your team'/>
-        <meta property=’og:url’ content="{{ Request::url() }}"/>
+        <meta property="og:title" content="GP Wallet" />
+        <meta property="og:image" content="{{ asset('img/team.png') }}" />
+        <meta property="og:description" content="Manage the wallet of your team"/>
+        <meta property="og:url" content="{{ Request::url() }}"/>
 
         <title>{{ config('app.name', 'Home') }}</title>
 
