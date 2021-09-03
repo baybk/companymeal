@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'Nguyen Van Bay',
             'email' => 'baynguyen1997@gmail.com',
-            'password' => bcrypt('123456'),
+            'password' => bcrypt('0942193241'),
         ]);
 
         // new Users
@@ -29,18 +29,10 @@ class UserTableSeeder extends Seeder
             // 'name' => FAKE_USER_NAME,
             'email' => 'fakeuser11@gmail.com'
         ]);
-        $user2 = User::factory()->create([
-            'name' => 'fakeUser22',
-            // 'name' => FAKE_USER_NAME,
-            'email' => 'fakeuser22@gmail.com'
-        ]);
 
         // New team
         $team = Team::create([
-            'name' => 'Rice office 140'
-        ]);
-        $team2 = Team::create([
-            'name' => 'Rice office 35'
+            'name' => 'IShop - Quản trị'
         ]);
 
         // add member to team
@@ -49,20 +41,10 @@ class UserTableSeeder extends Seeder
             'team_id' => $team->id,
             'role' => USER_ROLE_ADMIN
         ]);
-        UsersTeam::factory()->create([
-            'user_id' => $admin->id,
-            'team_id' => $team2->id,
-            'role' => USER_ROLE_ADMIN
-        ]);
 
         UsersTeam::factory()->create([
             'user_id' => $user->id,
             'team_id' => $team->id,
-            'role' => 'user'
-        ]);
-        UsersTeam::factory()->create([
-            'user_id' => $user2->id,
-            'team_id' => $team2->id,
             'role' => 'user'
         ]);
     }

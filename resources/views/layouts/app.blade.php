@@ -183,12 +183,6 @@
                                     <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a>
                                 </li>
                             @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('registerTeam') }}">{{ __('messages.register_your_team') }}</a>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -197,16 +191,18 @@
 
                                 <a class="navbarDropdown" href="/home">Home</a>
                                 @if (isAdminUserHelper() == 'admin') 
-                                    <a class="navbarDropdown" href="{{ route('admin.orders2') }}">Yêu cầu trừ số dư</a>
-                                    <a class="navbarDropdown" href="{{ route('register') }}">Thêm thành viên</a>
-                                    <a style="display:none" class="navbarDropdown" href="{{ route('admin.orders') }}">Beta</a>
+                                    <a class="navbarDropdown" href="{{ route('home') }}">Danh sách đơn hàng</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}">
                                         {{ __('messages.logout') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('register') }}">
+                                        Thêm thành viên vào nhóm này
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('registerTeam') }}">
+                                        Tạo nhóm mới
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

@@ -45,8 +45,8 @@
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700">Home</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 link-hover">{{ __('messages.login') }}</a>
-                        <span class="text-gray-700"> | </span>
-                        <a href="{{ route('registerTeam') }}" class="text-sm text-gray-700 link-hover">{{ __('messages.register_your_team') }}</a>
+                        <!-- <span class="text-gray-700"> | </span> -->
+                        <!-- <a href="" class="text-sm text-gray-700 link-hover">messages.register_your_team</a> -->
                     @endauth
                 </div>
             @endif
