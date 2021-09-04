@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Contract\UserBusiness;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UsersTeam;
@@ -9,10 +10,16 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use Mail;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
+    use UserBusiness;
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -43,17 +50,64 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function verifyLogin()
+    {
+        return view('auth.verifyLogin');
+    }
+
+    public function postVerifyLogin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput();
+        }
+
+        $code = $this->randVerifyLoginCode();
+
+        $data = [
+            'to_email' => $request->email
+        ];
+
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            $user->login_code = $code;
+            $user->save();
+        }
+
+        Mail::send(
+                'auth.verify_login.mail',
+                ['code' => $code],
+                function($message) use ($data) {
+                    $message->to($data['to_email'])
+                            ->subject('Mã code đăng nhập');
+                }
+            );
+        
+        $toEmail = $request->email;
+        session()->flash('toEmail', $toEmail);
+        return redirect('/login');
+    }
+
     public function login(Request $request)
     {
         $this->validateLogin($request);
        
         $user = User::where('email', $request->email)->first();
+        if ($user->login_code != trim($request->code)) {
+            session()->flash('my_error', 'Mã đăng nhập không hợp lệ');
+            return redirect('/verify-login');
+        }
+
         $teamIdsOfUser = UsersTeam::where('user_id', $user->id)->groupBy('team_id')->pluck('team_id');
         if (count($teamIdsOfUser) <= 0 || !in_array($request->team_id, $teamIdsOfUser->toArray())) {
-            $error = \Illuminate\Validation\ValidationException::withMessages([
-                'team_id' => [__('messages.you_are_not_belong_to_the_team')],
-            ]);
-            throw $error;
+            // $error = \Illuminate\Validation\ValidationException::withMessages([
+            //     'team_id' => [__('messages.you_are_not_belong_to_the_team')],
+            // ]);
+            // throw $error;
+            session()->flash('my_error', __('messages.you_are_not_belong_to_the_team'));
+            return redirect('/verify-login');
         }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -68,6 +122,8 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             session()->put('team_id', $request->team_id);
+            $user->login_code = $this->randVerifyLoginCode();
+            $user->save();
             return $this->sendLoginResponse($request);
         }
 
@@ -84,7 +140,8 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'team_id' => 'required'
+            'team_id' => 'required',
+            'code' => 'required'
         ]);
     }
 }

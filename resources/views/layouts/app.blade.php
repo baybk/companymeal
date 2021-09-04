@@ -152,6 +152,10 @@
             color: #33b995;
             text-align: center;
         }
+        .message-error{
+            color: red;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -180,7 +184,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('login') }}">{{ __('messages.login') }}</a>
+                                    <a style="color:#fff" class="nav-link my-nav-link" href="{{ route('verifyLogin') }}">{{ __('messages.login') }}</a>
                                 </li>
                             @endif
                         @else
@@ -195,7 +199,8 @@
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                         {{ __('messages.logout') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('register') }}">

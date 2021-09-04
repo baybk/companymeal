@@ -6,6 +6,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\UsersTeam;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 trait UserBusiness
 {
@@ -42,5 +43,14 @@ trait UserBusiness
             return null;
         }
         return Team::findOrFail(session('team_id'));
+    }
+
+    public function randVerifyLoginCode()
+    {
+        $rand3Char = Str::random(4);
+        $rand3Char = Str::lower($rand3Char);
+        $randNum = random_int(1000, 9999);
+        $code = $rand3Char . $randNum;
+        return $code;
     }
 }

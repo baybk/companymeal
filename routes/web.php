@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('logs', [LogController::class, 'getLogs'])->name('logs.getLogs');
+Route::get('verify-login', [LoginController::class, 'verifyLogin'])->name('verifyLogin');
+Route::post('verify-login', [LoginController::class, 'postVerifyLogin'])->name('postVerifyLogin');
 
 Auth::routes();
 

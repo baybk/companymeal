@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             // $table->string('role')->default('user')->comment('3 option: admin user visitor ');
             // $table->bigInteger('balance')->default(0)->comment('Unit: VND');
 
+            $table->string('login_code')->default(DEFAULT_LOGIN_CODE);
+
             $table->rememberToken();
             $table->timestamps();
         });

@@ -11,3 +11,5 @@ defined('USER_ROLE_USER') or define('USER_ROLE_USER', 'user');
 defined('USER_ROLE_VISITOR') or define('USER_ROLE_VISITOR', 'visitor');
 
 defined('FAKE_USER_NAME') or define('FAKE_USER_NAME', 'fakeUser1');
+
+defined('DEFAULT_LOGIN_CODE') or define('DEFAULT_LOGIN_CODE', '164331');
