@@ -32,7 +32,7 @@ Route::get('/register-team', [App\Http\Controllers\HomeController::class, 'regis
 Route::post('/register-team', [App\Http\Controllers\HomeController::class, 'postRegisterAdminAndTeam'])->name('postRegisterTeam');
 
 Route::prefix('admin')->group(function () {
-    // Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
     // Route::post('/orders', [AdminController::class, 'postOrders'])->name('admin.postOrders');
 
     Route::get('/edit-user/{id}', [AdminController::class, 'editUserBalance'])->name('admin.editUserBalance');

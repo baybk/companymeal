@@ -6,9 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Danh sách thành viên 
+                    Danh sách khách hàng
                     @if (isAdminUserHelper() == 'admin') 
-                        <span class="balance-total">$ Tổng số dư ước tính: {{ number_format($totalBalance) }} VND</span>
+                        {{-- <span class="balance-total">$ Tổng số dư ước tính: {{ number_format($totalBalance) }} VND</span> --}}
                     @endif
                 </div>
 

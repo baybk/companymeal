@@ -41,6 +41,7 @@
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
+        font-size: 0.8rem;
         }
 
         .mytd, .myth {
@@ -195,7 +196,7 @@
 
                                 <a class="navbarDropdown" href="/home">Home</a>
                                 @if (isAdminUserHelper() == 'admin') 
-                                    <a class="navbarDropdown" href="{{ route('home') }}">Danh sách đơn hàng</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.orders') }}">Danh sách đơn hàng</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

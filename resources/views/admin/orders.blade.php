@@ -5,49 +5,51 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><span class="subtract">Request trừ tiền cơm ( cho ngày {{ date('d-m-Y') }} )</span> <br>(Hiện tại mặc định 1 bữa ăn có giá {{ env('MEAL_PRICE', 20000) }} VND)</div>
+                <div class="card-header">
+                    <span class="subtract">Đơn hàng gần nhất</span> 
+                </div>
 
-                <div class="card-body">
+                <div class="card-body" style="overflow-x: auto;">
                     @if (session('error'))
                         <div class="alert alert-danger" role="alert">
                             {{ session('error') }}
                         </div>
                     @endif
 
-                    <h5 class="h5-guide">Đánh dấu những người đặt cơm. Sau đó nhấn xác nhận để trừ số dư của họ</h5>
-
-                    <form method="POST" action="{{ route('admin.postOrders') }}">
-                        @csrf
-                        @foreach ($users as $user)
-                        <div class="onepeo">
-                            <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> 
-                            <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> (số dư hiện tại: {{ number_format($user->balance) }} VND) <br>
-                        </div>
-                        @endforeach
-
-                        <br>
-                        <input type="submit" value="Xác nhận">
-                    </form>
-
-                    <h4>Ngày request gần nhất</h4>
                     <table class="mytable">
                         <thead>
-                            <th class="myth">Ngày đã đặt cơm</th>
-                            <th class="myth">Số người được request</th>
+                            <th class="myth">Họ tên</th>
+                            <th class="myth">Số phone</th>
+                            <th class="myth">Địa chỉ</th>
+                            <th class="myth">Trạng thái đơn</th>
+                            <th class="myth">Số sản phẩm</th>
+                            <th class="myth">Hành động</th>
                         </thead>
 
                         <tbody>
-                        @foreach ($lastPaidedList as $lastPaided)
+                        @foreach ($orders as $order)
                             <tr>
-                                <td class="mytd">{{ $lastPaided->date_remark }}</td>
-                                <td class="mytd">{{ $lastPaided->user_list_paid }}</td>
+                                <td class="mytd">{{ $order->customer_name }}</td>
+                                <td class="mytd">{{ $order->customer_phone }}</td>
+                                <td class="mytd">{{ $order->customer_address }}</td>
+                                <td class="mytd">{{ $order->delivery_status }}</td>
+                                <td class="mytd">
+                                    @if (is_array($order->lines))
+                                        {{ count($order->lines) }}
+                                    @else
+                                        0
+                                    @endif
+                                </td>
+                                <td class="mytd">
+                                    <a href="#">Chi tiết</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
 
                     <div class="paginate">
-                        {{ $lastPaidedList->links() }}
+                        {{ $orders->links() }}
                     </div>
                 </div>
             </div>

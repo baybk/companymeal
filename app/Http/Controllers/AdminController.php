@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Contract\UserBusiness;
 use App\Models\BalanceChangeHistory;
+use App\Models\Order;
 use App\Models\RemarkDatePaided;
 use App\Models\User;
 use App\Notifications\DailyBalanceNotification;
@@ -28,10 +29,10 @@ class AdminController extends Controller
     }
 
     public function orders() {
-        // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
-        $users = $this->getUsersListInCurrentTeam();
-        $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
-        return view('admin.orders', compact('users', 'lastPaidedList'));
+        $orders = Order::where('team_id', $this->getCurrentTeam()->id)
+                                            ->orderBy('id', 'desc')
+                                            ->simplePaginate(10);
+        return view('admin.orders', compact('orders'));
     }
 
     public function postOrders(Request $request) {
