@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,8 +32,8 @@ Route::get('/register-team', [App\Http\Controllers\HomeController::class, 'regis
 Route::post('/register-team', [App\Http\Controllers\HomeController::class, 'postRegisterAdminAndTeam'])->name('postRegisterTeam');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
-    Route::post('/orders', [AdminController::class, 'postOrders'])->name('admin.postOrders');
+    // Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    // Route::post('/orders', [AdminController::class, 'postOrders'])->name('admin.postOrders');
 
     Route::get('/edit-user/{id}', [AdminController::class, 'editUserBalance'])->name('admin.editUserBalance');
     Route::post('/edit-user/{id}', [AdminController::class, 'postEditUserBalance'])->name('admin.postEditUserBalance');
@@ -42,4 +43,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/orders2', [AdminController::class, 'postOrders2'])->name('admin.postOrders2');
 
     Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
+});
+
+Route::group([
+    'prefix' => 'orders',
+    'as' => 'orders.'
+], function () {
+    Route::post('', [OrderController::class, 'store'])->name('store');
 });
