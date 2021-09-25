@@ -28,4 +28,9 @@ class Order extends Model
         'lines' => 'array',
         'admin_change_history' => 'array'
     ];
+
+    protected function asJson($value)
+    {
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
 }

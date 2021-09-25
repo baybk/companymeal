@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PassportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,3 +26,10 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::get('user', [PassportController::class, 'details']);
+
+Route::group([
+    'prefix' => 'orders',
+    'as' => 'orders.'
+], function () {
+    Route::post('', [OrderController::class, 'store'])->name('store');
+});
