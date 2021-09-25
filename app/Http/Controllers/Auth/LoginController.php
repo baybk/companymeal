@@ -6,6 +6,7 @@ use App\Http\Contract\UserBusiness;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UsersTeam;
+use App\Notifications\SendVerifyCodeLoginToBotNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -76,14 +77,17 @@ class LoginController extends Controller
             $user->save();
         }
 
-        Mail::send(
-                'auth.verify_login.mail',
-                ['code' => $code],
-                function($message) use ($data) {
-                    $message->to($data['to_email'])
-                            ->subject('Mã code đăng nhập');
-                }
-            );
+        // Mail::send(
+        //         'auth.verify_login.mail',
+        //         ['code' => $code],
+        //         function($message) use ($data) {
+        //             $message->to($data['to_email'])
+        //                     ->subject('Mã code đăng nhập');
+        //         }
+        //     );
+        
+        # Send temprary to telegram to quick
+        User::first()->notify(new SendVerifyCodeLoginToBotNotification('MÃ ĐĂNG NHẬP', $code));
         
         $toEmail = $request->email;
         session()->flash('toEmail', $toEmail);

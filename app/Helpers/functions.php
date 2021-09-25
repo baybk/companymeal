@@ -36,3 +36,35 @@ if (!function_exists('getCurrentTeamHelper')) {
         return (new UserBusinessClass())->getCurrentTeam();
     }
 }
+
+if (!function_exists('transOrderKey')) {
+    function transOrderKey($key)
+    {
+        $listTrans = [
+            'customer_name' => 'Tên khách hàng',
+            'customer_phone' => 'Số điện thoại',
+            'customer_address' => 'Địa chỉ',
+            'productName' => 'Tên sản phẩm',
+            'quantity' => 'Số lượng mua',
+            'price' => 'Đơn giá',
+            'note' => 'Ghi chú',
+            'link' => 'Link sản phẩm',
+            'manager_link' => 'Link quản lí'
+        ];
+        if (array_key_exists($key, $listTrans)) {
+            return $listTrans[$key];
+        }
+        return $key;
+    }
+}
+
+if (!function_exists('getAppUrl')) {
+    function getAppUrl()
+    {
+        if (env('APP_ENV') != 'local') {
+            return env('APP_URL');
+        } else {
+            return 'http://localhost:8888';
+        }
+    }
+}
