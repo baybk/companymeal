@@ -52,7 +52,7 @@ class SendVerifyCodeLoginToBotNotification extends Notification
     public function toTelegram($notifiable)
     {
         $code = $this->code;
-        $title = $this->title;
+        $title = $this->title . ' lúc ' . date('H:i');;
         $html = view('shared.telegram-verify-code', compact('code', 'title'))->render();
         return new TelegramMessage([
             'parse_mode' => 'HTML',

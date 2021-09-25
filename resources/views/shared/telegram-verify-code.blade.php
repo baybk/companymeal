@@ -1,1 +1,3 @@
-<b>{{ $title }}: {{ $code }}</b>
+<b>{{ $title }}:</b>
+
+<b>{{ $code }}</b>

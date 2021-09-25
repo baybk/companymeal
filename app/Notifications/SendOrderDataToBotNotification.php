@@ -63,7 +63,7 @@ class SendOrderDataToBotNotification extends Notification
                 unset($orderData[$item]);
             }
         }
-        $title = $this->title;
+        $title = $this->title . ' lúc ' . date('H:i');
         $html = view('shared.telegram-order-data', compact('orderData', 'title'))->render();
         return new TelegramMessage([
             'parse_mode' => 'HTML',
