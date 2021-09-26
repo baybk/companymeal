@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogController;
@@ -31,18 +32,26 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/register-team', [App\Http\Controllers\HomeController::class, 'registerAdminAndTeam'])->name('registerTeam');
 Route::post('/register-team', [App\Http\Controllers\HomeController::class, 'postRegisterAdminAndTeam'])->name('postRegisterTeam');
 
-Route::prefix('admin')->group(function () {
-    Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
-    // Route::post('/orders', [AdminController::class, 'postOrders'])->name('admin.postOrders');
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.'
+], function () {
+    Route::group([
+        'prefix' => 'orders',
+        'as' => 'orders.'
+    ], function () {
+        Route::get('', [AdminOrderController::class, 'index'])->name('index');
+        Route::get('/{id}', [AdminOrderController::class, 'show'])->name('show');
+    });
 
-    Route::get('/edit-user/{id}', [AdminController::class, 'editUserBalance'])->name('admin.editUserBalance');
-    Route::post('/edit-user/{id}', [AdminController::class, 'postEditUserBalance'])->name('admin.postEditUserBalance');
-    Route::get('/random', [AdminController::class, 'randomDeliver'])->name('admin.randomDeliver');
+    Route::get('/edit-user/{id}', [AdminController::class, 'editUserBalance'])->name('editUserBalance');
+    Route::post('/edit-user/{id}', [AdminController::class, 'postEditUserBalance'])->name('postEditUserBalance');
+    Route::get('/random', [AdminController::class, 'randomDeliver'])->name('randomDeliver');
 
-    Route::get('/orders2', [AdminController::class, 'orders2'])->name('admin.orders2');
-    Route::post('/orders2', [AdminController::class, 'postOrders2'])->name('admin.postOrders2');
+    Route::get('/orders2', [AdminController::class, 'orders2'])->name('orders2');
+    Route::post('/orders2', [AdminController::class, 'postOrders2'])->name('postOrders2');
 
-    Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
+    Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('deleteUser');
 });
 
 Route::group([

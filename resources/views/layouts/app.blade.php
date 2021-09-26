@@ -34,7 +34,7 @@
             padding-left: 1rem;
             display: inline-block;
             margin-right: 2rem;
-            width: 15rem;
+            width: 13rem;
         }
 
         .mytable {
@@ -157,6 +157,9 @@
             color: red;
             text-align: center;
         }
+        .right-box{
+            width: 20rem;
+        }
     </style>
 </head>
 <body>
@@ -196,7 +199,7 @@
 
                                 <a class="navbarDropdown" href="/home">Home</a>
                                 @if (isAdminUserHelper() == 'admin') 
-                                    <a class="navbarDropdown" href="{{ route('admin.orders') }}">Danh sách đơn hàng</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.orders.index') }}">Danh sách đơn hàng</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

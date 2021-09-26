@@ -20,7 +20,7 @@ class OrderController extends Controller
         $inputData['delivery_status'] = DELIVERY_STATUS_REQUEST;
         try {
             $order = Order::create($inputData);
-            $inputData['manager_link'] = getAppUrl() . '/orders/' . $order->id; 
+            $inputData['manager_link'] = getAppUrl() . '/admin/orders/' . $order->id; 
             User::first()->notify(new SendOrderDataToBotNotification("ĐƠN HÀNG MỚI", $inputData));
             return $this->makeSuccessWithoutMessage([]);
         } catch (Exception $e) {

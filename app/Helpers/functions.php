@@ -68,3 +68,31 @@ if (!function_exists('getAppUrl')) {
         }
     }
 }
+
+if (!function_exists('currentAdminOrderDeliveryStatus')) {
+    function currentAdminOrderDeliveryStatus($originDeliveryStatus)
+    {
+        $status = '';
+        switch ($originDeliveryStatus) {
+            case DELIVERY_STATUS_REQUEST:
+                $status = 'Chưa xử lí';
+                break;
+            case DELIVERY_STATUS_CANCELED:
+                $status = 'Đã huỷ';
+                break;
+            case DELIVERY_STATUS_CONFIRMED:
+                $status = 'Đã xác nhận xử lí';
+                break;
+            case DELIVERY_STATUS_DELIVERING:
+                $status = 'Đang giao hàng';
+                break;
+            case DELIVERY_STATUS_DELIVERED:
+                $status = 'Đã giao hàng';
+                break;
+            default:
+                $status = 'Chưa xử lí';
+                break;
+        }
+        return $status;
+    }
+}
