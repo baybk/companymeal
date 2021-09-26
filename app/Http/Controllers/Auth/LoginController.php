@@ -58,12 +58,9 @@ class LoginController extends Controller
 
     public function postVerifyLogin(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+        $request->validate([
+            'email' => 'required|email|exists:App\Models\User,email',
         ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withInput();
-        }
 
         $code = $this->randVerifyLoginCode();
 
@@ -142,7 +139,7 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
+            $this->username() => 'required|string|exists:App\Models\User,'.$this->username(),
             'password' => 'required|string',
             'team_id' => 'required',
             'code' => 'required'
