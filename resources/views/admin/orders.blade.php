@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <span class="subtract">Đơn hàng gần nhất</span> 
@@ -32,7 +32,7 @@
                                 <td class="mytd">{{ $order->customer_name }}</td>
                                 <td class="mytd">{{ $order->customer_phone }}</td>
                                 <td class="mytd">{{ $order->customer_address }}</td>
-                                <td class="mytd">{{ currentAdminOrderDeliveryStatus($order->delivery_status) }}</td>
+                                <td style="font-weight:bold;" class="mytd {{ cssClassDeliveryStatus($order->delivery_status) }}">{{ currentAdminOrderDeliveryStatus($order->delivery_status) }}</td>
                                 <td class="mytd">
                                     @if (is_array($order->lines))
                                         {{ count($order->lines) }}

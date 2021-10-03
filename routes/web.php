@@ -42,6 +42,7 @@ Route::group([
     ], function () {
         Route::get('', [AdminOrderController::class, 'index'])->name('index');
         Route::get('/{id}', [AdminOrderController::class, 'show'])->name('show');
+        Route::post('/{id}', [AdminOrderController::class, 'update'])->name('update');
     });
 
     Route::get('/edit-user/{id}', [AdminController::class, 'editUserBalance'])->name('editUserBalance');

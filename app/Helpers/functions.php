@@ -90,10 +90,92 @@ if (!function_exists('currentAdminOrderDeliveryStatus')) {
             case DELIVERY_STATUS_DELIVERED:
                 $status = 'Đã giao hàng';
                 break;
+            case DELIVERY_STATUS_PENDING:
+                $status = 'Tạm hoãn xử lí';
+                break;
             default:
                 $status = 'Chưa xử lí';
                 break;
         }
         return $status;
+    }
+}
+
+if (!function_exists('cssClassDeliveryStatus')) {
+    function cssClassDeliveryStatus($deliveryStatus)
+    {
+        $className = '';
+        switch ($deliveryStatus) {
+            case DELIVERY_STATUS_REQUEST:
+                $className = 'order-request';
+                break;
+            case DELIVERY_STATUS_CANCELED:
+                $className = 'order-canceled';
+                break;
+            case DELIVERY_STATUS_CONFIRMED:
+                $className = 'order-confirmed';
+                break;
+            case DELIVERY_STATUS_DELIVERING:
+                $className = 'order-delivering';
+                break;
+            case DELIVERY_STATUS_DELIVERED:
+                $className = 'order-delivered';
+                break;
+            case DELIVERY_STATUS_PENDING:
+                $className = 'order-pending';
+                break;
+            default:
+                $className = 'order-request';
+                break;
+        }
+        return $className;
+    }
+}
+
+if (!function_exists('getProperNextDeliveryOrderStatuses')) {
+    function getProperNextDeliveryOrderStatuses($currentStatus)
+    {
+        $nextStatusList = [];
+        switch ($currentStatus) {
+            case DELIVERY_STATUS_REQUEST:
+                $nextStatusList = [
+                    DELIVERY_STATUS_CONFIRMED,
+                    DELIVERY_STATUS_PENDING,
+                    DELIVERY_STATUS_DELIVERING,
+                    DELIVERY_STATUS_CANCELED,
+                ];
+                break;
+            case DELIVERY_STATUS_PENDING:
+                $nextStatusList = [
+                    DELIVERY_STATUS_CONFIRMED,
+                    DELIVERY_STATUS_DELIVERING,
+                    DELIVERY_STATUS_CANCELED,
+                ];
+                break;
+            case DELIVERY_STATUS_CONFIRMED:
+                $nextStatusList = [
+                    DELIVERY_STATUS_PENDING,
+                    DELIVERY_STATUS_DELIVERING,
+                    DELIVERY_STATUS_DELIVERED,
+                    DELIVERY_STATUS_CANCELED,
+                ];
+                break;
+            case DELIVERY_STATUS_DELIVERING:
+                $nextStatusList = [
+                    DELIVERY_STATUS_DELIVERED,
+                    DELIVERY_STATUS_PENDING,
+                    DELIVERY_STATUS_CANCELED,
+                ];
+                break;
+            case DELIVERY_STATUS_DELIVERED:
+                $nextStatusList = [
+                ];
+                break;
+            default:
+                $nextStatusList = [
+                ];
+                break;
+        }
+        return $nextStatusList;
     }
 }

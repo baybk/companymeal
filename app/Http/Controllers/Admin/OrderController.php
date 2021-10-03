@@ -6,6 +6,7 @@ use App\Http\Contract\UserBusiness;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller {
     use UserBusiness;
@@ -27,5 +28,17 @@ class OrderController extends Controller {
     {
         $order = Order::findOrFail($id)->toArray();
         return view('admin.order.detail', compact('order'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $inputData = $request->all();
+        if (!isset($inputData['delivery_status']) || (isset($inputData['delivery_status'])  && empty($inputData['delivery_status']) ) ) {
+            unset($inputData['delivery_status']);
+        }
+        $order->update($inputData);
+        $request->session()->flash('message', "Cập nhật thành công!");
+        return redirect()->route('admin.orders.show', ['id' => $id]);
     }
 }

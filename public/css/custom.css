@@ -1,0 +1,153 @@
+.name {
+    font-size: 18px;
+    color: #38c172;
+    /* text-decoration-line: underline; */
+    font-weight: 300;
+    padding-left: 1rem;
+    display: inline-block;
+    margin-right: 2rem;
+    width: 13rem;
+}
+
+.mytable {
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+font-size: 0.8rem;
+}
+
+.mytd, .myth {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;
+}
+
+h4 {
+    margin-top: 2rem;
+}
+
+.subtract {
+    font-size: 1.5rem;
+}
+
+.navbarDropdown {
+    padding: 5px;
+    background: cornflowerblue;
+    border-radius: 8px;
+    margin-right: 4px;
+    color: #f8fafc;
+}
+
+.onepeo {
+    margin-bottom: 0.7rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 3px;
+}
+
+.onecb {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(1.8); /* IE */
+    -moz-transform: scale(1.8); /* FF */
+    -webkit-transform: scale(1.8); /* Safari and Chrome */
+    -o-transform: scale(1.8); /* Opera */
+    transform: scale(1.8);
+    padding: 10px;
+    margin-right: 1rem;
+}
+
+.paginate {
+    float: right;
+    margin-top: 1rem;
+}
+.balance-total {
+    display: inline-block;
+    float: right;
+}
+
+.h5-guide {
+    color: #c51f1a;
+    margin-bottom: 1rem;
+}
+
+.onemoney {
+    font-family: -webkit-pictograph;
+}
+
+.submit-order-1 {
+    width: 60%;
+    background: #1472ed;
+    color: #fff;
+    outline: none;
+    border: none;
+    display: block;
+    padding: 0.7rem 0.3rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    margin: 0px auto 13px auto;
+}
+
+.submit-order-3 {
+    float: right;
+    min-width: 30%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.submit-order-2 {
+    min-width: 30%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.red {
+    color:#c51f1a !important;
+}
+.linethrough {
+    text-decoration: line-through !important;
+}
+
+.btn-delete {
+    font-size: 1rem;
+    background: chocolate;
+    color: #fff;
+    border: none;
+    padding: 0.2rem 0.3rem;
+    border-radius: 0.2rem;
+}
+.my-nav-link {
+    margin: 0.2rem;
+    background: cornflowerblue;
+    border-radius: 8px;
+    padding-left: 0.5rem !important;
+}
+.my-nav-link:hover {
+    text-decoration: underline;
+}
+.message-success{
+    color: #33b995;
+    text-align: center;
+}
+.message-error{
+    color: red;
+    text-align: center;
+}
+.right-box{
+    width: 20rem;
+}
+
+.order-request{
+    color: green;
+}
+.order-pending{
+    color: chocolate;
+}
+.order-confirmed{
+    color: rgb(189, 51, 168);
+}
+.order-delivering{
+    color: rgb(4, 165, 157);
+}
+.order-delivered{
+    color: blue;
+}
+.order-canceled{
+    color: red;
+}
