@@ -15,7 +15,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $inputData = $request->all();
-        // Log::info($inputData);
+        Log::info($inputData);
         $inputData['payment_status'] = PAYMENT_STATUS_WAITING;
         $inputData['delivery_status'] = DELIVERY_STATUS_REQUEST;
         try {

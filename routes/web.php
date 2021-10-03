@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PassportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,12 +26,20 @@ Route::get('/', function () {
 Route::get('logs', [LogController::class, 'getLogs'])->name('logs.getLogs');
 Route::get('verify-login', [LoginController::class, 'verifyLogin'])->name('verifyLogin');
 Route::post('verify-login', [LoginController::class, 'postVerifyLogin'])->name('postVerifyLogin');
+Route::get('get-csrf-tk', [PassportController::class, 'getCsrfTk']);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/register-team', [App\Http\Controllers\HomeController::class, 'registerAdminAndTeam'])->name('registerTeam');
 Route::post('/register-team', [App\Http\Controllers\HomeController::class, 'postRegisterAdminAndTeam'])->name('postRegisterTeam');
+
+Route::group([
+    'prefix' => 'orders',
+    'as' => 'orders.'
+], function () {
+    Route::post('', [OrderController::class, 'store'])->name('store');
+});
 
 Route::group([
     'prefix' => 'admin',
@@ -52,11 +61,4 @@ Route::group([
     Route::post('/orders2', [AdminController::class, 'postOrders2'])->name('postOrders2');
 
     Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('deleteUser');
-});
-
-Route::group([
-    'prefix' => 'orders',
-    'as' => 'orders.'
-], function () {
-    Route::post('', [OrderController::class, 'store'])->name('store');
 });

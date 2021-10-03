@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class PassportController extends Controller
@@ -52,5 +53,14 @@ class PassportController extends Controller
                 'user' => Auth::user()
             ]
         , 200);
+    }
+
+    public function getCsrfTk(Request $request)
+    {
+        return response()->json([
+            "success" => true,
+            "token" => csrf_token()
+        ],
+        200);
     }
 }
