@@ -20,8 +20,9 @@ class CreateOrdersTable extends Migration
             $table->string('customer_phone');
             $table->string('customer_email')->nullable()->default(null);
             $table->string('customer_address');
+            $table->unsignedInteger('total_price')->nullable()->default(null);
             $table->string('payment_status')->comment('enum: WAITING, PAID');
-            $table->string('delivery_status')->comment('enum: REQUEST, CONFIRMED, DELIVERING, DELIVERED, CANCELED');
+            $table->string('delivery_status')->comment('enum: REQUEST, PENDING, CONFIRMED, DELIVERING, DELIVERED, CANCELED');
             $table->json('lines')->comment('list products ordered');
             $table->text('general_note')->nullable()->default(null);
             $table->text('admin_change_history')->nullable()->default(null);

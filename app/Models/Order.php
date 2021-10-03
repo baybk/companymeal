@@ -22,6 +22,7 @@ class Order extends Model
         'delivery_status',
         'general_note',
         'lines',
+        'total_price'
     ];
 
     protected $casts = [

@@ -49,7 +49,8 @@ if (!function_exists('transOrderKey')) {
             'price' => 'Đơn giá',
             'note' => 'Ghi chú',
             'link' => 'Link sản phẩm',
-            'manager_link' => 'Link quản lí'
+            'manager_link' => 'Link quản lí',
+            'total_price' => 'Tổng tiền hàng dự kiến'
         ];
         if (array_key_exists($key, $listTrans)) {
             return $listTrans[$key];
