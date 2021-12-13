@@ -5,54 +5,38 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('CẬP NHẬT NGƯỜI DÙNG') }} : {{ $user->name }}</div>
+                <div class="card-header">Thành viên : {{ $user->name }}</div>
 
                 <div class="card-body">
-                    @if (session('error'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-
-                    <h4>(1) Thay đổi số dư (cưỡng ép)</h4>
-                    <form method="POST" action="{{ route('admin.editUserBalance', ['id' => $user->id]) }}">
-                        @csrf
-                        Cộng/trừ 1 lượng (VNĐ): <input name="money" type="text" /> <br>
-                        Lí do Cộng/trừ:_________<input name="reason" type="text" /> <br>
-                        Password:_____________<input name="pass" type="password" />
-                        <br>
-                        <input type="submit" value="Xác nhận">
-                    </form>
-
-                    <h4>(2) Thông tin user</h4>
+                    <h4>(1) Thông tin user</h4>
                     <div>Tên: {{ $user->name }}</div>
                     <div>Số dư hiện tại: {{ number_format($user->balance) }} VND</div>
 
-                    <h4>(3) Xoá user <button class="btn-delete" onclick="return submit()">Xác nhận</button> </h4>
+                    <h4>(2) Xoá user <button class="btn-delete" onclick="return submit()">Xác nhận</button> </h4>
 
-                    <h4>(4) Lịch sử thay đổi số dư</h4>
+                    <h4>(3) Các task thuộc sprint hiện tại</h4>
                     <table class="mytable">
                         <thead>
-                            <th class="myth">Ngày</th>
-                            <th class="myth">Lí do</th>
-                            <th class="myth">Số dư trước biến động</th>
-                            <th class="myth">Lượng thay đổi</th>
+                            <th class="myth">Tên task</th>
+                            <th class="myth">Số hours</th>
+                            <th class="myth">Ngày bắt đầu</th>
+                            <th class="myth">Ngày kết thúc</th>
                         </thead>
 
                         <tbody>
-                            @foreach ($userHistories as $history)
+                            @foreach ($currentTasks as $task)
                             <tr>
-                                <td class="mytd">{{ $history->created_at }}</td>
-                                <td class="mytd">{{ $history->reason }}</td>
-                                <td class="mytd">{{ $history->balance_before_change }} VND</td>
-                                <td class="mytd">{{ $history->change_number }} VND</td>
+                                <td class="mytd">{{ $task->name }}</td>
+                                <td class="mytd">{{ $task->hours }}</td>
+                                <td class="mytd">{{ $task->from_date }}</td>
+                                <td class="mytd">{{ $task->end_date }}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
 
                     <div class="paginate">
-                        {{ $userHistories->links() }}
+                        
                     </div>
                 </div>
             </div>

@@ -42,4 +42,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/orders2', [AdminController::class, 'postOrders2'])->name('admin.postOrders2');
 
     Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
+
+    Route::get('/create-sprint', [AdminController::class, 'createSprint'])->name('admin.createSprint');
+    Route::post('/create-sprint', [AdminController::class, 'postCreateSprint'])->name('admin.postCreateSprint');
+
+    Route::get('/create-task', [AdminController::class, 'createTask'])->name('admin.createTask');
+    Route::post('/create-task', [AdminController::class, 'postCreateTask'])->name('admin.postCreateTask');
 });

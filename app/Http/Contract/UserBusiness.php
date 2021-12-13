@@ -2,6 +2,7 @@
 
 namespace App\Http\Contract;
 
+use App\Models\Sprint;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\UsersTeam;
@@ -43,6 +44,14 @@ trait UserBusiness
             return null;
         }
         return Team::findOrFail(session('team_id'));
+    }
+
+    public function getCurrentSprint()
+    {
+        $currentSprint = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->first();
+        return $currentSprint;
     }
 
     public function randVerifyLoginCode()

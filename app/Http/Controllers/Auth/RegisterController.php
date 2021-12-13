@@ -56,7 +56,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -72,8 +72,8 @@ class RegisterController extends Controller
         $code = generateNewCode();
         $user = User::create([
             'name' => $data['name'],
-            'email' => $code . '@gmail.com',
-            'password' => Hash::make($code),
+            'email' => $data['email'],
+            'password' => Hash::make('12345678'),
         ]);
         UsersTeam::create([
             'user_id' => $user->id,
@@ -87,9 +87,9 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
-        $user->email = $user->id . '@gmail.com';
-        $user->password = Hash::make($user->id . '');
-        $user->save();
+        // $user->email = $user->id . '@gmail.com';
+        // $user->password = Hash::make($user->id . '');
+        // $user->save();
         session()->flash('message', __('messages.register_team_success_please_login_to_manage_your_team'));
         return redirect('/login');
     }

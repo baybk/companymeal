@@ -197,9 +197,10 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <a class="navbarDropdown" href="/home">Home</a>
+                                <a class="navbarDropdown" href="/home">Thành viên</a>
                                 @if (isAdminUserHelper() == 'admin') 
-                                    <a class="navbarDropdown" href="{{ route('admin.orders2') }}">Yêu cầu trừ số dư</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.createSprint') }}">Tạo sprint</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.createTask') }}">Tạo task</a>
                                     <a class="navbarDropdown" href="{{ route('register') }}">Thêm thành viên</a>
                                     <a class="navbarDropdown" href="{{ route('registerTeam') }}">{{ __('messages.register_your_team') }}</a>
                                 @endif

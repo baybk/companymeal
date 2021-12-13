@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Contract\UserBusiness;
+use App\Models\Sprint;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,14 +38,11 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $users = $this->getUsersListInCurrentTeam();
-        // $users = User::where('name', '!=', FAKE_USER_NAME)->get();
-        $totalBalance = 0;
-        $selectedUserIdsForRandom = $request->session()->get('selected_user_ids', []);
+        $currentSprint = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->first();
 
-        foreach ($users as $user) {
-            $totalBalance = $totalBalance + $user->getBalanceInCurrentTeam();
-        }
-        return view('home', compact('users', 'totalBalance', 'selectedUserIdsForRandom'));
+        return view('home', compact('users', 'currentSprint'));
     }
 
     // THIS BELOW PART FOR CREATE TEAM

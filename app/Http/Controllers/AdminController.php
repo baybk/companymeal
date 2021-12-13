@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Contract\UserBusiness;
 use App\Models\BalanceChangeHistory;
 use App\Models\RemarkDatePaided;
+use App\Models\Sprint;
+use App\Models\Task;
 use App\Models\User;
 use App\Notifications\DailyBalanceNotification;
 use App\Notifications\RandomDeliverNotification;
@@ -110,8 +112,18 @@ class AdminController extends Controller
 
     public function editUserBalance(Request $request, $userId) {
         $user = User::findOrFail($userId);
-        $userHistories = $user->getBalanceChangeHistoriesInCurrentTeam();
-        return view('admin.editUserBalance', compact('userHistories', 'user'));
+        // $userHistories = $user->getBalanceChangeHistoriesInCurrentTeam();
+        $currentTasks =  Task::where(
+            'team_id', $this->getCurrentTeam()->id
+        )
+        ->where(
+            'sprint_id', $this->getCurrentSprint()->id
+        )
+        ->where(
+            'user_id', $userId
+        )
+        ->orderBy('id', 'desc')->get();
+        return view('admin.editUserBalance', compact('currentTasks', 'user'));
     }
 
     public function postEditUserBalance(Request $request, $userId) {
@@ -290,6 +302,38 @@ class AdminController extends Controller
         if ($user) {
             $user->delete();
         }
+        return redirect('/home');
+    }
+
+    public function createSprint(Request $request)
+    {
+        return view('auth.createSprint');
+    }
+
+    public function postCreateSprint(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $sprint = Sprint::create($requestData);
+        return redirect('/home');
+    }
+
+    public function createTask(Request $request)
+    {
+        $users = $this->getUsersListInCurrentTeam();
+        return view('auth.createTask', compact('users'));
+    }
+
+    public function postCreateTask(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $currentSprint = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->first();
+        $requestData['sprint_id'] = $currentSprint->id;
+
+        $sprint = Task::create($requestData);
         return redirect('/home');
     }
 }
