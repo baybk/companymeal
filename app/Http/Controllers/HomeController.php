@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Contract\UserBusiness;
 use App\Models\Sprint;
+use App\Models\Task;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,6 +42,19 @@ class HomeController extends Controller
         $currentSprint = Sprint::where(
             'team_id', $this->getCurrentTeam()->id
         )->orderBy('id', 'desc')->first();
+        foreach($users as &$user) {
+            $sumHours =  Task::where('team_id', $this->getCurrentTeam()->id)
+            ->where('sprint_id', $this->getCurrentSprint()->id)
+            ->where('user_id', $user->id)->sum('hours');
+            $text = "Đủ workload";
+            if ($sumHours < $user->hours_per_week) {
+                $text = "Chưa đủ workload (thiếu " . (string) ($user->hours_per_week - $sumHours) . " h)";
+            } else if ($sumHours > $user->hours_per_week) {
+                $text = "Vượt workload (" . (string) ($sumHours - $user->hours_per_week) . " h)";
+            }
+            $user->status_hours = $text;
+            $user->sum_hours = $sumHours;
+        }
 
         return view('home', compact('users', 'currentSprint'));
     }

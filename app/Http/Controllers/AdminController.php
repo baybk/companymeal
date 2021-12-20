@@ -127,39 +127,24 @@ class AdminController extends Controller
     }
 
     public function postEditUserBalance(Request $request, $userId) {
-        $user = User::findOrFail($userId);
+        $user = User::where(
+            'id', $userId
+        )->first();
         $adminUser = auth()->user();
         if (
-            !isset($request->money) || empty($request->money) ||
-            !isset($request->reason) || empty($request->reason) ||
-            !isset($request->pass) || empty($request->pass)
+            !$user || !$request->hours_per_week
         ) {
             $request->session()->flash('error', 'Vui lòng điền đủ thông tin');
             return redirect()->back()->withInput();
         }
-
-        if (
-            !Hash::check($request->pass, $adminUser->password)
-        ) {
-            $request->session()->flash('error', 'Pass not right');
-            return redirect()->back()->withInput();
-        }
-        
-        $changeMoney = (int) $request->money;
-        $oldBalance = $user->getBalanceInCurrentTeam();
-
         try {
             DB::beginTransaction();
             
-            $user->changeBalanceInCurrentTeam($changeMoney);
-
-            BalanceChangeHistory::create([
-                'user_id' => $userId,
-                'team_id' => $this->getCurrentTeam()->id,
-                'reason' => $request->reason,
-                'balance_before_change' => $oldBalance,
-                'change_number' => $changeMoney,
-            ]);
+            $user->hours_per_week = $request->hours_per_week;
+            if (!empty($request->email)) {
+                $user->email = $request->email;
+            }
+            $user->save();
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -168,14 +153,6 @@ class AdminController extends Controller
             $request->session()->flash('error', 'Có lỗi server khi xử lí với cơ sở dữ liệu');
             return redirect()->back()->withInput();
         }
-
-        try {
-            User::first()->notify(new ReportWhenChangeBalanceNotification($this->getDataForReport(REASON_EDIT_USER_BALANCE . ' ' . $user->name)));
-        } catch (\Throwable $th) {
-            Log::info($th->getMessage());
-            $this->writeLogBalanceReport('REPORT PRIVATE');
-        }
-
         return redirect('/home');
     }
 

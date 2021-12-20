@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Thành viên : {{ $user->name }}</div>
 
@@ -14,7 +14,16 @@
 
                     <h4>(2) Xoá user <button class="btn-delete" onclick="return submit()">Xác nhận</button> </h4>
 
-                    <h4>(3) Các task thuộc sprint hiện tại</h4>
+                    <h4>(3) Thay đổi hours per week</h4>
+                    <form method="POST" action="{{ route('admin.editUserBalance', ['id' => $user->id]) }}">
+                        @csrf
+                        Hours per week *: <input name="hours_per_week" type="number" /> <br>
+                        Email: <input name="email" type="email" /> <br>
+                        <br>
+                        <input type="submit" value="Xác nhận">
+                    </form>
+
+                    <h4>(4) Các task thuộc sprint hiện tại</h4>
                     <table class="mytable">
                         <thead>
                             <th class="myth">Tên task</th>
