@@ -11,6 +11,7 @@ class Sprint extends Model
 
     public $fillable = [
         'name',
-        'team_id'
+        'team_id',
+        'detail'
     ];
 }
