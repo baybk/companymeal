@@ -76,14 +76,14 @@ class LoginController extends Controller
             $user->save();
         }
 
-        Mail::send(
-                'auth.verify_login.mail',
-                ['code' => $code],
-                function($message) use ($data) {
-                    $message->to($data['to_email'])
-                            ->subject('Mã code đăng nhập');
-                }
-            );
+        // Mail::send(
+        //         'auth.verify_login.mail',
+        //         ['code' => $code],
+        //         function($message) use ($data) {
+        //             $message->to($data['to_email'])
+        //                     ->subject('Mã code đăng nhập');
+        //         }
+        //     );
         
         $toEmail = $request->email;
         session()->flash('toEmail', $toEmail);
@@ -96,10 +96,10 @@ class LoginController extends Controller
        
         $user = User::where('email', $request->email)->first();
         if (!$user) return redirect('/');
-        if ($user->login_code != trim($request->code)) {
-            session()->flash('my_error', 'Mã đăng nhập không hợp lệ');
-            return redirect('/verify-login');
-        }
+        // if ($user->login_code != trim($request->code)) {
+        //     session()->flash('my_error', 'Mã đăng nhập không hợp lệ');
+        //     return redirect('/verify-login');
+        // }
 
         $teamIdsOfUser = UsersTeam::where('user_id', $user->id)->groupBy('team_id')->pluck('team_id');
         if (count($teamIdsOfUser) <= 0 || !in_array($request->team_id, $teamIdsOfUser->toArray())) {

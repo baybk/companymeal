@@ -299,13 +299,25 @@ class AdminController extends Controller
     public function createTask(Request $request)
     {
         $users = $this->getUsersListInCurrentTeam();
-        return view('auth.createTask', compact('users'));
+        $stories = Story::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->get();
+        return view('auth.createTask', compact('users', 'stories'));
     }
 
     public function postCreateTask(Request $request)
     {
         $requestData = $request->all();
         $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $namePrefix = '';
+        if ($request->story) {
+            $namePrefix = "[" . $request->story . "]";
+            if ($request->task_type) {
+                $namePrefix = $namePrefix . "[" . $request->task_type . "]";
+            }
+        }
+
+        $requestData['name'] = $namePrefix . " " . $requestData['name'];
         $currentSprint = Sprint::where(
             'team_id', $this->getCurrentTeam()->id
         )->orderBy('id', 'desc')->first();

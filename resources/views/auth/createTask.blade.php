@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Tạo task</div>
 
@@ -15,6 +15,22 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">Tên task</label>
 
                             <div class="col-md-6">
+                                <select name="story">
+                                    <option value="">--------</option>
+                                    @foreach($stories as $story)
+                                    <option value="{{ $story->name }}">{{ $story->name }}_{{ $story->desc }}</option>
+                                    @endforeach
+                                    <option></option>
+                                </select>
+                                <select name="task_type">
+                                    <option value="">--------</option>
+                                    <option value="Backend">Backend</option>
+                                    <option value="Frontend">Frontend</option>
+                                    <option value="Design">Design</option>
+                                    <option value="BA">BA</option>
+                                    <option value="Database">Database</option>
+                                    <option value="Testing">Testing</option>
+                                </select>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
