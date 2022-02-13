@@ -43,8 +43,14 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
 
+    Route::get('/sprints', [AdminController::class, 'listSprint'])->name('admin.listSprint');
+    Route::get('/set-default-sprint/{sprintId}', [AdminController::class, 'setDefaultSprint'])->name('admin.setDefaultSprint');
     Route::get('/create-sprint', [AdminController::class, 'createSprint'])->name('admin.createSprint');
     Route::post('/create-sprint', [AdminController::class, 'postCreateSprint'])->name('admin.postCreateSprint');
+
+    Route::get('/create-story', [AdminController::class, 'createStory'])->name('admin.createStory');
+    Route::get('/list-story', [AdminController::class, 'listStory'])->name('admin.listStory');
+    Route::post('/create-story', [AdminController::class, 'postCreateStory'])->name('admin.postCreateStory');
 
     Route::get('/create-task', [AdminController::class, 'createTask'])->name('admin.createTask');
     Route::post('/create-task', [AdminController::class, 'postCreateTask'])->name('admin.postCreateTask');

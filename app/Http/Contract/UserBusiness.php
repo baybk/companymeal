@@ -51,6 +51,20 @@ trait UserBusiness
         $currentSprint = Sprint::where(
             'team_id', $this->getCurrentTeam()->id
         )->orderBy('id', 'desc')->first();
+
+        $currentSprintId = session('current_sprint_id');
+        if (!$currentSprintId) {
+        } else {
+            $sprint = Sprint::where(
+                'team_id', $this->getCurrentTeam()->id,
+            )
+            ->where('id', $currentSprintId)
+            ->orderBy('id', 'desc')->first();
+            if ($sprint) {
+                $currentSprint = $sprint;
+            }
+        }
+        
         return $currentSprint;
     }
 

@@ -95,6 +95,7 @@ class LoginController extends Controller
         $this->validateLogin($request);
        
         $user = User::where('email', $request->email)->first();
+        if (!$user) return redirect('/');
         if ($user->login_code != trim($request->code)) {
             session()->flash('my_error', 'Mã đăng nhập không hợp lệ');
             return redirect('/verify-login');

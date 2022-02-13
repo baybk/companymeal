@@ -199,10 +199,14 @@
 
                                 <a class="navbarDropdown" href="/home">Thành viên</a>
                                 @if (isAdminUserHelper() == 'admin') 
-                                    <a class="navbarDropdown" href="{{ route('admin.createSprint') }}">Tạo sprint</a>
-                                    <a class="navbarDropdown" href="{{ route('admin.createTask') }}">Tạo task</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.listSprint') }}">List sprint</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.createSprint') }}">Tạo sprint</a> |
+                                    <a class="navbarDropdown" href="{{ route('admin.createTask') }}">Tạo task</a> |
+
+                                    <a class="navbarDropdown" href="{{ route('admin.listStory') }}">List story</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.createStory') }}">Tạo story</a> |
                                     <a class="navbarDropdown" href="{{ route('register') }}">Thêm thành viên</a>
-                                    <a class="navbarDropdown" href="{{ route('registerTeam') }}">{{ __('messages.register_your_team') }}</a>
+                                    <a class="navbarDropdown" href="{{ route('registerTeam') }}">Đăng kí nhóm</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

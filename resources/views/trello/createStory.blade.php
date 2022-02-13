@@ -5,14 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('messages.add_member') }}</div>
+                <div class="card-header">Thêm story</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.postCreateSprint') }}">
+                    <form method="POST" action="{{ route('admin.postCreateStory') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-2 col-form-label text-md-right">Tên sprint</label>
+                            <label for="name" class="col-md-2 col-form-label text-md-right">Kí hiệu story</label>
 
                             <div class="col-md-8">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -26,11 +26,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-2 col-form-label text-md-right">Mô tả:</label>
+                            <label for="desc" class="col-md-2 col-form-label text-md-right">Mô tả:</label>
 
                             <div class="col-md-8">
-                                <!-- <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus> -->
-                                <textarea rows="20" cols="100" name="detail" >{{ old('name') }}</textarea>
+                                <input id="desc" type="text" class="form-control @error('desc') is-invalid @enderror" name="desc" value="{{ old('desc') }}" required autocomplete="desc" autofocus>
                             </div>
                         </div>
 

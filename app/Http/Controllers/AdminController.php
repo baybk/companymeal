@@ -6,6 +6,7 @@ use App\Http\Contract\UserBusiness;
 use App\Models\BalanceChangeHistory;
 use App\Models\RemarkDatePaided;
 use App\Models\Sprint;
+use App\Models\Story;
 use App\Models\Task;
 use App\Models\User;
 use App\Notifications\DailyBalanceNotification;
@@ -117,7 +118,7 @@ class AdminController extends Controller
             'team_id', $this->getCurrentTeam()->id
         )
         ->where(
-            'sprint_id', $this->getCurrentSprint()->id
+            'sprint_id', $this->getCurrentSprint() ? $this->getCurrentSprint()->id : 0
         )
         ->where(
             'user_id', $userId
@@ -312,5 +313,57 @@ class AdminController extends Controller
 
         $sprint = Task::create($requestData);
         return redirect('/home');
+    }
+
+    public function listSprint(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $sprints = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->get();
+
+        $currentSprint = $this->getCurrentSprint() ? $this->getCurrentSprint()->id : 0;
+
+        return view('trello.list-sprint', compact('sprints', 'currentSprint'));
+    }
+
+    public function setDefaultSprint(Request $request, $sprintId)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $sprint = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )
+        ->where('id', $sprintId)
+        ->first();
+        if (!$sprint) return redirect('/');
+        session()->put('current_sprint_id', (int)$sprintId);
+
+        return redirect()->route('admin.listSprint');
+    }
+
+    public function listStory(Request $request)
+    {
+        $requestData = $request->all();
+        $stories = Story::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->get();
+        return view('trello.listStory', compact('stories'));
+    }
+
+    public function createStory(Request $request)
+    {
+        return view('trello.createStory');
+    }
+
+    public function postCreateStory(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $stories = Story::create(
+            $requestData
+        );
+        return redirect()->route('admin.listStory');
     }
 }

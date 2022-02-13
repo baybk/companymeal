@@ -39,13 +39,16 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $users = $this->getUsersListInCurrentTeam();
-        $currentSprint = Sprint::where(
-            'team_id', $this->getCurrentTeam()->id
-        )->orderBy('id', 'desc')->first();
+        // $currentSprint = Sprint::where(
+        //     'team_id', $this->getCurrentTeam()->id
+        // )->orderBy('id', 'desc')->first();
+        $currentSprint = $this->getCurrentSprint();
         foreach($users as &$user) {
-            $sumHours =  Task::where('team_id', $this->getCurrentTeam()->id)
-            ->where('sprint_id', $this->getCurrentSprint()->id)
-            ->where('user_id', $user->id)->sum('hours');
+            $sumHours = 0;
+            if ($this->getCurrentSprint())
+                $sumHours =  Task::where('team_id', $this->getCurrentTeam()->id)
+                ->where('sprint_id', $this->getCurrentSprint()->id)
+                ->where('user_id', $user->id)->sum('hours');
             $text = "Đủ workload";
             if ($sumHours < $user->hours_per_week) {
                 $text = "Chưa đủ workload (thiếu " . (string) ($user->hours_per_week - $sumHours) . " h)";

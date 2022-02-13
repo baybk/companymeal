@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="subtract">Sprint hiện tại:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</span> 
+                    <span class="subtract">Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</span> 
                 </div>
 
                 <div class="card-body" style="overflow-x: auto;">
@@ -45,6 +45,18 @@
                     <div class="paginate">
                         <!-- $users->links() -->
                     </div>
+                </div>
+            </div>
+
+
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="subtract">Chi tiết Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</span> 
+                </div>
+
+                <div class="card-body" style="overflow-x: auto;">
+                    <textarea rows="20" cols="100" name="detail" >{{ $currentSprint ? $currentSprint->detail : '' }}</textarea>
                 </div>
             </div>
         </div>
