@@ -355,6 +355,27 @@ class AdminController extends Controller
         return redirect()->route('admin.listSprint');
     }
 
+    public function editTask(Request $request, $taskId)
+    {
+        $task = Task::findOrFail($taskId);
+        $users = $this->getUsersListInCurrentTeam();
+        $stories = Story::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->get();
+        return view('trello.edit-task', compact('task', 'stories', 'users'));
+    }
+
+    public function postEditTask(Request $request, $taskId)
+    {
+        $requestData = $request->all();
+        $task  = Task::findOrFail($taskId);
+        unset($requestData['_token']);
+        unset($requestData['story']);
+        unset($requestData['task_type']);
+        Task::where('id',$taskId)->update($requestData);
+        return redirect()->route('admin.editUserBalance', ['id' => $task->user_id]);
+    }
+
     public function setDefaultSprint(Request $request, $sprintId)
     {
         $requestData = $request->all();
