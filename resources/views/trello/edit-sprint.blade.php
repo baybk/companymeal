@@ -5,17 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('messages.add_member') }}</div>
+                <div class="card-header">Cập nhật Sprint</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.postCreateSprint') }}">
+                    <form method="POST" action="{{ route('admin.postEditSprint', ['sprintId'=>$sprint->id]) }}">
                         @csrf
 
                         <div class="form-group row">
                             <label for="name" class="col-md-2 col-form-label text-md-right">Tên sprint</label>
 
                             <div class="col-md-8">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $sprint->name) }}" required autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -30,7 +30,7 @@
 
                             <div class="col-md-8">
                                 <!-- <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus> -->
-                                <textarea rows="20" cols="100" name="detail" >{{ old('detail') }}</textarea>
+                                <textarea rows="20" cols="100" name="detail" >{{ old('detail', $sprint->detail) }}</textarea>
                             </div>
                         </div>
 

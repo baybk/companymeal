@@ -33,7 +33,8 @@
                                 <td class="mytd">NO</td>
                                 @endif
                                 <td class="mytd">
-                                    <a href="{{ route('admin.setDefaultSprint', ['sprintId'=>$sprint->id]) }}">Set default sprint</a>
+                                    <a href="{{ route('admin.setDefaultSprint', ['sprintId'=>$sprint->id]) }}">Set default sprint</a> |
+                                    <a href="{{ route('admin.editSprint', ['sprintId'=>$sprint->id]) }}">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

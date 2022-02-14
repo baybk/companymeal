@@ -340,6 +340,21 @@ class AdminController extends Controller
         return view('trello.list-sprint', compact('sprints', 'currentSprint'));
     }
 
+    public function editSprint(Request $request, $sprintId)
+    {
+        $sprint = Sprint::findOrFail($sprintId);
+        return view('trello.edit-sprint', compact('sprint'));
+    }
+
+    public function postEditSprint(Request $request, $sprintId)
+    {
+        $requestData = $request->all();
+        $sprint  = Sprint::findOrFail($sprintId);
+        unset($requestData['_token']);
+        Sprint::where('id',$sprintId)->update($requestData);
+        return redirect()->route('admin.listSprint');
+    }
+
     public function setDefaultSprint(Request $request, $sprintId)
     {
         $requestData = $request->all();
