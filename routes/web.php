@@ -58,4 +58,5 @@ Route::prefix('admin')->group(function () {
     Route::post('/create-task', [AdminController::class, 'postCreateTask'])->name('admin.postCreateTask');
     Route::get('/tasks/edit/{taskId}', [AdminController::class, 'editTask'])->name('admin.editTask');
     Route::post('/tasks/edit/{taskId}', [AdminController::class, 'postEditTask'])->name('admin.postEditTask');
+    Route::get('/tasks/today', [AdminController::class, 'todayTask'])->name('admin.todayTask');
 });

@@ -414,4 +414,24 @@ class AdminController extends Controller
         );
         return redirect()->route('admin.listStory');
     }
+
+    public function todayTask(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $data = [];
+        $listUsers = $this->getUsersListInCurrentTeam();
+        foreach($listUsers as $user) {
+            $data_one_user = [
+                "user" => $user->toArray(),
+                "tasks" => [
+                ]
+            ];
+            $tasksOneUser =  Task::where('team_id', $this->getCurrentTeam()->id)
+                                    ->where('sprint_id', $this->getCurrentSprint() ? $this->getCurrentSprint()->id : 0)
+                                    ->whereDateBetween();
+        }
+
+        return redirect()->route('admin.listStory');
+    }
 }
