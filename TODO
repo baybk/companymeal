@@ -1,0 +1,28 @@
+// balance mỗi user nằm trong bảng users_teams -> tính toán lại
+// Đăng kí user -> add team đó
+// Them team_id vo bang date_remark -> sua code postOrder
+
+? dang nhap = sdt thay vi email ? email chi danh cho admin thoi
+// fix Them user -> fix khong can login vao user moi
+
+// Xoa user
+
+? Admin chi co the thao tac vs cac doi tuong cua nhóm mình -> không xoá, sửa user nhóm khác
+? colspans cho history date request, neu 1 ngay co nhieu request voi li do # nhau
+
+? logic tao nhom : màn hình, hiện 4 field: name, email, pass, team_name  => check neu email chưa ton tai, thi tao tai khoan : nếu tồn tại thì kêu đăng nhập rồi tạo nhom
+
+
+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
+
+git push https://baybk@github.com/baybk/companymeal.git
+php artisan serve --port=8888
+
+
+####  NOTE TRELLO
+- List sprints (có chọn Sprint xem hiện tại (lưu session current_spirnt_id + sửa hàm GetCurrentSprint))
+- Edit sprint (co them detail)
+- Edit Task (co them detail)
+
+###
+Chọn select các task Today , để gửi mail cho thành viên

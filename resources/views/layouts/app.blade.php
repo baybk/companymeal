@@ -203,12 +203,11 @@
                                     <a class="navbarDropdown" href="{{ route('admin.listSprint') }}">List sprint</a>
                                     <a class="navbarDropdown" href="{{ route('admin.createSprint') }}">Tạo sprint</a> |
 
-                                    <a class="navbarDropdown" href="#">Today task</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.todayTask') }}">Today task</a>
                                     <a class="navbarDropdown" href="{{ route('admin.createTask') }}">Tạo task</a> |
 
                                     <a class="navbarDropdown" href="{{ route('admin.listStory') }}">List story</a>
-                                    <a class="navbarDropdown" href="{{ route('admin.createStory') }}">Tạo story</a> |
-                                    <a class="navbarDropdown" href="{{ route('registerTeam') }}">Đăng kí nhóm</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.createStory') }}">Tạo story</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -217,6 +216,8 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('messages.logout') }}
                                     </a>
+
+                                    <a class="dropdown-item" href="{{ route('registerTeam') }}">Đăng kí nhóm</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

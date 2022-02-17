@@ -5,7 +5,11 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Tạo task</div>
+                <div class="card-header">Tạo task
+                    @if($currentSprint != null && $latestSprint != null && $latestSprint->id != $currentSprint->id)
+                    <i style="color:red">(Chú ý: Bạn đang xem sprint không phải mới nhất)</i>
+                    @endif
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.postCreateTask') }}">

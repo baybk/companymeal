@@ -302,7 +302,11 @@ class AdminController extends Controller
         $stories = Story::where(
             'team_id', $this->getCurrentTeam()->id
         )->get();
-        return view('auth.createTask', compact('users', 'stories'));
+        $latestSprint = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->first();
+        $currentSprint = $this->getCurrentSprint();
+        return view('auth.createTask', compact('users', 'stories', 'latestSprint', 'currentSprint'));
     }
 
     public function postCreateTask(Request $request)
@@ -427,11 +431,18 @@ class AdminController extends Controller
                 "tasks" => [
                 ]
             ];
+            $now = Carbon::now()->toDateString();
             $tasksOneUser =  Task::where('team_id', $this->getCurrentTeam()->id)
                                     ->where('sprint_id', $this->getCurrentSprint() ? $this->getCurrentSprint()->id : 0)
-                                    ->whereDateBetween();
+                                    ->whereDate('from_date', '<=', $now)
+                                    ->whereDate('end_date', '>=', $now)
+                                    ->where('user_id', $user->id)
+                                    ->orderBy('id', 'desc')
+                                    ->get();
+            $data_one_user['tasks'] = $tasksOneUser;
+            $data[] = $data_one_user;
         }
 
-        return redirect()->route('admin.listStory');
+        return view('trello.today-tasks', compact('data'));
     }
 }
