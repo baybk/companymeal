@@ -72,7 +72,7 @@
                             <label for="from_date" class="col-md-4 col-form-label text-md-right">Ngày Bắt đầu</label>
 
                             <div class="col-md-6">
-                                <input id="from_date" type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date', $task->from_date) }}" required autocomplete="from_date" autofocus>
+                                <input style="display:inline;width:70%" id="from_date" type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date', $task->from_date) }}" required autocomplete="from_date" autofocus>
                             </div>
                         </div>
 
@@ -80,14 +80,23 @@
                             <label for="end_date" class="col-md-4 col-form-label text-md-right">Ngày Kết thúc</label>
 
                             <div class="col-md-6">
-                                <input id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" value="{{ old('end_date', $task->end_date) }}" required autocomplete="end_date" autofocus>
+                                <input style="display:inline;width:70%" id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" value="{{ old('end_date', $task->end_date) }}" required autocomplete="end_date" autofocus>
+                                <input placeholder="Đến giờ" style="display:inline;width:20%" name="end_time" max="24" type="number" class="form-control" value="{{ old('end_time', $task->end_time) }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="progress" class="col-md-4 col-form-label text-md-right">Tiến độ (%)</label>
+
+                            <div class="col-md-6">
+                                <input style="display:inline;width:40%" max="100" name="progress" type="number" class="form-control @error('progress') is-invalid @enderror" value="{{ old('progress', $task->progress) }}" required autocomplete="progress" autofocus>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('messages.add') }}
+                                    Sửa
                                 </button>
                             </div>
                         </div>

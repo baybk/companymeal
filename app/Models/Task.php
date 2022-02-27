@@ -18,6 +18,9 @@ class Task extends Model
         'hours',
         'story_point',
         'user_id',
-        'detail'
+        'detail',
+        'progress',
+        'from_time',
+        'end_time'
     ];
 }

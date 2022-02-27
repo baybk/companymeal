@@ -69,7 +69,7 @@
                             <label for="from_date" class="col-md-4 col-form-label text-md-right">Ngày Bắt đầu</label>
 
                             <div class="col-md-6">
-                                <input id="from_date" type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date') }}" required autocomplete="from_date" autofocus>
+                                <input style="display:inline;width:70%" id="from_date" type="date" class="form-control @error('from_date') is-invalid @enderror" name="from_date" value="{{ old('from_date') }}" required autocomplete="from_date" autofocus>
                             </div>
                         </div>
 
@@ -77,7 +77,8 @@
                             <label for="end_date" class="col-md-4 col-form-label text-md-right">Ngày Kết thúc</label>
 
                             <div class="col-md-6">
-                                <input id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" value="{{ old('end_date') }}" required autocomplete="end_date" autofocus>
+                                <input style="display:inline;width:70%" id="end_date" type="date" class="form-control @error('end_date') is-invalid @enderror" name="end_date" value="{{ old('end_date') }}" required autocomplete="end_date" autofocus>
+                                <input placeholder="Đến giờ" style="display:inline;width:20%" max="24" name="end_time" type="number" class="form-control">
                             </div>
                         </div>
 

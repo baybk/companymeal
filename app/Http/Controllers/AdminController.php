@@ -123,7 +123,7 @@ class AdminController extends Controller
         ->where(
             'user_id', $userId
         )
-        ->orderBy('id', 'desc')->get();
+        ->orderBy('from_date', 'asc')->get();
         return view('admin.editUserBalance', compact('currentTasks', 'user'));
     }
 
@@ -326,9 +326,8 @@ class AdminController extends Controller
             'team_id', $this->getCurrentTeam()->id
         )->orderBy('id', 'desc')->first();
         $requestData['sprint_id'] = $currentSprint->id;
-
         $sprint = Task::create($requestData);
-        return redirect('/home');
+        return redirect()->route('admin.todayTask');
     }
 
     public function listSprint(Request $request)
@@ -377,7 +376,7 @@ class AdminController extends Controller
         unset($requestData['story']);
         unset($requestData['task_type']);
         Task::where('id',$taskId)->update($requestData);
-        return redirect()->route('admin.editUserBalance', ['id' => $task->user_id]);
+        return redirect()->route('admin.todayTask');
     }
 
     public function setDefaultSprint(Request $request, $sprintId)
@@ -425,6 +424,7 @@ class AdminController extends Controller
         $requestData['team_id'] = $this->getCurrentTeam()->id;
         $data = [];
         $listUsers = $this->getUsersListInCurrentTeam();
+        $isAllTask = false;
         foreach($listUsers as $user) {
             $data_one_user = [
                 "user" => $user->toArray(),
@@ -437,12 +437,20 @@ class AdminController extends Controller
                                     ->whereDate('from_date', '<=', $now)
                                     ->whereDate('end_date', '>=', $now)
                                     ->where('user_id', $user->id)
-                                    ->orderBy('id', 'desc')
+                                    ->orderBy('from_date', 'asc')
                                     ->get();
+            if (isset($requestData['is_all'])) {
+                $isAllTask = true;
+                $tasksOneUser =  Task::where('team_id', $this->getCurrentTeam()->id)
+                                    ->where('sprint_id', $this->getCurrentSprint() ? $this->getCurrentSprint()->id : 0)
+                                    ->where('user_id', $user->id)
+                                    ->orderBy('from_date', 'asc')
+                                    ->get();
+            }
             $data_one_user['tasks'] = $tasksOneUser;
             $data[] = $data_one_user;
         }
 
-        return view('trello.today-tasks', compact('data'));
+        return view('trello.today-tasks', compact('data', 'isAllTask'));
     }
 }
