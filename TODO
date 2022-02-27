@@ -13,7 +13,7 @@
 ? logic tao nhom : màn hình, hiện 4 field: name, email, pass, team_name  => check neu email chưa ton tai, thi tao tai khoan : nếu tồn tại thì kêu đăng nhập rồi tạo nhom
 
 
-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
+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
 
 git push https://baybk@github.com/baybk/companymeal.git
 php artisan serve --port=8888
