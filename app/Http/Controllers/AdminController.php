@@ -177,7 +177,7 @@ class AdminController extends Controller
     }
 
     public function orders2() {
-        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $users = User::where('name', '!=', 'fakeUser1')->orderBy('id', 'asc')->get();
         $lastPaidedList = RemarkDatePaided::orderBy('id', 'desc')->simplePaginate(10);
         return view('admin.orders2', compact('users', 'lastPaidedList'));
     }

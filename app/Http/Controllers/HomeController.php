@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::where('name', '!=', 'fakeUser1')->get();
+        $users = User::where('name', '!=', 'fakeUser1')->orderBy('id', 'asc')->get();
         $totalBalance = 0;
         $selectedUserIdsForRandom = $request->session()->get('selected_user_ids', []);
 
