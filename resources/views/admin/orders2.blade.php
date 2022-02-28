@@ -5,7 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header"><span class="subtract">Request trừ tiền ( cho ngày {{ date('d-m-Y') }} )</span></div>
+                <div class="card-header">
+                    <span class="">Request trừ tiền ( cho ngày {{ date('d-m-Y') }} )</span>
+                    <span style="float: right;">Số người chọn: <i id="select_qty">0</i> | Số tiền: <i id="select_money">0</i></span>
+                </div>
 
                 <div class="card-body">
                     @if (session('error'))
@@ -32,7 +35,7 @@
                         <div class="onepeo">
                             <input class="onecb" name="userIds[]" type="checkbox" value="{{ $user->id }}" /> 
                             <a href="{{ route('admin.editUserBalance', ['id' => $user->id]) }}" class="name">{{ $user->name }}</a> 
-                            <input class="onemoney" name="list_money[{{ $user->id }}]" type="number" value="{{ env('MEAL_PRICE', 20000) }}" /> <span>VND</span>
+                            <input class="onemoney" id="money_{{$user->id}}" name="list_money[{{ $user->id }}]" type="number" value="{{ env('MEAL_PRICE', 20000) }}" /> <span>VND</span>
                             <br>
                         </div>
                         @endforeach
@@ -99,5 +102,30 @@
             return false;
         }
     }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function execOnChangeCb(elemThis) {
+        var select_qty = 0;
+        var select_money = 0;
+        $('.onecb').each(function(index, elem) {
+            if ($(elem).is(":checked")) {
+                select_qty = select_qty + 1;
+                select_money = select_money + parseInt($('#money_' + elem.value).val());
+            }
+        })
+        $('#select_qty').text(select_qty);
+        $('#select_money').text(numberWithCommas(select_money));
+    }
+
+    $(document).on('change', '.onecb', function() {
+        execOnChangeCb(this);
+    });
+
+    $(document).on('change', '.onemoney', function() {
+        execOnChangeCb(this);
+    });
 </script>
 @stop
