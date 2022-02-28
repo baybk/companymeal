@@ -379,6 +379,13 @@ class AdminController extends Controller
         return redirect()->route('admin.todayTask');
     }
 
+    public function deleteTask(Request $request, $taskId)
+    {
+        $task  = Task::findOrFail($taskId);
+        $task->delete();
+        return redirect()->route('admin.todayTask');
+    }
+
     public function setDefaultSprint(Request $request, $sprintId)
     {
         $requestData = $request->all();
@@ -406,6 +413,13 @@ class AdminController extends Controller
     public function createStory(Request $request)
     {
         return view('trello.createStory');
+    }
+
+    public function deleteStory(Request $request, $storyId)
+    {
+        $story = Story::findOrFail($storyId);
+        $story->delete();
+        return redirect()->route('admin.listStory');
     }
 
     public function postCreateStory(Request $request)

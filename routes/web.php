@@ -53,10 +53,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/create-story', [AdminController::class, 'createStory'])->name('admin.createStory');
     Route::get('/list-story', [AdminController::class, 'listStory'])->name('admin.listStory');
     Route::post('/create-story', [AdminController::class, 'postCreateStory'])->name('admin.postCreateStory');
+    Route::get('/delete-story/{storyId}', [AdminController::class, 'deleteStory'])->name('admin.deleteStory');
 
     Route::get('/create-task', [AdminController::class, 'createTask'])->name('admin.createTask');
     Route::post('/create-task', [AdminController::class, 'postCreateTask'])->name('admin.postCreateTask');
     Route::get('/tasks/edit/{taskId}', [AdminController::class, 'editTask'])->name('admin.editTask');
     Route::post('/tasks/edit/{taskId}', [AdminController::class, 'postEditTask'])->name('admin.postEditTask');
     Route::get('/tasks/today', [AdminController::class, 'todayTask'])->name('admin.todayTask');
+    Route::get('/delete-task/{taskId}', [AdminController::class, 'deleteTask'])->name('admin.deleteTask');
 });

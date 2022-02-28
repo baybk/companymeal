@@ -30,7 +30,7 @@
                                 <td class="mytd">{{ $story->name }}</td>
                                 <td class="mytd">{{ $story->desc }}</td>
                                 <td class="mytd">
-                                    <a href="">Chỉnh sửa</a>
+                                    <a href="{{ route('admin.deleteStory', ['storyId' => $story->id]) }}">Xoá</a>
                                 </td>
                             </tr>
                         @endforeach

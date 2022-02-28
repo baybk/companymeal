@@ -33,7 +33,8 @@
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->end_date)) }}  {{ $task->end_time }}:00h</td>
                                     <td class="mytd">({{ $task->progress }} %) </td>
                                     <td class="mytd">
-                                        <a href="{{ route('admin.editTask', ['taskId' => $task->id]) }}">Chỉnh sửa</a>
+                                        <a href="{{ route('admin.editTask', ['taskId' => $task->id]) }}">Chỉnh sửa</a> |
+                                        <a href="{{ route('admin.deleteTask', ['taskId' => $task->id]) }}">Xoá</a>
                                     </td>
                                 </tr>
                                 @endforeach
