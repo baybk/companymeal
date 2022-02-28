@@ -6,7 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="subtract">Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</span> 
+                    <a class="btn" href="#">Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</a> |
+                    <a class="btn mybtn" href="{{ route('register') }}">Thêm thành viên</a> 
                 </div>
 
                 <div class="card-body" style="overflow-x: auto;">

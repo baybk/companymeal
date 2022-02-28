@@ -7,7 +7,8 @@
             <div class="card">
                 <div class="card-header">
                     <a class="btn {{ $isTodayTask ? '' : 'red' }}" href="{{ route('admin.todayTask') }}">All tasks</a> |
-                    <a class="btn {{ $isTodayTask ? 'red' : '' }}" href="{{ route('admin.todayTask') }}?is_today_task=true">Today's tasks</a>
+                    <a class="btn {{ $isTodayTask ? 'red' : '' }}" href="{{ route('admin.todayTask') }}?is_today_task=true">Today's tasks</a> |
+                    <a class="btn mybtn" href="{{ route('admin.createTask') }}">Tạo task</a>
                 </div>
 
                 <div class="card-body">

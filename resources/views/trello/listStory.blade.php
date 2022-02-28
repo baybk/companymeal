@@ -6,7 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="subtract">Danh sách Story </span> 
+                    <a class="btn" href="#">Danh sách Story</a> |
+                    <a class="btn mybtn" href="{{ route('admin.createStory') }}">Tạo story</a>
                 </div>
 
                 <div class="card-body" style="overflow-x: auto;">

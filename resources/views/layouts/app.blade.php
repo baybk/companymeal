@@ -152,6 +152,9 @@
             color: #33b995;
             text-align: center;
         }
+        .mybtn{
+            border: 1px solid #d7d1d1;
+        }
     </style>
 </head>
 <body>
@@ -199,15 +202,12 @@
 
                                 <a class="navbarDropdown" href="/home">Thành viên</a>
                                 @if (isAdminUserHelper() == 'admin') 
-                                    <a class="navbarDropdown" href="{{ route('register') }}">Thêm thành viên</a>|
-                                    <a class="navbarDropdown" href="{{ route('admin.listSprint') }}">List sprint</a>
-                                    <a class="navbarDropdown" href="{{ route('admin.createSprint') }}">Tạo sprint</a> |
+                                    |
+                                    <a class="navbarDropdown" href="{{ route('admin.listSprint') }}">List sprint</a> |
 
-                                    <a class="navbarDropdown" href="{{ route('admin.todayTask') }}">Today task</a>
-                                    <a class="navbarDropdown" href="{{ route('admin.createTask') }}">Tạo task</a> |
+                                    <a class="navbarDropdown" href="{{ route('admin.todayTask') }}">List task</a> |
 
                                     <a class="navbarDropdown" href="{{ route('admin.listStory') }}">List story</a>
-                                    <a class="navbarDropdown" href="{{ route('admin.createStory') }}">Tạo story</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
