@@ -95,7 +95,8 @@
             $confirmIsYes = confirm('Bạn chắc chắn muốn request trừ tiền + random người mua?');
         }
         if (type == 2) {
-            $confirmIsYes = confirm('Bạn chắc chắn muốn request trừ tiền?');
+            var text = 'Bạn chắc chắn muốn trừ số tiền ' + $('#select_money').text() + ' đ (' + $('#select_qty').text() + ' người) ?'
+            $confirmIsYes = confirm(text);
         }
         if ($confirmIsYes == true) {
             document.getElementById('bt_submit_order').click();
