@@ -28,6 +28,7 @@
                                 </select>
                                 <select name="task_type">
                                     <option value="">--------</option>
+                                    <option value="Fullstack">Fullstack</option>
                                     <option value="Backend">Backend</option>
                                     <option value="Frontend">Frontend</option>
                                     <option value="Design">Design</option>
