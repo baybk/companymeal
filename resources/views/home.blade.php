@@ -4,6 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @if (session('success_message'))
+            <div class="message-success">
+                <strong>{{ session('success_message') }}</strong>
+            </div>
+            @endif
+
             <div class="card">
                 <div class="card-header">
                     <a class="btn" href="#">Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</a> |

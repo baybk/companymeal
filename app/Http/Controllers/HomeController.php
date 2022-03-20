@@ -68,18 +68,22 @@ class HomeController extends Controller
         return Validator::make($data, [
             'team_name' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
     protected function createAdminAndTeam(array $data)
     {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = User::where('email', $data['email'])->first();
+        if (!$user) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
         $team = Team::create([
             'name' => $data['team_name']
         ]);
@@ -104,6 +108,6 @@ class HomeController extends Controller
         session()->flash(
             'success_message', 
             __('messages.register_team_success_please_login_to_manage_your_team', ['team_id' => $user->team_id]));
-        return redirect('/login');
+        return redirect('/home');
     }
 }
