@@ -61,4 +61,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/tasks/edit/{taskId}', [AdminController::class, 'postEditTask'])->name('admin.postEditTask');
     Route::get('/tasks/today', [AdminController::class, 'todayTask'])->name('admin.todayTask');
     Route::get('/delete-task/{taskId}', [AdminController::class, 'deleteTask'])->name('admin.deleteTask');
+    Route::get('/move-doing-task/{taskId}', [AdminController::class, 'moveDoingTask'])->name('admin.moveDoingTask');
+    Route::get('/check-done-task/{taskId}', [AdminController::class, 'checkDoneTask'])->name('admin.checkDoneTask');
 });

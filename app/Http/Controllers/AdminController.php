@@ -386,6 +386,22 @@ class AdminController extends Controller
         return redirect()->route('admin.todayTask');
     }
 
+    public function moveDoingTask(Request $request, $taskId)
+    {
+        $task  = Task::findOrFail($taskId);
+        $task->progress = 10;
+        $task->save();
+        return redirect()->route('admin.todayTask');
+    }
+
+    public function checkDoneTask(Request $request, $taskId)
+    {
+        $task  = Task::findOrFail($taskId);
+        $task->progress = 100;
+        $task->save();
+        return redirect()->route('admin.todayTask');
+    }
+
     public function setDefaultSprint(Request $request, $sprintId)
     {
         $requestData = $request->all();

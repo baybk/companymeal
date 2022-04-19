@@ -26,14 +26,24 @@
 
                             <tbody>
                                 @foreach ($dataOneUser['tasks'] as $task)
+                                    @php
+                                        $progressColor = '';
+                                        if ($task->progress >= 10 && $task->progress < 100) {
+                                            $progressColor = 'color: orange;';
+                                        } else if ($task->progress >= 100) {
+                                            $progressColor = 'color: #38c172';
+                                        }
+                                    @endphp
                                 <tr>
                                     <td class="mytd">{{ $task->name }}</td>
                                     <td class="mytd">({{ $task->hours }} giờ) </td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->from_date)) }}  -></td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->end_date)) }}  {{ $task->end_time }}:00h</td>
-                                    <td class="mytd">({{ $task->progress }} %) </td>
+                                    <td class="mytd" style="{{ $progressColor }}" >({{ $task->progress }} %) </td>
                                     <td class="mytd">
                                         <a href="{{ route('admin.editTask', ['taskId' => $task->id]) }}">Chỉnh sửa</a> |
+                                        <a href="{{ route('admin.moveDoingTask', ['taskId' => $task->id]) }}">Doing</a> |
+                                        <a href="{{ route('admin.checkDoneTask', ['taskId' => $task->id]) }}">Done</a> |
                                         <a href="{{ route('admin.deleteTask', ['taskId' => $task->id]) }}">Xoá</a>
                                     </td>
                                 </tr>
