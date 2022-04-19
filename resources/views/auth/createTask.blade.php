@@ -35,7 +35,7 @@
                                     <option value="BA">BA</option>
                                     <option value="Database">Database</option>
                                     <option value="Testing">Testing</option>
-                                    <option value="Testing">General</option>
+                                    <option value="General">General</option>
                                 </select>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
