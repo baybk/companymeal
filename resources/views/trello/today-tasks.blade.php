@@ -44,6 +44,7 @@
                                         <a href="{{ route('admin.editTask', ['taskId' => $task->id]) }}">Chỉnh sửa</a> |
                                         <a href="{{ route('admin.moveDoingTask', ['taskId' => $task->id]) }}">Doing</a> |
                                         <a href="{{ route('admin.checkDoneTask', ['taskId' => $task->id]) }}">Done</a> |
+                                        <a href="{{ route('admin.moveTaskToLastestSprint', ['taskId' => $task->id]) }}">Move sprint</a> |
                                         <a href="{{ route('admin.deleteTask', ['taskId' => $task->id]) }}">Xoá</a>
                                     </td>
                                 </tr>

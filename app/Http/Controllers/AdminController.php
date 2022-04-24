@@ -402,6 +402,24 @@ class AdminController extends Controller
         return redirect()->route('admin.todayTask');
     }
 
+    public function moveTaskToLastestSprint(Request $request, $taskId)
+    {
+        $task  = Task::findOrFail($taskId);
+        # find lastest sprint id
+        $lastestSprint = Sprint::where(
+            'team_id', $this->getCurrentTeam()->id
+        )
+        ->orderBy('id', 'desc')
+        ->first();
+        if (!$lastestSprint) return redirect('/');
+        
+        if ($task->sprint_id != $lastestSprint->id) {
+            $task->sprint_id = $lastestSprint->id;
+            $task->save();
+        }
+        return redirect()->route('admin.todayTask');
+    }
+
     public function setDefaultSprint(Request $request, $sprintId)
     {
         $requestData = $request->all();

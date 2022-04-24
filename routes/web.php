@@ -63,4 +63,5 @@ Route::prefix('admin')->group(function () {
     Route::get('/delete-task/{taskId}', [AdminController::class, 'deleteTask'])->name('admin.deleteTask');
     Route::get('/move-doing-task/{taskId}', [AdminController::class, 'moveDoingTask'])->name('admin.moveDoingTask');
     Route::get('/check-done-task/{taskId}', [AdminController::class, 'checkDoneTask'])->name('admin.checkDoneTask');
+    Route::get('/move-task-to-lastest-sprint/{taskId}', [AdminController::class, 'moveTaskToLastestSprint'])->name('admin.moveTaskToLastestSprint');
 });
