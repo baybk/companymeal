@@ -21,6 +21,7 @@ class Task extends Model
         'detail',
         'progress',
         'from_time',
-        'end_time'
+        'end_time',
+        'desc'
     ];
 }

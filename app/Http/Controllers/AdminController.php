@@ -468,6 +468,11 @@ class AdminController extends Controller
 
     public function todayTask(Request $request)
     {
+        Log::info('team_id session=');
+        Log::info(session('team_id'));
+        Log::info('current_sprint_id session=');
+        Log::info(session('current_sprint_id'));
+
         $requestData = $request->all();
         $requestData['team_id'] = $this->getCurrentTeam()->id;
         $data = [];
