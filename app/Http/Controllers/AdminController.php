@@ -470,8 +470,8 @@ class AdminController extends Controller
     {
         Log::info('team_id session=');
         Log::info(session('team_id'));
-        Log::info('current_sprint_id session=');
-        Log::info(session('current_sprint_id'));
+        Log::info('ss lifetime=');
+        Log::info(env('SESSION_LIFETIME'));
 
         $requestData = $request->all();
         $requestData['team_id'] = $this->getCurrentTeam()->id;
