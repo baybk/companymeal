@@ -96,7 +96,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-md-2 col-form-label text-md-right">Ghi chú:</label>
                             <div class="col-md-8">
-                                <textarea rows="12" cols="100" name="desc" >{{ old('desc', $task->desc) }}</textarea>
+                                <textarea rows="5" cols="100" name="desc" >{{ old('desc', $task->desc) }}</textarea>
                             </div>
                         </div>
 
