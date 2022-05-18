@@ -33,7 +33,7 @@
                                             $progressColor = 'color: orange;';
                                         } else if ($task->progress >= 100) {
                                             $progressColor = 'color: #38c172;';
-                                            $nameStyle = 'text-decoration-line: line-through;';
+                                            $nameStyle = 'color: #38c172;';
                                         }
                                     @endphp
                                 <tr>
