@@ -28,14 +28,16 @@
                                 @foreach ($dataOneUser['tasks'] as $task)
                                     @php
                                         $progressColor = '';
+                                        $nameStyle = ''
                                         if ($task->progress >= 10 && $task->progress < 100) {
                                             $progressColor = 'color: orange;';
                                         } else if ($task->progress >= 100) {
-                                            $progressColor = 'color: #38c172';
+                                            $progressColor = 'color: #38c172;';
+                                            $nameStyle = 'text-decoration-line: line-through;'
                                         }
                                     @endphp
                                 <tr>
-                                    <td class="mytd">{{ $task->name }}</td>
+                                    <td class="mytd {{ $nameStyle }}">{{ $task->name }}</td>
                                     <td class="mytd">({{ $task->hours }} giờ) </td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->from_date)) }}  -></td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->end_date)) }}  {{ $task->end_time }}:00h</td>
