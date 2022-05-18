@@ -28,12 +28,12 @@
                                 @foreach ($dataOneUser['tasks'] as $task)
                                     @php
                                         $progressColor = '';
-                                        $nameStyle = ''
+                                        $nameStyle = '';
                                         if ($task->progress >= 10 && $task->progress < 100) {
                                             $progressColor = 'color: orange;';
                                         } else if ($task->progress >= 100) {
                                             $progressColor = 'color: #38c172;';
-                                            $nameStyle = 'text-decoration-line: line-through;'
+                                            $nameStyle = 'text-decoration-line: line-through;';
                                         }
                                     @endphp
                                 <tr>
