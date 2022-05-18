@@ -37,7 +37,7 @@
                                         }
                                     @endphp
                                 <tr>
-                                    <td class="mytd {{ $nameStyle }}">{{ $task->name }}</td>
+                                    <td class="mytd" style="{{ $nameStyle }}">{{ $task->name }}</td>
                                     <td class="mytd">({{ $task->hours }} giờ) </td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->from_date)) }}  -></td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->end_date)) }}  {{ $task->end_time }}:00h</td>
