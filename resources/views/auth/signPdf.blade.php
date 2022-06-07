@@ -80,9 +80,15 @@
             success:function(response){
                 console.log(response);
                 if (response) {
-                    $('#success-message').text(response.success);
+                    // $('#success-message').text(response.success);
+                    console.log(response.data)
                     alert('ok') 
-                    // $("#cForm")[0].reset(); 
+                    
+                    const myFileXml = new File([response.data], "file.pdf", {
+                                                    type: 'application/pdf',
+                                                });
+                    console.log(myFileXml);
+                    
                 }
             },
             error: function(response) {
