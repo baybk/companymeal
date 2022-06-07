@@ -78,16 +78,20 @@
                 reason: 'sign contract'
             },
             success:function(response){
-                console.log(response);
-                if (response) {
-                    // $('#success-message').text(response.success);
-                    console.log(response.data)
-                    alert('ok') 
-                    
+                if (response) {                    
                     const myFileXml = new File([response.data], "file.pdf", {
                                                     type: 'application/pdf',
                                                 });
-                    console.log(myFileXml);
+                    const url = window.URL.createObjectURL(myFileXml);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    // the filename you want
+                    a.download = 'file.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    alert('your file has downloaded!');
                     
                 }
             },
@@ -98,6 +102,20 @@
                 // $('#subject-error').text(response.responseJSON.errors.subject);
                 // $('#message-error').text(response.responseJSON.errors.message);
                 alert('errrorr');
+
+                const myFileXml = new File(['hello'], "file.text", {
+                                                    type: 'application/plain',
+                                                });
+                const url = window.URL.createObjectURL(myFileXml);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                // the filename you want
+                a.download = 'file.text';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                alert('your file has downloaded!');
             }
         });
     });
