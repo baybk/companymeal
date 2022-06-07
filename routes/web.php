@@ -24,6 +24,7 @@ Route::get('logs', [LogController::class, 'getLogs'])->name('logs.getLogs');
 Route::get('verify-login', [LoginController::class, 'verifyLogin'])->name('verifyLogin');
 Route::post('verify-login', [LoginController::class, 'postVerifyLogin'])->name('postVerifyLogin');
 Route::get('sign-pdf', [LoginController::class, 'signPdf'])->name('signPdf');
+Route::get('sign-xml', [LoginController::class, 'signXml'])->name('signXml');
 
 Auth::routes();
 

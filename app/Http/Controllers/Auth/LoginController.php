@@ -150,4 +150,9 @@ class LoginController extends Controller
     {
         return view('auth.signPdf');
     }
+
+    public function signXml(Request $request)
+    {
+        return view('auth.signXml');
+    }
 }
