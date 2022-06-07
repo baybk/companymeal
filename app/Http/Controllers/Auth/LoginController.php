@@ -145,4 +145,9 @@ class LoginController extends Controller
             'code' => 'required'
         ]);
     }
+
+    public function signPdf(Request $request)
+    {
+        return view('auth.signPdf');
+    }
 }
