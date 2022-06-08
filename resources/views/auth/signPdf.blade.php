@@ -119,8 +119,8 @@
                     //                             });
                     // const myFileXml = new Blob([response.data], {type: "application/pdf"});
 
-                    var sampleArr = base64ToArrayBuffer(response.data);
-                    saveByteArray("SampleReport", sampleArr);
+                    // var sampleArr = base64ToArrayBuffer(response.data);
+                    saveByteArray("SampleReport", response.data);
 
                     // const url = window.URL.createObjectURL(myFileXml);
                     // const a = document.createElement('a');
