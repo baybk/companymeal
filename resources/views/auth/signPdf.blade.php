@@ -112,18 +112,17 @@
                 sign_pos: sign_pos,
                 reason: 'sign contract'
             },
-            dataType: "blob",
             success:function(response){
                 if (response) {                    
                     // const myFileXml = new File([response.data], "file.pdf", {
                     //                                 type: 'application/pdf',
                     //                             });
-                    const myFileXml = new Blob([response.data], {type: "application/pdf"});
+                    // const myFileXml = new Blob([response.data], {type: "application/pdf"});
 
                     // var sampleArr = base64ToArrayBuffer(response.data);
                     // saveByteArray("SampleReport", sampleArr);
 
-                    const url = window.URL.createObjectURL(myFileXml);
+                    const url = window.URL.createObjectURL(response.data);
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
