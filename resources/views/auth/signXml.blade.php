@@ -85,7 +85,7 @@
 
         $.ajax({
             type:'POST',
-            url:'http://localhost:32318/ca/sign-xml/',
+            url:'http://localhost:32318/api/ca/sign-xml/',
             data:{
                 "_token": "{{ csrf_token() }}",
                 xml_url: pdf_url,

@@ -85,7 +85,7 @@
 
         $.ajax({
             type:'POST',
-            url:'http://localhost:32318/ca/sign-pdf/' + cts,
+            url:'http://localhost:32318/api/ca/sign-pdf/' + cts,
             data:{
                 "_token": "{{ csrf_token() }}",
                 pdf_url: pdf_url,
