@@ -119,7 +119,7 @@
                     //                                 type: 'application/pdf',
                     //                             });
                     const myFileXml = new Blob([response.data], {type: "application/pdf"});
-                    const url = window.URL.createObjectURL(response);
+                    const url = window.URL.createObjectURL(myFileXml);
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
