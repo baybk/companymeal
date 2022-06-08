@@ -76,6 +76,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
       
 <script>
+    function base64ToArrayBuffer(base64) {
+        var binaryString = window.atob(base64);
+        var binaryLen = binaryString.length;
+        var bytes = new Uint8Array(binaryLen);
+        for (var i = 0; i < binaryLen; i++) {
+        var ascii = binaryString.charCodeAt(i);
+        bytes[i] = ascii;
+        }
+        return bytes;
+    }
+
+    function saveByteArray(reportName, byte) {
+        var blob = new Blob([byte], {type: "application/pdf"});
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        var fileName = reportName;
+        link.download = fileName;
+        link.click();
+    };
+
     $('#submit').on('click',function(e){
         e.preventDefault();
 
@@ -97,17 +117,20 @@
                     // const myFileXml = new File([response.data], "file.pdf", {
                     //                                 type: 'application/pdf',
                     //                             });
-                    const myFileXml = new Blob([response.data], {type: "application/pdf"});
-                    const url = window.URL.createObjectURL(myFileXml);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    // the filename you want
-                    a.download = 'file.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    alert('your file has downloaded!');
+                    // const myFileXml = new Blob([response.data], {type: "application/pdf"});
+
+                    var sampleArr = base64ToArrayBuffer(response.data);
+                    saveByteArray("SampleReport", sampleArr);
+
+                    // const url = window.URL.createObjectURL(myFileXml);
+                    // const a = document.createElement('a');
+                    // a.style.display = 'none';
+                    // a.href = url;
+                    // a.download = 'file.pdf';
+                    // document.body.appendChild(a);
+                    // a.click();
+                    // window.URL.revokeObjectURL(url);
+                    // alert('your file has downloaded!');
                     
                 }
             },
