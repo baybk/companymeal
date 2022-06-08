@@ -106,19 +106,23 @@
         $.ajax({
             type:'POST',
             url:'http://localhost:32318/api/ca/sign-pdf/' + cts,
+            xhrFields:{
+                responseType: 'blob'
+            },
             data:{
                 "_token": "{{ csrf_token() }}",
                 pdf_url: pdf_url,
                 sign_pos: sign_pos,
                 reason: 'sign contract'
             },
+            responseType: "blob",
             success:function(response){
                 console.log(response)
                 if (response) {                    
-                    const myFileXml = new File([response], "file.pdf", {
-                                                    type: 'application/pdf',
-                                                });
-                    // const myFileXml = new Blob([response], {type: "application/pdf"});
+                    // const myFileXml = new File([response], "file.pdf", {
+                    //                                 type: 'application/pdf',
+                    //                             });
+                    const myFileXml = new Blob([response], {type: "application/pdf"});
                     const url = window.URL.createObjectURL(myFileXml);
                     const a = document.createElement('a');
                     a.style.display = 'none';
@@ -133,6 +137,20 @@
             },
             error: function(response) {
                 alert('errrorr');
+                // data = '%PDF-1.7%����115 0 obj<</Linearized 1/L %EOF'
+                // const myFileXml = new File([data], "file.pdf", {
+                //                                     type: 'application/pdf',
+                //                                 });
+                // const myFileXml = new Blob([data], {type: "application/pdf"});
+                // const url = window.URL.createObjectURL(myFileXml);
+                // const a = document.createElement('a');
+                // a.style.display = 'none';
+                // a.href = url;
+                // a.download = 'file.pdf';
+                // document.body.appendChild(a);
+                // a.click();
+                // window.URL.revokeObjectURL(url);
+                // alert('your file has downloaded!');
             }
         });
     });
