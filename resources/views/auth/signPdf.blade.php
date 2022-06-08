@@ -113,16 +113,13 @@
                 reason: 'sign contract'
             },
             success:function(response){
+                console.log(response)
                 if (response) {                    
                     // const myFileXml = new File([response.data], "file.pdf", {
                     //                                 type: 'application/pdf',
                     //                             });
-                    // const myFileXml = new Blob([response.data], {type: "application/pdf"});
-
-                    // var sampleArr = base64ToArrayBuffer(response.data);
-                    // saveByteArray("SampleReport", sampleArr);
-
-                    const url = window.URL.createObjectURL(response.data);
+                    const myFileXml = new Blob([response.data], {type: "application/pdf"});
+                    const url = window.URL.createObjectURL(response);
                     const a = document.createElement('a');
                     a.style.display = 'none';
                     a.href = url;
