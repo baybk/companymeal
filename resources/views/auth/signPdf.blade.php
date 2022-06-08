@@ -45,6 +45,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="cts" class="col-md-4 col-form-label text-md-right">Serial CTS:</label>
+
+                            <div class="col-md-6">
+                                <input style="padding: 4px;" id="cts" type="text" class="form-control @error('cts') is-invalid @enderror" name="cts" value="{{ old('cts') }}" required autocomplete="cts" autofocus>
+
+                                @error('cts')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button style="margin-top: 20px; padding: 5px;" type="button" id="submit" class="btn btn-primary">
@@ -67,10 +81,11 @@
 
         let pdf_url = $('#pdf_url').val();
         let sign_pos = $('#sign_pos').val();
+        let cts = $('#cts').val();
 
         $.ajax({
             type:'POST',
-            url:'http://localhost:32318/ca/sign-pdf/',
+            url:'http://localhost:32318/ca/sign-pdf/' + cts,
             data:{
                 "_token": "{{ csrf_token() }}",
                 pdf_url: pdf_url,
