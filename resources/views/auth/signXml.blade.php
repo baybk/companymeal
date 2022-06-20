@@ -101,6 +101,9 @@
         $.ajax({
             type:'POST',
             url:'http://localhost:32318/api/ca/sign-xml/' + cts,
+            xhrFields:{
+                responseType: 'blob'
+            },
             data:{
                 "_token": "{{ csrf_token() }}",
                 xml_url: pdf_url,
@@ -109,6 +112,7 @@
                 sign_pos: '50x50',
                 uu_id: uu_id
             },
+            responseType: "blob",
             success:function(response){
                 if (response) {                    
                     const myFileXml = new Blob([response], {type: 'application/xml',});
