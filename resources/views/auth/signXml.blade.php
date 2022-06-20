@@ -111,9 +111,7 @@
             },
             success:function(response){
                 if (response) {                    
-                    const myFileXml = new File([response.data], "file.xml", {
-                                                    type: 'application/xml',
-                                                });
+                    const myFileXml = new Blob([response], {type: 'application/xml',});
                     const url = window.URL.createObjectURL(myFileXml);
                     const a = document.createElement('a');
                     a.style.display = 'none';
