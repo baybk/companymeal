@@ -59,6 +59,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="page_number" class="col-md-4 col-form-label text-md-right">Page number:</label>
+
+                            <div class="col-md-6">
+                                <input style="padding: 4px;" id="page_number" type="number" class="form-control @error('page_number') is-invalid @enderror" name="page_number" value="{{ old('page_number', '50x50') }}" autocomplete="page_number" autofocus>
+
+                                @error('page_number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button style="margin-top: 20px; padding: 5px;" type="button" id="submit" class="btn btn-primary">
@@ -103,6 +117,11 @@
         let sign_pos = $('#sign_pos').val();
         let cts = $('#cts').val();
 
+        let page_number = 1;
+        if ($('#page_number').val()) {
+            page_number = $('#page_number').val();
+        }
+
         $.ajax({
             type:'POST',
             url:'http://localhost:32318/api/ca/sign-pdf/' + cts,
@@ -113,7 +132,8 @@
                 "_token": "{{ csrf_token() }}",
                 pdf_url: pdf_url,
                 sign_pos: sign_pos,
-                reason: 'sign contract'
+                reason: 'sign contract',
+                page_number: page_number
             },
             responseType: "blob",
             success:function(response){
