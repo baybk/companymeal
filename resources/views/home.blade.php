@@ -12,7 +12,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="btn" href="#">Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</a> |
+                    <a class="btn" href="#">Sprint đang xem:  {!! $currentSprint ? $currentSprint->name : '<span style="color:red;">Chưa có sprint</span>' !!}</a> |
                     <a class="btn mybtn" href="{{ route('register') }}">Thêm thành viên</a> 
                 </div>
 
@@ -59,7 +59,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <span class="subtract">Chi tiết Sprint đang xem:  {{ $currentSprint ? $currentSprint->name : 'Chưa có sprint' }}</span> 
+                    <span class="subtract">Chi tiết Sprint đang xem:   {!! $currentSprint ? $currentSprint->name : '<span style="color:red;">Chưa có sprint</span>' !!}</span> 
                 </div>
 
                 <div class="card-body" style="overflow-x: auto;">
