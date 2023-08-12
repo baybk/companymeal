@@ -9,6 +9,7 @@ use App\Models\Sprint;
 use App\Models\Story;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\ProjectNote;
 use App\Notifications\DailyBalanceNotification;
 use App\Notifications\RandomDeliverNotification;
 use App\Notifications\ReportWhenChangeBalanceNotification;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -460,6 +462,7 @@ class AdminController extends Controller
     {
         $requestData = $request->all();
         $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $requestData['name'] = Str::slug($requestData['desc']);
         $stories = Story::create(
             $requestData
         );
@@ -505,5 +508,36 @@ class AdminController extends Controller
         }
 
         return view('trello.today-tasks', compact('data', 'isTodayTask'));
+    }
+
+    public function listNote(Request $request)
+    {
+        $requestData = $request->all();
+        $notes = ProjectNote::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->get();
+        return view('trello.listNote', compact('notes'));
+    }
+
+    public function createNote(Request $request)
+    {
+        return view('trello.createNote');
+    }
+
+    public function postCreateNote(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $note = ProjectNote::create(
+            $requestData
+        );
+        return redirect()->route('admin.listNote');
+    }
+
+    public function deleteNote(Request $request, $noteId)
+    {
+        $note = ProjectNote::findOrFail($noteId);
+        $note->delete();
+        return redirect()->route('admin.listNote');
     }
 }

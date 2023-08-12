@@ -208,6 +208,7 @@
                                     <a class="navbarDropdown" href="{{ route('admin.todayTask') }}">List task</a> |
 
                                     <a class="navbarDropdown" href="{{ route('admin.listStory') }}">List story</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.listNote') }}">Project notes</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

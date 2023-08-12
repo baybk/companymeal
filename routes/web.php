@@ -66,4 +66,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/move-doing-task/{taskId}', [AdminController::class, 'moveDoingTask'])->name('admin.moveDoingTask');
     Route::get('/check-done-task/{taskId}', [AdminController::class, 'checkDoneTask'])->name('admin.checkDoneTask');
     Route::get('/move-task-to-lastest-sprint/{taskId}', [AdminController::class, 'moveTaskToLastestSprint'])->name('admin.moveTaskToLastestSprint');
+
+    Route::get('/list-note', [AdminController::class, 'listNote'])->name('admin.listNote');
+    Route::get('/create-note', [AdminController::class, 'createNote'])->name('admin.createNote');
+    Route::post('/create-note', [AdminController::class, 'postCreateNote'])->name('admin.postCreateNote');
+    Route::get('/delete-note/{noteId}', [AdminController::class, 'deleteNote'])->name('admin.deleteNote');
 });
