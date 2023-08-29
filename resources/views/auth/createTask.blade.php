@@ -12,6 +12,12 @@
                 </div>
 
                 <div class="card-body">
+                    @if (session('flash_message'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('flash_message') }}
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('admin.postCreateTask') }}">
                         @csrf
 
@@ -65,7 +71,7 @@
                             <label for="hours" class="col-md-4 col-form-label text-md-right">Số giờ</label>
 
                             <div class="col-md-6">
-                                <input id="hours" type="text" class="form-control @error('hours') is-invalid @enderror" name="hours" value="{{ old('hours', 1) }}" required autocomplete="hours" autofocus>
+                                <input id="hours" type="text" class="form-control @error('hours') is-invalid @enderror" name="hours" value="{{ old('hours', 3) }}" required autocomplete="hours" autofocus>
                             </div>
                         </div>
 

@@ -333,7 +333,9 @@ class AdminController extends Controller
         )->orderBy('id', 'desc')->first();
         $requestData['sprint_id'] = $currentSprint->id;
         $sprint = Task::create($requestData);
-        return redirect()->route('admin.todayTask');
+
+        $request->session()->flash('flash_message', 'Tạo Task thành công.');
+        return redirect()->route('admin.createTask');
     }
 
     public function listSprint(Request $request)
