@@ -323,6 +323,10 @@ class AdminController extends Controller
             }
         }
 
+        if ($request->stt) {
+            $namePrefix = '['.strval($request->stt).']' . $namePrefix;
+        }
+
         $requestData['name'] = $namePrefix . " " . $requestData['name'];
         $currentSprint = Sprint::where(
             'team_id', $this->getCurrentTeam()->id
@@ -377,6 +381,7 @@ class AdminController extends Controller
         unset($requestData['_token']);
         unset($requestData['story']);
         unset($requestData['task_type']);
+        unset($requestData['stt']);
         Task::where('id',$taskId)->update($requestData);
         return redirect()->route('admin.todayTask');
     }
@@ -471,10 +476,10 @@ class AdminController extends Controller
 
     public function todayTask(Request $request)
     {
-        Log::info('team_id session=');
-        Log::info(session('team_id'));
-        Log::info('ss lifetime=');
-        Log::info(env('SESSION_LIFETIME'));
+        // Log::info('team_id session=');
+        // Log::info(session('team_id'));
+        // Log::info('ss lifetime=');
+        // Log::info(env('SESSION_LIFETIME'));
 
         $requestData = $request->all();
         $requestData['team_id'] = $this->getCurrentTeam()->id;
@@ -491,7 +496,8 @@ class AdminController extends Controller
             $tasksOneUser =  Task::where('team_id', $this->getCurrentTeam()->id)
                                     ->where('sprint_id', $this->getCurrentSprint() ? $this->getCurrentSprint()->id : 0)
                                     ->where('user_id', $user->id)
-                                    ->orderBy('from_date', 'asc')
+                                    // ->orderBy('from_date', 'asc')
+                                    ->orderBy('name', 'asc')
                                     ->get();
             if (isset($requestData['is_today_task'])) {
                 $isTodayTask = true;
@@ -500,7 +506,8 @@ class AdminController extends Controller
                                     ->whereDate('from_date', '<=', $now)
                                     ->whereDate('end_date', '>=', $now)
                                     ->where('user_id', $user->id)
-                                    ->orderBy('from_date', 'asc')
+                                    // ->orderBy('from_date', 'asc')
+                                    ->orderBy('name', 'asc')
                                     ->get();
             }
             $data_one_user['tasks'] = $tasksOneUser;

@@ -19,10 +19,11 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">Tên task</label>
 
                             <div class="col-md-6">
+                                <input id="stt" type="number" class="col-md-3" name="stt" value="{{ old('stt') }}" autocomplete="stt" />
                                 <select name="story">
                                     <option value="">--------</option>
                                     @foreach($stories as $story)
-                                    <option value="{{ $story->name }}">{{ $story->name }}_{{ $story->desc }}</option>
+                                    <option value="{{ $story->name }}">{{ $story->desc }}</option>
                                     @endforeach
                                     <option></option>
                                 </select>

@@ -32,7 +32,7 @@
                                     <?php
                                         if ($note->type == 'LINK') {
                                     ?>
-                                        <a href="{{ $note->value }}">{{ $note->value }}</a>
+                                        <a target="_blank" href="{{ $note->value }}">{{ $note->value }}</a>
                                     
                                     <?php
                                         } else if ($note->type == 'TEXT') {
