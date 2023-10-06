@@ -43,6 +43,7 @@
                                     <option value="Database">Database</option>
                                     <option value="Testing">Testing</option>
                                     <option value="General">General</option>
+                                    <option value="EstimateStory">EstimateStory</option>
                                     <option value="Deployment">Deployment</option>
                                 </select>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -71,7 +72,8 @@
                             <label for="hours" class="col-md-4 col-form-label text-md-right">Số giờ</label>
 
                             <div class="col-md-6">
-                                <input id="hours" type="text" class="form-control @error('hours') is-invalid @enderror" name="hours" value="{{ old('hours', 3) }}" required autocomplete="hours" autofocus>
+                                <input id="hours" style="display:inline;width:60%" type="text" class="form-control @error('hours') is-invalid @enderror" name="hours" value="{{ old('hours', 3) }}" required autocomplete="hours" autofocus>
+                                <button type="button" class="btn btn-primary" style="display:inline;width:20%" data-toggle="modal" data-target="#myModal">Chi tiết</button>
                             </div>
                         </div>
 
@@ -106,10 +108,73 @@
                                 </button>
                             </div>
                         </div>
+
+
+                        <!-- MODAL DETAIL HOURS -->
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Tính chi tiết giờ theo công thức</h5>
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <div class="col-md-12">
+                                        BE Hours: <input onkeyup="calcTotalHours()" id="hours_for_backend" style="display:inline;width:30%" type="text" class="form-control @error('hours_for_backend') is-invalid @enderror" name="hours_for_backend" value="{{ old('hours_for_backend', 0) }}" autocomplete="hours" autofocus>
+                                        FE Hours: <input onkeyup="calcTotalHours()" id="hours_for_frontend" style="display:inline;width:30%" type="text" class="form-control @error('hours_for_frontend') is-invalid @enderror" name="hours_for_frontend" value="{{ old('hours_for_frontend', 0) }}" autocomplete="hours_for_frontend" autofocus>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script type="text/javascript">
+    function calcTotalHours() {
+        const hours_for_backend = $("#hours_for_backend").val();
+        const hours_for_frontend = $("#hours_for_frontend").val();
+        if (!hours_for_backend || !hours_for_frontend) {
+            return false;
+        }
+
+        const hours_for_backend_int = parseInt(hours_for_backend)
+        const hours_for_frontend_int = parseInt(hours_for_frontend)
+
+        let requirement_cost = (hours_for_backend_int+hours_for_frontend_int)*20/100
+        let design_cost = (hours_for_backend_int+hours_for_frontend_int)*25/100
+        let testing_cost = (hours_for_backend_int+hours_for_frontend_int)*20/100
+        let fixing_cost = (hours_for_backend_int+hours_for_frontend_int)*10/100
+        let deployment_cost = (hours_for_backend_int+hours_for_frontend_int)*4/100
+
+        requirement_cost = Math.round(requirement_cost * 10) / 10;
+        design_cost = Math.round(design_cost * 10) / 10;
+        testing_cost = Math.round(testing_cost * 10) / 10;
+        fixing_cost = Math.round(fixing_cost * 10) / 10;
+        deployment_cost = Math.round(deployment_cost * 10) / 10;
+
+        let total = hours_for_backend_int + hours_for_frontend_int + requirement_cost + design_cost + testing_cost + fixing_cost + deployment_cost
+        total = Math.round(total);
+        
+        $("#hours").val(total)
+        $("#requirement_cost").val(requirement_cost)
+        $("#design_cost").val(design_cost)
+        $("#testing_cost").val(testing_cost)
+        $("#fixing_cost").val(fixing_cost)
+        $("#deployment_cost").val(deployment_cost)
+    }
+</script>
 @endsection

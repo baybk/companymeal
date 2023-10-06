@@ -18,6 +18,8 @@
                             <thead>
                                 <th class="myth">Tên task</th>
                                 <th class="myth">Số hours</th>
+                                <th class="myth">BE hours</th>
+                                <th class="myth">FE hours</th>
                                 <th class="myth">Ngày bắt đầu</th>
                                 <th class="myth">Ngày kết thúc</th>
                                 <th class="myth">Tiến độ %</th>
@@ -39,6 +41,8 @@
                                 <tr>
                                     <td class="mytd" style="{{ $progressColor }}">{{ $task->name }}</td>
                                     <td class="mytd">({{ $task->hours }} giờ) </td>
+                                    <td class="mytd">({{ $task->hours_for_backend }} giờ) </td>
+                                    <td class="mytd">({{ $task->hours_for_frontend }} giờ) </td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->from_date)) }}  -></td>
                                     <td class="mytd">{{ date('d-m-Y', strtotime($task->end_date)) }}  {{ $task->end_time }}:00h</td>
                                     <td class="mytd" style="{{ $progressColor }}" >({{ $task->progress }} %) </td>
