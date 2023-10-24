@@ -13,7 +13,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Quản lí tiền cơm') }}</title>
+    <title>{{ config('app.name', 'App Name') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -209,6 +209,7 @@
 
                                     <a class="navbarDropdown" href="{{ route('admin.listStory') }}">List story</a>
                                     <a class="navbarDropdown" href="{{ route('admin.listNote') }}">Project notes</a>
+                                    <a class="navbarDropdown" href="{{ route('admin.listQa') }}">Q&A</a>
                                 @endif
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

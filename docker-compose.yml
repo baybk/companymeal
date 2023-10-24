@@ -30,11 +30,12 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./.data:/var/lib/mysql
       # - ./docker-compose/mysqlconf/my.conf:/etc/my.conf:z
     networks:
       - trell
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - "3306:3306"
 
   nginx:
     image: nginx:alpine

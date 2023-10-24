@@ -71,4 +71,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/create-note', [AdminController::class, 'createNote'])->name('admin.createNote');
     Route::post('/create-note', [AdminController::class, 'postCreateNote'])->name('admin.postCreateNote');
     Route::get('/delete-note/{noteId}', [AdminController::class, 'deleteNote'])->name('admin.deleteNote');
+
+    Route::get('/list-qa', [AdminController::class, 'listQa'])->name('admin.listQa');
+    Route::get('/create-qa', [AdminController::class, 'createQa'])->name('admin.createQa');
+    Route::post('/create-qa', [AdminController::class, 'postCreateQa'])->name('admin.postCreateQa');
+    Route::get('/delete-qa/{qaId}', [AdminController::class, 'deleteQa'])->name('admin.deleteQa');
 });

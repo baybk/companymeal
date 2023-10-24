@@ -10,6 +10,7 @@ use App\Models\Story;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\ProjectNote;
+use App\Models\Qa;
 use App\Notifications\DailyBalanceNotification;
 use App\Notifications\RandomDeliverNotification;
 use App\Notifications\ReportWhenChangeBalanceNotification;
@@ -548,5 +549,39 @@ class AdminController extends Controller
         $note = ProjectNote::findOrFail($noteId);
         $note->delete();
         return redirect()->route('admin.listNote');
+    }
+
+    ////////////////////////////////////////////
+    /// Q&A
+    ////////////////////////////////////////////
+    public function listQa(Request $request)
+    {
+        $requestData = $request->all();
+        $notes = Qa::where(
+            'team_id', $this->getCurrentTeam()->id
+        )->orderBy('id', 'desc')->get();
+        return view('trello.listQa', compact('notes'));
+    }
+
+    public function createQa(Request $request)
+    {
+        return view('trello.createQa');
+    }
+
+    public function postCreateQa(Request $request)
+    {
+        $requestData = $request->all();
+        $requestData['team_id'] = $this->getCurrentTeam()->id;
+        $qa = Qa::create(
+            $requestData
+        );
+        return redirect()->route('admin.listQa');
+    }
+
+    public function deleteQa(Request $request, $qaId)
+    {
+        $note = Qa::findOrFail($qaId);
+        $note->delete();
+        return redirect()->route('admin.listQa');
     }
 }
