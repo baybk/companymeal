@@ -17,6 +17,7 @@
                         <table class="mytable">
                             <thead>
                                 <th class="myth">Tên task</th>
+                                <th class="myth">Tên task Normal</th>
                                 <th class="myth">Số hours</th>
                                 <th class="myth">BE hours</th>
                                 <th class="myth">FE hours</th>
@@ -37,9 +38,18 @@
                                             $progressColor = 'color: #38c172;';
                                             $nameStyle = 'color: #38c172;';
                                         }
+
+                                        $taskNameNormal = $task->name;
+                                        $taskNameNormalSplit = explode("]", $taskNameNormal);
+                                        if (count($taskNameNormalSplit) > 0) {
+                                            $taskNameNormal = $taskNameNormalSplit[count($taskNameNormalSplit) - 1];
+                                        }
                                     @endphp
                                 <tr>
                                     <td class="mytd" style="{{ $progressColor }}">{{ $task->name }}</td>
+                                    
+                                    <td class="mytd">{{ $taskNameNormal }}</td>
+
                                     <td class="mytd">({{ $task->hours }} giờ) </td>
                                     <td class="mytd">({{ $task->hours_for_backend }} giờ) </td>
                                     <td class="mytd">({{ $task->hours_for_frontend }} giờ) </td>
