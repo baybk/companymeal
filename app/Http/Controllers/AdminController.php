@@ -584,4 +584,12 @@ class AdminController extends Controller
         $note->delete();
         return redirect()->route('admin.listQa');
     }
+
+    public function updateDoneQa(Request $request, $qaId)
+    {
+        $note = Qa::findOrFail($qaId);
+        $note->status = 'DONE';
+        $note->save();
+        return redirect()->route('admin.listQa');
+    }
 }

@@ -76,4 +76,5 @@ Route::prefix('admin')->group(function () {
     Route::get('/create-qa', [AdminController::class, 'createQa'])->name('admin.createQa');
     Route::post('/create-qa', [AdminController::class, 'postCreateQa'])->name('admin.postCreateQa');
     Route::get('/delete-qa/{qaId}', [AdminController::class, 'deleteQa'])->name('admin.deleteQa');
+    Route::get('/update-done-qa/{qaId}', [AdminController::class, 'updateDoneQa'])->name('admin.updateDoneQa');
 });

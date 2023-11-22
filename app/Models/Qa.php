@@ -12,6 +12,7 @@ class Qa extends Model
     public $fillable = [
         'team_id',
         'question',
-        'answer'
+        'answer',
+        'status'
     ];
 }
